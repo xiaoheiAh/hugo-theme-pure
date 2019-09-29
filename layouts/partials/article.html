@@ -1,0 +1,32 @@
+<div class="content">
+  <article id="{{ .Params.layout }}-{{ .Params.slug }}" class="article article-type-{{ .Params.layout }}" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    <!-- TODO gallary -->
+    {{- partial "post/gallery" .}}
+    <div class="article-header">
+      {{- if or (.Permalink) (.Title)}}
+      {{ .Scratch.Set "class_name" "article-title" }}
+      {{- partial "post/title.html" . }}
+      {{- end }}
+      <div class="article-meta">
+        {{ .Scratch.Set "class_name" "article-date" }}
+        {{- partial "post/date.html" . }}
+        {{- partial "post/category.html" . }}
+        {{- partial "post/tag.html" . }}
+        {{- partial "post/pv.html" . }}
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="{{ .RelPermalink }}#comments"
+            class="article-comment-link">{{T "article_comments" }}</a></span>
+        {{- partial "post/wc.html" . }}
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      {{ .Content }}
+    </div>
+    <div class="article-footer">
+      {{- partial "post/copyright.html" . }}
+    </div>
+  </article>
+  {{- partial "post/comment.html" . }}
+</div>
+{{- partial "post/nav.html" . }}
+{{- partial "post/donate.html" . }}

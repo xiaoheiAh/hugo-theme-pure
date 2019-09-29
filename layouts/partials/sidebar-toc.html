@@ -1,0 +1,10 @@
+{{- if .Site.Params.config.toc }}
+  <aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+    <div class="slimContent">
+      <nav id="toc" class="article-toc">
+        <h3 class="toc-title">{{T "article_catalogue" }}</h3>
+        {{- .TableOfContents}}
+      </nav>
+    </div>
+  </aside>
+{{- end }}

@@ -1,0 +1,8 @@
+{{- with .Params.tags}}  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+    {{- range . }}
+    <a class="article-tag-link" href="{{ "tags" | relLangURL }}/{{ . | urlize }}/"> {{ . }} </a>
+    {{- end}}
+  </span>
+{{- end }}

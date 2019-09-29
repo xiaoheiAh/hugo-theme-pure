@@ -1,0 +1,6 @@
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>
+<a href="{{- .Permalink }}" class="{{ .Scratch.Get "class_name" }}">
+  <time datetime="{{ .Date }}" itemprop="datePublished">{{- .Date.Format (.Site.Params.dateFormatToUse | default "2006-01-02") }}</time>
+</a>
+</span>

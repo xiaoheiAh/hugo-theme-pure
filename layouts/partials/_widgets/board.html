@@ -1,0 +1,10 @@
+<div class="widget">
+    <h3 class="widget-title">{{ T "widget_board" }}</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                {{- printf $.Site.Params.site.board | safeHTML }}
+            </div>
+        </div>
+    </div>
+</div>

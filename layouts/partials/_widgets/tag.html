@@ -1,0 +1,14 @@
+<div class="widget">
+    <h3 class="widget-title"> {{ T "widget_tags" }}</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            {{ range $name, $taxonomy := $.Site.Taxonomies.tags }}
+            {{ with $.Site.GetPage (printf "/tags/%s" $name) }}
+            <li class="tag-list-item"><a href="{{ .Permalink }}" class="tag-list-link">{{ $name }}</a><span
+                    class="tag-list-count">{{ $taxonomy.Count}}</span></li>
+            {{ end }}
+            {{- end }}
+        </ul>
+
+    </div>
+</div>

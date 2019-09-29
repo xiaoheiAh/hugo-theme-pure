@@ -1,0 +1,21 @@
+{{- with .Site.Params.pv.busuanzi.enable }}
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+{{- end }}
+{{- if .Site.Params.pv.leancloud.enable }}
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="{{- .Permalink }}" class="leancloud_visitors"  data-flag-title="{{ .Title }}">0</span>
+    </span>
+{{- else if (and (eq .Site.Params.comment.type "valine") (.Site.Params.comment.valine.visitor)) }}
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="{{- .Permalink }}" class="leancloud_visitors"  data-flag-title="{{ .Title }}">
+			<span class="leancloud-visitors-count">0</span>
+		</span>
+    </span>
+{{- end }}

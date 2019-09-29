@@ -1,0 +1,39 @@
+{{- define "content"}}
+<main class="main" role="main">
+    <article class="content article article-archives article-type-list" itemscope="">
+        <header class="article-header">
+            <h1 itemprop="title">{{ .Title }}</h1>
+            <p class="text-muted">{{- T "total_article" (len .Pages) }}</p>
+        </header>
+        <div class="article-body">
+            {{ range $idx,$page := .Pages }}
+            {{ $thisYear := $page.Date.Format ("2006") }}
+            {{- $lastElement := $idx | add -1 | index $.Pages }}
+            {{- if or (eq $idx 0) ( ne ($lastElement.Date.Format "2006") $thisYear ) }}
+                {{- if ne $idx 0 }} 
+                    </div></div></div></section>
+                {{- end }}
+                <section class="panel panel-default b-no">
+                    <div class="panel-heading" role="tab">
+                        <h3 class="panel-title">
+                            <a data-toggle="collapse" href="#collapse{{- $thisYear }}" aria-expanded="true">
+                                <i class="icon icon-calendar-plus text-active"></i><i class="icon icon-calendar-minus text"></i>
+                                &nbsp;{{- $thisYear }}
+                            </a>
+                        </h3>
+                    </div>
+                    <div id="collapse{{- $thisYear }}" class="panel-collapse collapse in" role="tabpanel"
+                        aria-labelledby="heading{{- $thisYear }}">
+                        <div class="panel-body">
+                            <div class="collection">
+            {{- end }}
+            
+            {{- .Page.Scratch.Set "type" "link"}}
+            {{- partial "item-post.html" . }}
+            
+            {{- end }}
+        </div>
+        </div></div></div></section>
+    </article>
+</main>
+{{- end }}

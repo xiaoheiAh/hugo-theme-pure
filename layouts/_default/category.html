@@ -1,0 +1,44 @@
+{{- define "content"}}
+{{- $categories := .Site.Taxonomies.categories }}
+<main class="main" role="main">
+    <article class="article article-categories article-type-list" itemscope="">
+        <header class="article-header">
+            <h1 itemprop="name" class="hidden-xs">{{- .Title }}</h1>
+            <p class="text-muted hidden-xs">{{- T "total_category" (len $categories) }}</p>
+            <nav role="navigation" id="nav-main" class="okayNav">
+                <ul>
+                    <li><a href="{{- "categories" | relURL }}">{{- T "nav_all" }}</a></li>
+                    {{- range $categories }}
+                    <li><a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a></li>
+                    {{- end }}
+                </ul>
+            </nav>
+        </header>
+        <!-- /header -->
+        <div class="article-body">
+            <div class="panel panel-default b-no">
+                <div class="panel-heading" role="tab">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse{{- .Name | md5 }}" aria-expanded="true">
+                            <i class="icon icon-folder text-active"></i><i class="icon icon-folder-open text"></i>
+                            {{- .Name }}
+                        </a>
+                        <small class="text-muted">(Total {{- len .Pages }} articles)</small>
+                    </h4>
+                </div>
+                <div id="collapse{{ .Name | md5 }}" class="panel-collapse collapse in" role="tabpanel"
+                    aria-labelledby="heading{{ .Name | md5}}">
+                    <div class="panel-body">
+                        <div class="collection">
+                                {{- range .Pages }}
+                                {{- .Page.Scratch.Set "type" "link"}}
+                                {{- partial "item-post.html" . }}
+                            {{- end }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</main>
+{{- end }}

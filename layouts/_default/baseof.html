@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language }}">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+      {{- block "title" . -}}
+      {{ if .IsPage }}
+        {{ .Title }} - {{ .Site.Title }}
+      {{ else}}
+        {{ .Site.Title}}{{ end }}
+      {{- end -}}
+    </title>
+    {{ partial "head.html" . }}
+  </head>
+  <body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+    {{- partial "header.html" .}}
+    {{- if and (.Site.Params.sidebar) (or (ne .Params.sidebar "none") (ne .Params.sidebar "custom"))}}
+        {{- partial "sidebar.html" . }}
+    {{end}}
+    {{ block "content" . }}{{ end }}
+    {{- partial "footer.html" . }}
+    {{- partial "script.html" . }}
+  </body>
+</html>

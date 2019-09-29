@@ -1,0 +1,23 @@
+<script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/rust.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript" src="{{ "js/application.js" | relURL }}"></script>
+<script type="text/javascript" src="{{ "js/plugin.js" | relURL }}"></script>
+{{- partial "search.html" }}
+{{- if eq .Type "repository" }}
+   {{- partial "_script/repository.html" }}
+{{- end}}
+<!-- TODO books -->
+{{- if .IsPage }}
+   {{- partial "_script/pv.html" }}
+{{- end }}
+{{- if and (not .IsHome)  (.IsPage) (.Params.comments) }}
+   {{- partial "_script/comment.html" }}
+{{- end }}
+{{- partial "_script/fancybox.html" }}
+{{- partial "_script/analytics.html" }}

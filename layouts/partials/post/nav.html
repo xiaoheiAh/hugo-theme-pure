@@ -1,0 +1,49 @@
+<nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        {{- if (or (.Prev) (.Next)) }}
+        <ul class="pager pull-left">
+            {{- with .Prev}}
+            <li class="prev">
+                <a href="{{- .Permalink }}" title="{{- .Title }}"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;{{T "nav_newer" }}</span></a>
+            </li>
+            {{- end }}
+            {{- with .Next }}
+            <li class="next">
+                <a href="{{- .Permalink }}"
+                    title="{{- .Title }}"><span>{{T "nav_older" }}&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            {{- end }}
+            {{ with .Site.Params.config.toc }}
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="{{ T "article_catalogue" }}" role="button">
+                    <span>[&nbsp;</span><span>{{ T "article_catalogue" }}</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+            {{- end }}
+        </ul>
+        {{- end }}
+        {{- $donate := .Site.Params.donate}}
+        {{- with $donate.enable }}
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal"
+            data-target="#donateModal"><span>{{ T "donate_button" }}</span></button>
+        <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+          <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+        </div> -->
+        {{- end }}
+        {{- $share := .Site.Params.share}}
+        <div class="bar-right">
+            {{- with $share.enable }}
+            <div class="share-component" data-sites="{{- $share.sites }}"
+                data-mobile-sites="{{- $share.mobile_sites }}"></div>
+            {{- end }}
+        </div>
+    </div>
+</nav>

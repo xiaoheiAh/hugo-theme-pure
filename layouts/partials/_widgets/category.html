@@ -1,0 +1,12 @@
+<div class="widget">
+    <h3 class="widget-title"> {{ T "widget_categories" }}</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            {{- range $name, $taxonomy := $.Site.Taxonomies.categories }}
+            {{- with $.Site.GetPage (printf "/categories/%s" $name) }}
+            <li class="category-list-item"><a href="{{ .Permalink }}" class="category-list-link">{{ $name }}</a><span class="category-list-count">{{ $taxonomy.Count}}</span></li>
+            {{- end }}
+            {{- end }}
+        </ul>
+    </div>
+</div>

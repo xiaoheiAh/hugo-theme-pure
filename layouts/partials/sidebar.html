@@ -1,0 +1,8 @@
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    {{ range $w := .Site.Params.widgets }}
+      <!-- $ 传递全局上下文 -->
+      {{- partial  (printf "_widgets/%s.html" $w) $ }}
+    {{- end }}
+  </div>
+</aside>
