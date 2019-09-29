@@ -3,9 +3,9 @@
 
 name : "Hugo Theme Pure"
 license : "MIT"
-licenselink : "https://github.com/yourname/yourtheme/blob/master/LICENSE"
-description : ""
-homepage : "http://example.com/"
+licenselink : "https://github.com/xiaoheiAh/hugo-theme-pure/blob/master/LICENSE"
+description : "A powerful and pure theme for hugo~enjoy~"
+homepage : "https://blog.xiaohei.im/"
 tags : []
 features : []
 min_version : "0.57.2"
