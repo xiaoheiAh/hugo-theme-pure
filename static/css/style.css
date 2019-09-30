@@ -5557,13 +5557,13 @@ pre code {
   padding: 0;
 }
 
-.highlight {
+pre {
   position: relative;
   padding: 32px 10px 0 10px;
   border-radius: 4px;
 }
 
-.highlight:before {
+pre:before {
   display: block;
   content: ' ';
   height: 32px;
@@ -5577,7 +5577,7 @@ pre code {
   border-top-right-radius: 4px;
 }
 
-.highlight:after {
+pre:after {
   content: " ";
   position: absolute;
   border-radius: 50%;
