@@ -16,8 +16,8 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 {{- if .IsPage }}
    {{- partial "_script/pv.html" }}
 {{- end }}
-{{- if and (not .IsHome)  (.IsPage) (.Params.comments) }}
-   {{- partial "_script/comment.html" }}
+{{- if eq .Type "posts"   }}
+   {{- partial "_script/comment.html" . }}
 {{- end }}
 {{- partial "_script/fancybox.html" }}
 {{- partial "_script/analytics.html" }}
