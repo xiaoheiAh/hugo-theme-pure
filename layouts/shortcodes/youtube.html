@@ -1,6 +1,0 @@
-{{ if not .Site.IsServer }}
-    {{ template "_internal/shortcodes/youtube.html" . }}
-{{ else }}
-    <!-- Render the placeholder for the shortcode -->
-    <pre>YouTube Vedio: {{ .Get 0 }}</pre>
-{{ end }}
