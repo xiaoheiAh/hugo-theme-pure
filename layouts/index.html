@@ -3,7 +3,7 @@
 <main class="main" role="main">
   {{/* partial "archive-list.html" . - */}} 
   <div class="content article-list">
-    {{- range .Site.RegularPages -}}
+    {{- range where .Site.RegularPages "Type" "posts" -}}
     <article
       class="article article-type-page"
       itemscope
@@ -12,11 +12,17 @@
       <div class="article-header">
         {{ partial "post/title.html" . -}}
       </div>
+      {{- if .Summary }}
       <div class="article-entry text-muted" itemprop="description">
         {{- .Summary -}}
       </div>
+      {{- end }}
       <p class="article-meta">
-        {{ .Date.Format (.Site.Params.dateFormatToUse | default "2006-01-02") }}
+        {{- partial "post/date.html" . }}
+        {{- partial "post/category.html" . }}
+        {{- partial "post/tag.html" . }}
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="{{- .RelPermalink }}#comments" class="article-comment-link">{{- T "article_comments" }}</a></span>
+        {{- partial "post/wc.html" . }}
       </p>
     </article>
     {{- end -}}
