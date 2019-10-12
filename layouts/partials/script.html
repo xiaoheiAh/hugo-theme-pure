@@ -1,23 +1,40 @@
 <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 <script>
-window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+   window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 </script>
 <script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
 <script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/rust.min.js"></script>
-<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script type="text/javascript"
+   src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <script type="text/javascript" src="{{ "js/application.js" | relURL }}"></script>
 <script type="text/javascript" src="{{ "js/plugin.js" | relURL }}"></script>
-{{- partial "search.html" }}
+<script>
+      (function (window) {
+          var INSIGHT_CONFIG = {
+              TRANSLATION: {
+                  POSTS: '{{ T "insight_posts"}}',
+                  PAGES: '{{ T "insight_pages"}}',
+                  CATEGORIES: '{{ T "insight_categories"}}',
+                  TAGS: '{{ T "insight_tags"}}',
+                  UNTITLED: '{{ T "insight_untitled"}}',
+              },
+              ROOT_URL: '{{ .Site.BaseURL }}',
+              CONTENT_URL: '{{ "/algolia.json" | absURL}} ',
+          };
+          window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+      })(window);
+      </script>
+<script type="text/javascript" src="{{ "js/insight.js" | relURL }}"></script>
 {{- if eq .Type "repository" }}
-   {{- partial "_script/repository.html" }}
+{{- partial "_script/repository.html" . }}
 {{- end}}
 <!-- TODO books -->
 {{- if .IsPage }}
-   {{- partial "_script/pv.html" }}
+{{- partial "_script/pv.html" . }}
 {{- end }}
 {{- if eq .Type "posts"   }}
-   {{- partial "_script/comment.html" . }}
+{{- partial "_script/comment.html" . }}
 {{- end }}
-{{- partial "_script/fancybox.html" }}
-{{- partial "_script/analytics.html" }}
+{{- partial "_script/fancybox.html" . }}
+{{- partial "_script/analytics.html" . }}

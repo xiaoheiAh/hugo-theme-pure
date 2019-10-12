@@ -148,3 +148,17 @@ copyright_base_on:
   other: base on
 copyright_powered_by:
   other: Powered by
+
+
+insight_hint: 
+  other: 想要查找什么...
+insight_posts: 
+  other: 文章
+insight_pages: 
+  other: 页面
+insight_categories:
+  other: 分类
+insight_tags:
+  other: 标签
+insight_untitled:
+  other: (未命名)
