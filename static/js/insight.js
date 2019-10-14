@@ -33,13 +33,13 @@
             case 'PAGES':
                 $searchItems = array.map(function (item) {
                     // Use config.root instead of permalink to fix url issue
-                    return searchItem('file', item.title, null, item.text.slice(0, 150), CONFIG.ROOT_URL + item.path);
+                    return searchItem('file', item.title, null, item.content.slice(0, 150), item.uri);
                 });
                 break;
             case 'CATEGORIES':
             case 'TAGS':
                 $searchItems = array.map(function (item) {
-                    return searchItem(type === 'CATEGORIES' ? 'folder' : 'tag', item.name, item.slug, null, item.permalink);
+                    return searchItem(type === 'CATEGORIES' ? 'folder' : 'tag', item.title, '', null, item.uri);
                 });
                 break;
             default:
@@ -98,16 +98,16 @@
     function filterFactory (keywords) {
         return {
             POST: function (obj) {
-                return filter(keywords, obj, ['title', 'text']);
+                return filter(keywords, obj, ['title', 'content']);
             },
             PAGE: function (obj) {
-                return filter(keywords, obj, ['title', 'text']);
+                return filter(keywords, obj, ['title', 'content']);
             },
             CATEGORY: function (obj) {
-                return filter(keywords, obj, ['name', 'slug']);
+                return filter(keywords, obj, ['title']);
             },
             TAG: function (obj) {
-                return filter(keywords, obj, ['name', 'slug']);
+                return filter(keywords, obj, ['title']);
             }
         };
     }
@@ -135,16 +135,16 @@
     function weightFactory (keywords) {
         return {
             POST: function (obj) {
-                return weight(keywords, obj, ['title', 'text'], [3, 1]);
+                return weight(keywords, obj, ['title', 'content'], [3, 1]);
             },
             PAGE: function (obj) {
-                return weight(keywords, obj, ['title', 'text'], [3, 1]);
+                return weight(keywords, obj, ['title', 'content'], [3, 1]);
             },
             CATEGORY: function (obj) {
-                return weight(keywords, obj, ['name', 'slug'], [1, 1]);
+                return weight(keywords, obj, ['title'], [1]);
             },
             TAG: function (obj) {
-                return weight(keywords, obj, ['name', 'slug'], [1, 1]);
+                return weight(keywords, obj, ['title'], [1]);
             }
         };
     }
@@ -154,8 +154,8 @@
         var FILTERS = filterFactory(keywords);
         var posts = json.posts;
         var pages = json.pages;
-        var tags = extractToSet(json, 'tags');
-        var categories = extractToSet(json, 'categories');
+        var tags = json.tags;
+        var categories = json.categories;
         return {
             posts: posts.filter(FILTERS.POST).sort(function (a, b) { return WEIGHTS.POST(b) - WEIGHTS.POST(a); }).slice(0, 5),
             pages: pages.filter(FILTERS.PAGE).sort(function (a, b) { return WEIGHTS.PAGE(b) - WEIGHTS.PAGE(a); }).slice(0, 5),

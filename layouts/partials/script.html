@@ -20,7 +20,7 @@
                   UNTITLED: '{{ T "insight_untitled"}}',
               },
               ROOT_URL: '{{ .Site.BaseURL }}',
-              CONTENT_URL: '{{ "/algolia.json" | absURL}} ',
+              CONTENT_URL: '{{ "/searchindex.json" | relURL }} ',
           };
           window.INSIGHT_CONFIG = INSIGHT_CONFIG;
       })(window);
