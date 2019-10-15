@@ -13,7 +13,20 @@
     </title>
     {{ partial "head.html" . }}
   </head>
-  <body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  {{- $.Scratch.Add "bodyClass" slice }}
+  {{- $config := .Site.Params.config }}
+  {{- if $config.layout }}
+    {{- $.Scratch.Add "bodyClass" $config.layout }}
+  {{- else }}
+    {{- $.Scratch.Add "bodyClass" "main-center" }}
+  {{- end }}
+  {{- with $config.skin }}
+    {{- $.Scratch.Add "bodyClass" . }}
+  {{- end}}
+  {{- if eq .Site.Params.sidebar "none"}} 
+    {{- $.Scratch.Add "bodyClass" "no-sidebar" }}
+  {{- end }}
+  <body class="{{- delimit ( $.Scratch.Get "bodyClass" ) " " }}" itemscope itemtype="http://schema.org/WebPage">
     {{- partial "header.html" .}}
     {{- if and (.Site.Params.sidebar) (or (ne .Params.sidebar "none") (ne .Params.sidebar "custom"))}}
         {{- partial "sidebar.html" . }}
