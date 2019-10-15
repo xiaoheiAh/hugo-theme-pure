@@ -12,7 +12,7 @@ $ git clone https://github.com/xiaoheiAh/hugo-theme-pure themes/pure
 
 1. Please copy the config.yml under the `exampleSite` folder to the root folder of your Hugo Site. Feel free to change it. If you don't like `.yml` file, you can also convert it to you want.
 
-2. Your post should under the `post` folder, like this : `hugo new post/any.md`
+2. Your post should under the `posts` folder, like this : `hugo new posts/any.md`
 
 ## Multilingual
 
