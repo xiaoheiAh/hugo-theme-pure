@@ -3,7 +3,7 @@
 <main class="main" role="main">
   {{/* partial "archive-list.html" . - */}} 
   <div class="content article-list">
-    {{- range where .Site.RegularPages "Type" "posts" -}}
+    {{- range where .Site.RegularPages "Type" "post" -}}
     <article
       class="article article-type-page"
       itemscope
