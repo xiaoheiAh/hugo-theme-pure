@@ -22,11 +22,18 @@
       </div>
       <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
         <ul class="nav navbar-nav main-nav {{- with .Site.Params.config.menu_highlight }}  menu-highlight {{- end}}">
+          {{- $icon := .Site.Params.menuIcons }}
           {{- range .Site.Menus.main -}}
             {{- $lowerItemName := lower .Name}}
             <li class="menu-item menu-item-{{- $lowerItemName}}">
                 <a href="{{- .URL | safeURL }}">
-                  <!-- TODO icon  -->
+                  {{- with $icon.enable }}
+                  {{- range $name,$value := $icon}}
+                    {{- if eq $name $lowerItemName }}
+                    <i class="icon {{- print " " $value }}"></i>
+                    {{- end}}
+                  {{- end }}
+                  {{- end}}
                   <span class="menu-title">{{- .Title  }}</span>
                 </a>
             </li>
