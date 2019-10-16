@@ -6,7 +6,7 @@ license : "MIT"
 licenselink : "https://github.com/xiaoheiAh/hugo-theme-pure/blob/master/LICENSE"
 description : "A powerful and pure theme for hugo~enjoy~"
 homepage : "https://blog.xiaohei.im/"
-tags : []
+tags : ["blog","clean","simple","dark","white","search"]
 features : []
 min_version : "0.57.2"
 
