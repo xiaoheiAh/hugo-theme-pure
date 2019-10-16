@@ -1,11 +1,25 @@
 # hugo-theme-pure
 
-A port of [hexo-theme-pure](https://github.com/cofess/hexo-theme-pure) for Hugo. Powerful & Clean.
+A port of [hexo-theme-pure](https://github.com/cofess/hexo-theme-pure) for Hugo. Powerful & Clean. [Iconfont](http://blog.cofess.com/hexo-theme-pure/iconfont/demo_fontclass.html)
+
+## Screenshots
+
+![](images/screenshot.png)
+
+![](images/black.png)
+
+![](images/blue.png)
+
+![](images/green.png)
+
+![](images/purple.png)
 
 ## Installation
 
 ```bash
+$ cd $HUGO_ROOT
 $ git clone https://github.com/xiaoheiAh/hugo-theme-pure themes/pure
+$ ./hugo server -t pure
 ```
 
 ### **Note** 
@@ -26,9 +40,33 @@ defaultContentLanguage: zh # en,fr...
 
 Currently supports English and Chinese, you can see `en.yml` and `zh.yml` under `pure/i18n`. If you want to support other language, you can copy any yml file under `i18n` and rename to new language, then feel free to translate.
 
-### Favicon & Images
+## Favicon & Images
 
 You should put you images into `static` folder at your root project. When specify `favicon` or `donate qr code` , don't use absolute url like `/favicon.ico`, please use relative url like `favicon.ico` or `donate/alipay.png`
+
+## Menu Icons
+
+You can configure the menu according to the icons of [Iconfont](http://blog.cofess.com/hexo-theme-pure/iconfont/demo_fontclass.html), the following is configuration.
+
+```yml
+menuIcons:
+  enable: true  
+  home: icon-home-fill
+  archives: icon-archives-fill
+  categories: icon-folder
+  tags: icon-tags
+  repository: icon-project
+  books: icon-book-fill
+  links: icon-friendship
+  about: icon-cup-fill
+```
+
+
+
+## TODO
+
+- [ ] TOC
+- [ ] pagination
 
 ## License
 
