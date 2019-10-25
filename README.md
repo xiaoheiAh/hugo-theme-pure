@@ -2,6 +2,8 @@
 
 A port of [hexo-theme-pure](https://github.com/cofess/hexo-theme-pure) for Hugo. Powerful & Clean. [Iconfont](http://blog.cofess.com/hexo-theme-pure/iconfont/demo_fontclass.html)
 
+[简体中文](README-ZH.md)
+
 ## Screenshots
 
 ![](images/screenshot.png)
