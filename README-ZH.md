@@ -11,7 +11,7 @@
 
 ## 预览
 
-![](https://raw.githubusercontent.com/xiaoheiAh/hugo-theme-pure/master/images/screenshot.png)
+![](https://raw.githubusercontent.com/xiaoheiAh/hugo-theme-pure/master/images/grey.png)
 
 ![](https://raw.githubusercontent.com/xiaoheiAh/hugo-theme-pure/master/images/black.png)
 
