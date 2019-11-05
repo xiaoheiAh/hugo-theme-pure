@@ -6,15 +6,15 @@ A port of [hexo-theme-pure](https://github.com/cofess/hexo-theme-pure) for Hugo.
 
 ## Screenshots
 
-![](images/screenshot.png)
+![](https://raw.githubusercontent.com/xiaoheiAh/hugo-theme-pure/master/images/screenshot.png)
 
-![](images/black.png)
+![](https://raw.githubusercontent.com/xiaoheiAh/hugo-theme-pure/master/images/black.png)
 
-![](images/blue.png)
+![](https://raw.githubusercontent.com/xiaoheiAh/hugo-theme-pure/master/images/blue.png)
 
-![](images/green.png)
+![](https://raw.githubusercontent.com/xiaoheiAh/hugo-theme-pure/master/images/green.png)
 
-![](images/purple.png)
+![](https://raw.githubusercontent.com/xiaoheiAh/hugo-theme-pure/master/images/purple.png)
 
 ## Installation
 
