@@ -83,7 +83,7 @@ params:
     avatar: avatar.png
     gravatar: # Gravatar email address, if you enable Gravatar, your avatar config will be overriden
     author: xiaoheiAh
-    author_title: A Developer
+    author_title: author title
     author_description: Good Good Study, Day Day Up~
     location: Shanghai, China
     follow: https://github.com/xiaoheiAh
@@ -116,11 +116,9 @@ params:
     mobile_sites: weibo,qq,qzone # 移动端显示的分享图标
 
   # Comment
-  # Gitment
-  # Introduction: https://imsun.net/posts/gitment-introduction/
   comment:
-    type: gitalk # 启用哪种评论系统
-    disqus: xiaoheiah # enter disqus shortname here
+    type:  # type disqus/gitalk/valine 启用哪种评论系统
+    disqus: your_disqus_name # enter disqus shortname here
     gitalk: # gitalk. https://gitalk.github.io/
       owner: #必须. GitHub repository 所有者，可以是个人或者组织。
       admin: #必须. GitHub repository 的所有者和合作者 (对这个 repository 有写权限的用户)。
@@ -140,7 +138,7 @@ params:
 
   # Donate
   donate:
-    enable: true
+    enable: false
     # 微信打赏
     wechatpay:
       qrcode: donate/wechatpayimg.png
@@ -153,7 +151,7 @@ params:
   # PV
   pv:
     busuanzi:
-      enable: true # 不蒜子统计
+      enable: false # 不蒜子统计
     leancloud:
       enable: false # leancloud统计
       app_id: # leancloud <AppID>
@@ -163,14 +161,12 @@ params:
   postCount:
     enable: true
     wordcount: true # 文章字数统计
-    min2read: true # 阅读时长预计
+    min2read: true # read time 阅读时长预计
 
   # config
   config:
-    skin: # 主题颜色 theme-black theme-blue theme-green theme-purple
+    skin: # theme color default is white. other type [theme-black,theme-blue,theme-green,theme-purple]
     layout: main-center # 布局方式 main-left main-center main-right
-    toc: true # 是否开启文章章节目录导航
-    menu_highlight: true # 是否开启当前菜单高亮显示
     excerpt_link: Read More
 
   # Sidebar
@@ -180,7 +176,7 @@ params:
   search:
     enable: true # enable search. thanks for https://raw.githubusercontent.com/ppoffice/hexo-theme-icarus/master/source/js/insight.js
 
-  # Sidebar
+  # Sidebar only the following widgets. you can remove any you don't like it.
   widgets:
     - board
     - category

@@ -1,4 +1,4 @@
-<script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 <script>
    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 </script>
@@ -7,8 +7,8 @@
 <script type="text/javascript"
    src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<script type="text/javascript" src="{{ "js/application.js" | relURL }}"></script>
-<script type="text/javascript" src="{{ "js/plugin.js" | relURL }}"></script>
+<script type="text/javascript" src="{{ "js/application.js" | absURL }}"></script>
+<script type="text/javascript" src="{{ "js/plugin.js" | absURL }}"></script>
 <script>
       (function (window) {
           var INSIGHT_CONFIG = {
@@ -20,12 +20,12 @@
                   UNTITLED: '{{ T "insight_untitled"}}',
               },
               ROOT_URL: '{{ .Site.BaseURL }}',
-              CONTENT_URL: '{{ "/searchindex.json" | relURL }} ',
+              CONTENT_URL: '{{ "/searchindex.json" | absURL }} ',
           };
           window.INSIGHT_CONFIG = INSIGHT_CONFIG;
       })(window);
       </script>
-<script type="text/javascript" src="{{ "js/insight.js" | relURL }}"></script>
+<script type="text/javascript" src="{{ "js/insight.js" | absURL }}"></script>
 {{- if eq .Type "repository" }}
 {{- partial "_script/repository.html" . }}
 {{- end}}
