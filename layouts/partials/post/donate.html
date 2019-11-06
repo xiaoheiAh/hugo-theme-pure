@@ -14,7 +14,7 @@
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane fade active in" id="alipay">
                             <div class="donate-payimg">
-                                <img src="{{- $donate.alipay.qrcode | relURL }}"
+                                <img src="{{- $donate.alipay.qrcode | absURL }}"
                                     alt="{{ T "donate_qrcode_alt" }}" title="{{ T "donate_qrcode_title" }}" />
                             </div>
                             <p class="text-muted mv">{{ T "donate_tip" }}</p>
@@ -22,7 +22,7 @@
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="wechatpay">
                             <div class="donate-payimg">
-                                <img src="{{- $donate.wechatpay.qrcode | relURL }}"
+                                <img src="{{- $donate.wechatpay.qrcode | absURL }}"
                                     alt="{{ T "donate_qrcode_alt" }}" title="{{ T "donate_qrcode_title" }}" />
                             </div>
                             <p class="text-muted mv">{{ T "donate_tip" }}</p>
