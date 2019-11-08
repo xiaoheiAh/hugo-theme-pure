@@ -168,6 +168,7 @@ params:
     skin: # theme color default is white. other type [theme-black,theme-blue,theme-green,theme-purple]
     layout: main-center # 布局方式 main-left main-center main-right
     excerpt_link: Read More
+    toc: true
 
   # Sidebar
   sidebar: right

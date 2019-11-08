@@ -4,6 +4,12 @@ A port of [hexo-theme-pure](https://github.com/cofess/hexo-theme-pure) for Hugo.
 
 [简体中文](README-ZH.md)
 
+## Contribute
+
+Since I mainly do back-end development, I don’t know anything about the front-end (`CSS` or something). It’s a hard-hitting transplant. Some of the features that I like very much don’t know how to add it. It’s a waste of time to study too long, so If you have a very good `feature` and hope to put it up, it would be best.
+
+The file structure of `repo` is roughly referred to [hexo-theme-pure](https://github.com/cofess/hexo-theme-pure) and should be clearer. It can be modified according to your needs. If you look at the file structure a little, you will find that the function has not been implemented.
+
 ## Screenshots
 
 ![](https://raw.githubusercontent.com/xiaoheiAh/hugo-theme-pure/master/images/grey.png)
@@ -63,11 +69,21 @@ menuIcons:
   about: icon-cup-fill
 ```
 
+## TOC
+
+enable toc 
+
+```yml
+  # config
+  config:
+    toc: true
+```
+
 
 
 ## TODO
 
-- [ ] TOC
+- [x] TOC
 - [ ] pagination
 
 ## License
