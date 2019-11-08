@@ -2,6 +2,12 @@
 
 [hexo-theme-pure](https://github.com/cofess/hexo-theme-pure) 移植版本. 简单,功能丰富使用.
 
+## 参与
+
+由于主要做后端开发,其实对前端(`CSS` 啥的)一窍不通,完全是硬着脑阔移植. 有些很喜欢的特性,并不知道怎么加,研究太久就会很浪费时间,所以如果你有很不错的 `feature` 希望能放上来,那是最好不过了.
+
+`repo` 的文件结构大致是参考 [hexo-theme-pure](https://github.com/cofess/hexo-theme-pure) 的,应该是比较清晰了. 可以根据你的需求针对性的修改.如果稍微看一下文件结构的话你会发现还有听过功能没有实现的.
+
 ## 特性
 
 1. 多语言支持

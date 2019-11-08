@@ -6,7 +6,14 @@
 <script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/rust.min.js"></script>
 <script type="text/javascript"
    src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
+<script>
+hljs.configure({
+  tabReplace: '    ', // 4 spaces
+  classPrefix: ''     // don't append class prefix
+                      // … other options aren't changed
+})
+hljs.initHighlightingOnLoad();
+</script>
 <script type="text/javascript" src="{{ "js/application.js" | absURL }}"></script>
 <script type="text/javascript" src="{{ "js/plugin.js" | absURL }}"></script>
 <script>
