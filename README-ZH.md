@@ -94,6 +94,16 @@ profile:
 	avatar: avatar.png
 ```
 
+## TOC
+
+开启 toc
+
+```yml
+  # config
+  config:
+    toc: true
+```
+
 ## 捐赠
 
 支持支付宝,微信付款码,需要先将二维码截出来并存放在 `static` 目录下.目前默认是在 `static/donate`. 需要的配置如下:

@@ -69,11 +69,21 @@ menuIcons:
   about: icon-cup-fill
 ```
 
+## TOC
+
+enable toc 
+
+```yml
+  # config
+  config:
+    toc: true
+```
+
 
 
 ## TODO
 
-- [ ] TOC
+- [x] TOC
 - [ ] pagination
 
 ## License
