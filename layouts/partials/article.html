@@ -22,9 +22,11 @@
     <div class="article-entry marked-body" itemprop="articleBody">
       {{ .Content }}
     </div>
+    {{- with .Site.Params.enablePostCopyright }}
     <div class="article-footer">
       {{- partial "post/copyright.html" . }}
     </div>
+    {{- end }}
   </article>
   {{- partial "post/comment.html" . }}
 </div>
