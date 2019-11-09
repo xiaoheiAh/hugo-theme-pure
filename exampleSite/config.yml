@@ -65,6 +65,7 @@ menu:
 params:
   since: 2017
   dateFormatToUse: "2006-01-02"
+  enablePostCopyright: false
   # Enable/Disable menu icons
   menuIcons:
     enable: true  # 是否启用导航菜单图标
@@ -106,7 +107,6 @@ params:
     title: Hugo # 页面title
     favicon: favicon.ico
     board: <p>enjoy~</p> # 公告牌
-    copyright: true # 底部版权信息
 
   # Share
   # weibo,qq,qzone,wechat,tencent,douban,diandian,facebook,twitter,google,linkedin
