@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        RabbitMQ-入门及高可用集群部署 - 赵小黑的博客
+      </title>
+    <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  
+  <meta name="theme-color" content="#000000" />
+  
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <meta name="description" content="学习rabbitmq如何使用,并利用docker完成rabbitmq高可用集群部署" />
+  <meta name="generator" content="Hugo 0.58.0 with theme pure" />
+  <title>RabbitMQ-入门及高可用集群部署 - 赵小黑的博客</title>
+  
+
+  <link rel="stylesheet" href="https://xiaohei.im/css/style.css">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css"> 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <meta property="og:title" content="RabbitMQ-入门及高可用集群部署" />
+<meta property="og:description" content="学习rabbitmq如何使用,并利用docker完成rabbitmq高可用集群部署" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiaohei.im/2019/09/rabbitmq-guide-and-ha-cluster/" />
+<meta property="article:published_time" content="2019-09-04T14:42:13+08:00" />
+<meta property="article:modified_time" content="2019-09-04T14:42:13+08:00" />
+<meta itemprop="name" content="RabbitMQ-入门及高可用集群部署">
+<meta itemprop="description" content="学习rabbitmq如何使用,并利用docker完成rabbitmq高可用集群部署">
+
+
+<meta itemprop="datePublished" content="2019-09-04T14:42:13&#43;08:00" />
+<meta itemprop="dateModified" content="2019-09-04T14:42:13&#43;08:00" />
+<meta itemprop="wordCount" content="924">
+
+
+
+<meta itemprop="keywords" content="rabbitmq," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="RabbitMQ-入门及高可用集群部署"/>
+<meta name="twitter:description" content="学习rabbitmq如何使用,并利用docker完成rabbitmq高可用集群部署"/>
+
+  <!--[if lte IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+    <![endif]-->
+
+  <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+  </head>
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/xiaoheiAh" target="_blank">
+            <img class="img-circle img-rotate" src="https://xiaohei.im/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">赵小黑</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">Java Developer</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shanghai, China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav  menu-highlight">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>自用科学上网节点推荐(便宜又好用)<a href="https://tianlinzhao.com/aff.php?aff=4969" target="_blank" style="background-color:#FFFF00">点这里跳转</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/corejava/" class="category-list-link">corejava</a><span class="category-list-count">7</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/hystrix/" class="category-list-link">hystrix</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/leetcode/" class="category-list-link">leetcode</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">5</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="category-list-link">消息队列</a><span class="category-list-count">4</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/collections/" class="tag-list-link">collections</a><span
+                    class="tag-list-count">7</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/hugo/" class="tag-list-link">hugo</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/hystrix/" class="tag-list-link">hystrix</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rabbitmq/" class="tag-list-link">rabbitmq</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">5</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rust/" class="tag-list-link">rust</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rxjava/" class="tag-list-link">rxjava</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="tag-list-link">分布式锁</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="tag-list-link">响应式编程</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="tag-list-link">数据结构</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+  </div>
+</aside>
+
+    
+    
+  <aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+    <div class="slimContent">
+      <nav id="toc" class="article-toc">
+        <h3 class="toc-title">文章目录</h3>
+        <div class="toc-content always-active">
+        </div>
+      </nav>
+    </div>
+  </aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2019/09/rabbitmq-guide-and-ha-cluster/"
+    >RabbitMQ-入门及高可用集群部署</a
+  >
+</h1>
+
+      <div class="article-meta">
+        <span class="article-date">
+  <i class="icon icon-calendar-check"></i>
+<a href="https://xiaohei.im/2019/09/rabbitmq-guide-and-ha-cluster/" class="article-date">
+  <time datetime="2019-09-04 14:42:13 &#43;0800 CST" itemprop="datePublished">2019-09-04</time>
+</a>
+</span><span class="article-category">
+  <i class="icon icon-folder"></i>
+  <a class="article-category-link" href="/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"> 消息队列 </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+    <a class="article-tag-link" href="/tags/rabbitmq/"> rabbitmq </a>
+  </span>
+
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/09/rabbitmq-guide-and-ha-cluster/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计:924字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长:2分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      <blockquote>
+<p>rabbitmq version: 3.7.15</p>
+</blockquote>
+
+<h2 id="常用操作">常用操作</h2>
+
+<ol>
+<li><code>sbin/rabbitmq-server</code> 启动</li>
+<li><code>sbin/rabbitmq-server -detached</code> 后台启动</li>
+<li><code>sbin/rabbitmqctl shutdown/stop</code> 关闭/停止server</li>
+<li><code>sbin/rabbitmqctl status</code> 检查server状态</li>
+<li><code>sbin/rabbitmq-plugins enable rabbitmq_management</code> 开启控制台</li>
+</ol>
+
+<h2 id="端口">端口</h2>
+
+<ol>
+<li>server启动后默认监听<code>5672</code></li>
+<li>控制台默认监听<code>15672</code></li>
+</ol>
+
+<h2 id="构建集群">构建集群</h2>
+
+<h3 id="构建集群的方式">构建集群的方式</h3>
+
+<ol>
+<li>在<code>config</code>文件中声明节点信息</li>
+<li>使用<code>DNS</code>发现</li>
+<li>使用<code>AWS</code>实例发现(<strong>通过插件</strong>)</li>
+<li>使用<code>kubernetes</code>发现(<strong>通过插件</strong>)</li>
+<li>使用<code>consul</code>发现(<strong>通过插件</strong>)</li>
+<li>使用<code>etcd</code>发现(<strong>通过插件</strong>)</li>
+<li>手动执行<code>rabbitmqctl</code></li>
+</ol>
+
+<h3 id="节点名称">节点名称</h3>
+
+<ul>
+<li><p>节点名称是节点的身份识别证明.两部分组成: <code>prefix</code> &amp; <code>hostname</code>.例如 <code>rabbit@node1.messaging.svc.local</code>的<code>prefix</code>是 <strong>rabbit</strong> ,<code>hostname</code>是 <strong>node1.messaging.svc.local</strong>.</p></li>
+
+<li><p>集群中名称必须 <strong>唯一</strong>. 如果使用同一个<code>hostname</code> 那么<code>prefix</code>要保持不一致</p></li>
+
+<li><p>集群中,节点通过节点名称互相进行识别和通信.所以<code>hostname</code>必须能解析.<code>CLI Tools</code>也要使用节点名称.</p></li>
+</ul>
+
+<h3 id="单机集群构建">单机集群构建</h3>
+
+<p>单机运行多节点需要保证:</p>
+
+<ul>
+<li>不同节点名称 <code>RABBITMQ_NODENAME</code></li>
+<li>不同存储路径 <code>RABBITMQ_DIST_PORT</code></li>
+<li>不同日志路径 <code>RABBITMQ_LOG_BASE</code></li>
+<li>不同端口,包括插件使用的 <code>RABBITMQ_NODE_PORT</code></li>
+</ul>
+
+<h4 id="rabbitmqctl-构建集群">rabbitmqctl 构建集群</h4>
+
+<pre><code class="language-bash">RABBITMQ_NODE_PORT=5672 RABBITMQ_NODENAME=rabbit rabbitmq-server -detached
+RABBITMQ_NODE_PORT=5673 RABBITMQ_NODENAME=hare rabbitmq-server -detached
+# 重置正在运行的节点
+rabbitmqctl -n hare stop_app
+# 加入集群
+rabbitmqctl -n hare join_cluster rabbit@`hostname -s`
+rabbitmqctl -n hare start_app
+</code></pre>
+
+<p>每个节点若配置有其他的插件.那么每个节点插件监听的端口不能冲突,例如添加控制台</p>
+
+<pre><code class="language-bash"># 首先开启控制台插件
+./rabbitmq-plugins enable  rabbitmq_management
+RABBITMQ_NODE_PORT=5672 RABBITMQ_SERVER_START_ARGS=&quot;-rabbitmq_management listener [{port,15672}]&quot; RABBITMQ_NODENAME=rabbit ./rabbitmq-server -detached
+RABBITMQ_NODE_PORT=5673 RABBITMQ_SERVER_START_ARGS=&quot;-rabbitmq_management listener [{port,15673}]&quot; RABBITMQ_NODENAME=hare ./rabbitmq-server -detached
+
+# 加入rabbit节点生成集群
+rabbitmqctl -n hare stop_app
+# 加入集群
+rabbitmqctl -n hare join_cluster rabbit@`hostname -s`
+rabbitmqctl -n hare start_app
+
+</code></pre>
+
+<p>以上就建了带控制台的两个节点.</p>
+
+<h4 id="遇到的问题">遇到的问题</h4>
+
+<ol>
+<li>添加节点进集群时,报错</li>
+</ol>
+
+<pre><code class="language-bash">./rabbitmqctl -n rabbit2 join_cluster rabbit@`hostname -s`
+
+Clustering node rabbit2@localhost with rabbit@localhost
+Error:
+{:inconsistent_cluster, 'Node rabbit@localhost thinks it\'s clustered 	with node rabbit2@localhost, but rabbit2@localhost disagrees'}
+</code></pre>
+
+<p>集群残留的<code>cluster</code>信息导致认证失败.删除<code>${RABBIT_MQ_HOME}/var/lib/rabbitmq/mnesia</code>文件夹.再<code>reset</code>节点</p>
+
+<ol start="2">
+<li>建集群报错</li>
+</ol>
+
+<pre><code class="language-bash">Clustering node rabbit2@localhost with rabbit@localhost
+Error:
+{:corrupt_or_missing_cluster_files, {:error, :enoent}, {:error, :enoent}}
+</code></pre>
+
+<p>同上</p>
+
+<ol start="3">
+<li>启动第三个节点时爆端口占用,该端口是第一个节点的控制台端口<code>15672</code>.<strong>没有解决</strong></li>
+</ol>
+
+<pre><code class="language-bash">2019-09-05 15:35:42.749 [error] &lt;0.555.0&gt; Failed to start Ranch listener rabbit_web_dispatch_sup_15672 in ranch_tcp:listen([{cacerts,'...'},{key,'...'},{cert,'...'},{port,15672}]) for reason eaddrinuse (address already in use)
+</code></pre>
+
+<h2 id="使用案例">使用案例</h2>
+
+<h4 id="topic-exchange">Topic Exchange</h4>
+
+<p><code>topic</code>类型的<code>exchange</code> ,<code>routing key</code> 是按一定规则来的,通过<code>.</code>连接,类似于正则.有两种符号:</p>
+
+<ul>
+<li><code>*</code> 代表一个单词</li>
+<li><code>#</code> 代表0或多个单词</li>
+</ul>
+
+<p>如果 单单只有<code>#</code>号, 那么<code>topic exchange</code>就像<code>fanout exchange</code>,如果没有使用<code>*</code>和<code>#</code>,那就是<code>direct exchange</code>了.</p>
+
+<h2 id="参考">参考</h2>
+
+<ol>
+<li><a href="https://hub.docker.com/_/rabbitmq/">docker hub rabbit mq 镜像</a></li>
+</ol>
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://xiaohei.im/2019/09/amqp-0-9-1-model-explained/" title="AMQP消息模型"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://xiaohei.im/2019/09/rabbitmq-msg-distribution/"
+                    title="RabbitMQ-消息分发机制"><span>下一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        
+        <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal"
+            data-target="#donateModal"><span>赏</span></button>
+        
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content donate">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <div class="modal-body">
+                <div class="donate-box">
+                    <div class="donate-head">
+                        <p>感谢您的支持,我会继续努力的!</p>
+                    </div>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/donate/alipayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦~</p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/donate/wechatpayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+                        </div>
+                    </div>
+                    <div class="donate-footer">
+                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay"
+                                    aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+                            </li>
+                            <li role="presentation" class="">
+                                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab"
+                                    aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i>
+                                    微信支付</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/xiaoheiAh" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://xiaohei.im/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2017  -
+    2019
+    <div class="publishby">
+        Theme by <a href="https://github.com/xiaoheiAh" target="_blank"> xiaoheiAh </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+   window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/rust.min.js"></script>
+<script type="text/javascript"
+   src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script>
+hljs.configure({
+  tabReplace: '    ', 
+  classPrefix: ''     
+                      
+})
+hljs.initHighlightingOnLoad();
+</script>
+<script type="text/javascript" src="https://xiaohei.im/js/application.js"></script>
+<script type="text/javascript" src="https://xiaohei.im/js/plugin.js"></script>
+<script>
+      (function (window) {
+          var INSIGHT_CONFIG = {
+              TRANSLATION: {
+                  POSTS: '文章',
+                  PAGES: '页面',
+                  CATEGORIES: '分类',
+                  TAGS: '标签',
+                  UNTITLED: '(未命名)',
+              },
+              ROOT_URL: 'https:\/\/xiaohei.im\/',
+              CONTENT_URL: 'https:\/\/xiaohei.im\/searchindex.json ',
+          };
+          window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+      })(window);
+      </script>
+<script type="text/javascript" src="https://xiaohei.im/js/insight.js"></script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: 'e38fc798c72a7e4e1386',
+        clientSecret: 'e151aa3b7b98d3cfaa1f096b88fdd7897e2c8007',
+        repo: 'xiaoheiAh.github.io',
+        owner: 'xiaoheiAh',
+        admin: ['xiaoheiAh'],
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('comments');
+</script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98254666-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

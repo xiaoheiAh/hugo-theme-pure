@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        Redis - 数据结构 - 赵小黑的博客
+      </title>
+    <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  
+  <meta name="theme-color" content="#000000" />
+  
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <meta name="description" content="系统学习 redis 相关的知识，从数据结构开始～
+" />
+  <meta name="generator" content="Hugo 0.58.0 with theme pure" />
+  <title>Redis - 数据结构 - 赵小黑的博客</title>
+  
+
+  <link rel="stylesheet" href="https://xiaohei.im/css/style.css">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css"> 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <meta property="og:title" content="Redis - 数据结构" />
+<meta property="og:description" content="系统学习 redis 相关的知识，从数据结构开始～" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiaohei.im/2019/10/data-structure/" />
+<meta property="article:published_time" content="2019-10-24T09:59:11+08:00" />
+<meta property="article:modified_time" content="2019-10-24T09:59:11+08:00" />
+<meta itemprop="name" content="Redis - 数据结构">
+<meta itemprop="description" content="系统学习 redis 相关的知识，从数据结构开始～">
+
+
+<meta itemprop="datePublished" content="2019-10-24T09:59:11&#43;08:00" />
+<meta itemprop="dateModified" content="2019-10-24T09:59:11&#43;08:00" />
+<meta itemprop="wordCount" content="6657">
+
+
+
+<meta itemprop="keywords" content="redis,数据结构," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Redis - 数据结构"/>
+<meta name="twitter:description" content="系统学习 redis 相关的知识，从数据结构开始～"/>
+
+  <!--[if lte IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+    <![endif]-->
+
+  <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+  </head>
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/xiaoheiAh" target="_blank">
+            <img class="img-circle img-rotate" src="https://xiaohei.im/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">赵小黑</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">Java Developer</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shanghai, China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav  menu-highlight">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>自用科学上网节点推荐(便宜又好用)<a href="https://tianlinzhao.com/aff.php?aff=4969" target="_blank" style="background-color:#FFFF00">点这里跳转</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/corejava/" class="category-list-link">corejava</a><span class="category-list-count">7</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/hystrix/" class="category-list-link">hystrix</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/leetcode/" class="category-list-link">leetcode</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">5</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="category-list-link">消息队列</a><span class="category-list-count">4</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/collections/" class="tag-list-link">collections</a><span
+                    class="tag-list-count">7</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/hugo/" class="tag-list-link">hugo</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/hystrix/" class="tag-list-link">hystrix</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rabbitmq/" class="tag-list-link">rabbitmq</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">5</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rust/" class="tag-list-link">rust</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rxjava/" class="tag-list-link">rxjava</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="tag-list-link">分布式锁</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="tag-list-link">响应式编程</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="tag-list-link">数据结构</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+  </div>
+</aside>
+
+    
+    
+  <aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+    <div class="slimContent">
+      <nav id="toc" class="article-toc">
+        <h3 class="toc-title">文章目录</h3>
+        <div class="toc-content always-active"><nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#string-字符串">String 字符串</a>
+<ul>
+<li><a href="#常用命令">常用命令</a></li>
+<li><a href="#结构">结构</a></li>
+<li><a href="#字符串存储">字符串存储</a>
+<ul>
+<li><a href="#why">WHY?</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#list-列表">List 列表</a>
+<ul>
+<li><a href="#常用命令-1">常用命令</a></li>
+<li><a href="#列表的数据结构">列表的数据结构</a>
+<ul>
+<li><a href="#ziplist-压缩列表">ziplist 压缩列表</a>
+<ul>
+<li><a href="#encoding-编码类型">encoding 编码类型</a></li>
+<li><a href="#增加元素">增加元素</a></li>
+<li><a href="#级联更新">级联更新</a></li>
+</ul></li>
+<li><a href="#quicklist">quicklist</a>
+<ul>
+<li><a href="#一张图展示结构">一张图展示结构</a></li>
+<li><a href="#压缩深度">压缩深度</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><a href="#set-集合">Set 集合</a>
+<ul>
+<li><a href="#常用命令-2">常用命令</a></li>
+</ul></li>
+<li><a href="#hash-哈希">Hash 哈希</a>
+<ul>
+<li><a href="#常用命令-3">常用命令</a></li>
+<li><a href="#字典">字典</a>
+<ul>
+<li><a href="#struct">struct</a></li>
+<li><a href="#一张图来表示">一张图来表示</a></li>
+<li><a href="#何时扩容">何时扩容?</a></li>
+<li><a href="#何时缩容">何时缩容?</a></li>
+<li><a href="#渐进式-rehash">渐进式 rehash</a>
+<ul>
+<li><a href="#增删改查辅助rehash">增删改查辅助rehash</a></li>
+<li><a href="#后台任务rehash">后台任务rehash</a></li>
+</ul></li>
+<li><a href="#渐进式rehash弊端">渐进式rehash弊端</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#zset-有序集合">Zset 有序集合</a>
+<ul>
+<li><a href="#常用命令-4">常用命令</a></li>
+<li><a href="#数据结构">数据结构</a>
+<ul>
+<li><a href="#什么是跳跃列表">什么是跳跃列表?</a></li>
+<li><a href="#struct-1">struct</a></li>
+<li><a href="#redis中跳表的优化">redis中跳表的优化</a></li>
+<li><a href="#一次查找的过程">一次查找的过程</a></li>
+<li><a href="#redis中level是如何生成的">redis中level是如何生成的?</a></li>
+<li><a href="#为什么使用跳表而不是红黑树或者哈希表">为什么使用跳表而不是红黑树或者哈希表?</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#参考">参考</a></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+      </nav>
+    </div>
+  </aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2019/10/data-structure/"
+    >Redis - 数据结构</a
+  >
+</h1>
+
+      <div class="article-meta">
+        <span class="article-date">
+  <i class="icon icon-calendar-check"></i>
+<a href="https://xiaohei.im/2019/10/data-structure/" class="article-date">
+  <time datetime="2019-10-24 09:59:11 &#43;0800 CST" itemprop="datePublished">2019-10-24</time>
+</a>
+</span><span class="article-category">
+  <i class="icon icon-folder"></i>
+  <a class="article-category-link" href="/categories/redis/"> redis </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+    <a class="article-tag-link" href="/tags/redis/"> redis </a>
+    <a class="article-tag-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"> 数据结构 </a>
+  </span>
+
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/10/data-structure/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计:6657字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长:14分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      <p>系统学习 redis 相关的知识，从数据结构开始～</p>
+
+<h2 id="string-字符串">String 字符串</h2>
+
+<p>Redis 的字符串是 <strong>动态字符串</strong>, 长度可变，自动扩容。利用预分配空间方式减少内存的分配。默认分配 1M 大小的内存。扩容时加倍现有空间，最大占用为 <code>512M</code>.</p>
+
+<h3 id="常用命令">常用命令</h3>
+
+<p><a href="https://redis.io/commands/set">SET</a>,<a href="https://redis.io/commands/setnx">SETNX</a>&hellip;</p>
+
+<h3 id="结构">结构</h3>
+
+<pre><code class="language-c">struct SDS&lt;T&gt; {
+  T capacity; // 数组容量
+  T len; // 数组长度
+  byte flags; // 特殊标识位，不理睬它
+  byte [] content; // 数组内容
+}
+</code></pre>
+
+<p>Redis 中的字符串叫做 <code>Simple Dynamic String</code>, 上述 <code>struct</code> 是一个简化版，实际的代码中，redis 会根据 str 的不同长度，使用不同的 <code>SDS</code>, 有 <code>sdshdr8</code>, <code>sdshdr16</code>, <code>sdshdr32</code> 等等&hellip; 但结构体都是如上的类型.</p>
+
+<p><code>capacity</code> 存储数组的长度，<code>len</code> 表示数组的实际长度。需要注意的是: string 的字符串是以 <code>\0</code> 结尾的，这样可以便于调试打印，还可以直接使用 <code>glibc</code> 的字符串函数进行操作.</p>
+
+<h3 id="字符串存储">字符串存储</h3>
+
+<p>字符串有两种存储方式，长度很短时，使用 <code>emb</code> 形式存储，长度超过 <code>44</code> 时，使用 <code>raw</code> 形式存储.</p>
+
+<p>可以使用 <code>debug object {your_string}</code> 来查看存储形式</p>
+
+<pre><code class="language-bash">&gt; set codehole abcdefghijklmnopqrstuvwxyz012345678912345678
+OK
+&gt; debug object codehole
+Value at:0x7fec2de00370 refcount:1 encoding:embstr serializedlength:45 lru:5958906 lru_seconds_idle:1
+&gt; set codehole abcdefghijklmnopqrstuvwxyz0123456789123456789
+OK
+&gt; debug object codehole
+Value at:0x7fec2dd0b750 refcount:1 encoding:raw serializedlength:46 lru:5958911 lru_seconds_idle:1
+</code></pre>
+
+<h4 id="why">WHY?</h4>
+
+<p>首先需要解释 <code>RedisObject</code>, 所有 Redis 对象都有的结构体</p>
+
+<pre><code class="language-c">struct RedisObject {
+    int4 type; // 4bits
+    int4 encoding; // 4bits
+    int24 lru; // 24bits
+    int32 refcount; // 4bytes
+    void *ptr; // 8bytes，64-bit system
+} robj;
+</code></pre>
+
+<p>不同的对象具有不同的类型 <code>type (4bit)</code>，同一个类型的 type 会有不同的存储形式 <code>encoding (4bit)</code>，为了记录对象的 LRU 信息，使用了 24 个 bit 来记录 LRU 信息。每个对象都有个引用计数，当引用计数为零时，对象就会被销毁，内存被回收。<code>ptr</code> 指针将指向对象内容 (body) 的具体存储位置。这样一个 RedisObject 对象头需要占据 16 字节的存储空间。</p>
+
+<p>接着我们再看 SDS 结构体的大小，在字符串比较小时，SDS 对象头的大小是 <code>capacity+3</code>，至少是 3。意味着分配一个字符串的最小空间占用为 19 字节 (16+3)。</p>
+
+<p>一张图解释:</p>
+
+<p><img src="https://raw.githubusercontent.com/xiaoheiAh/imgs/master/20191028154142.png" alt="sds" /></p>
+
+<h2 id="list-列表">List 列表</h2>
+
+<p>Redis 的列表是用链表来实现的，插入删除 <code>O (1)</code>, 查找 <code>O (n)</code>, 列表弹出最后一个元素时，数据结构删除，内存回收.</p>
+
+<h3 id="常用命令-1">常用命令</h3>
+
+<p><a href="https://redis.io/commands/lpush">LPUSH</a>,<a href="https://redis.io/commands/lpop">LPOP</a>,<a href="https://redis.io/commands/rpush">RPUSH</a>,<a href="https://redis.io/commands/rpop">RPOP</a>,<a href="https://redis.io/commands/lrange">LRANGE</a>&hellip;</p>
+
+<h3 id="列表的数据结构">列表的数据结构</h3>
+
+<p>列表底层的存储结构并不是简简单单的一个链表～通过 <code>ziplist</code> 连接起来组成 <code>quicklist</code>.</p>
+
+<h4 id="ziplist-压缩列表">ziplist 压缩列表</h4>
+
+<p>在列表元素较少时，redis 会使用一块连续内存来进行存储，这个结构就是 <code>ziplist</code>.  所有的元素紧挨着存储.</p>
+
+<pre><code class="language-bash">&gt; zadd z_lang 1 java 2 rust 3 go
+(integer) 3
+&gt; debug object z_lang
+Value at:0x7fde1c466660 refcount:1 encoding:ziplist serializedlength:34 lru:11974320 lru_seconds_idle:11
+</code></pre>
+
+<p>可以看到上述输出 <code>encoding</code> 为 <code>ziplist</code>.</p>
+
+<pre><code class="language-c">struct ziplist&lt;T&gt; {
+    int32 zlbytes; // 整个压缩列表占用字节数
+    int32 zltail_offset; // 最后一个元素距离压缩列表起始位置的偏移量，用于快速定位到最后一个节点
+    int16 zllength; // 元素个数
+    T [] entries; // 元素内容列表，挨个挨个紧凑存储
+    int8 zlend; // 标志压缩列表的结束，值恒为 0xFF
+}
+</code></pre>
+
+<p><code>zltail_offset</code> 是为了支持双向遍历才设计的，可以快速定位到最后一个元素，然后倒着遍历.</p>
+
+<p><img src="https://raw.githubusercontent.com/xiaoheiAh/imgs/master/20191028174656.png" alt="ziplist结构" /></p>
+
+<p><code>entry</code> 会随着容纳的元素不同而结构不同.</p>
+
+<pre><code class="language-c">struct entry {
+    int&lt;var&gt; prevlen; // 前一个 entry 的字节长度
+    int&lt;var&gt; encoding; // 元素类型编码
+    optional byte [] content; // 元素内容
+}
+</code></pre>
+
+<p><code>prevlen</code> 表示前一个 entry 的字节长度，倒序遍历时，可以根据这个字段来推算前一个 entry 的位置。它是变长的整数，字符串长度小于 254 ( <code>0XFE</code> ) 时，使用一个字节表示，大于等于 254, 使用 5 个字节来表示。第一个字节是 254, 剩余四个字节表示字符串长度.</p>
+
+<p><img src="https://raw.githubusercontent.com/xiaoheiAh/imgs/master/20191028175143.png" alt="ziplist-entry" /></p>
+
+<h5 id="encoding-编码类型">encoding 编码类型</h5>
+
+<p><code>encoding</code> 存储编码类型信息，<code>ziplist</code> 通过其来决定 <code>content</code> 内容的形式。所以其设计是很复杂的.</p>
+
+<ol>
+<li><code>00xxxxxx</code> 最大长度位 63 的短字符串，后面的 6 个位存储字符串的位数，剩余的字节就是字符串的内容。</li>
+<li><code>01xxxxxx xxxxxxxx</code> 中等长度的字符串，后面 14 个位来表示字符串的长度，剩余的字节就是字符串的内容。</li>
+<li><code>10000000 aaaaaaaa bbbbbbbb cccccccc dddddddd</code> 特大字符串，需要使用额外 4 个字节来表示长度。第一个字节前缀是 <code>10</code>，剩余 6 位没有使用，统一置为零。后面跟着字符串内容。不过这样的大字符串是没有机会使用的，压缩列表通常只是用来存储小数据的。</li>
+<li><code>11000000</code> 表示 int16，后跟两个字节表示整数。</li>
+<li><code>11010000</code> 表示 int32，后跟四个字节表示整数。</li>
+<li><code>11100000</code> 表示 int64，后跟八个字节表示整数。</li>
+<li><code>11110000</code> 表示 int24，后跟三个字节表示整数。</li>
+<li><code>11111110</code> 表示 int8，后跟一个字节表示整数。</li>
+<li><code>11111111</code> 表示 ziplist 的结束，也就是 zlend 的值 0xFF。</li>
+<li><code>1111xxxx</code> 表示极小整数，xxxx 的范围只能是 (<code>0001~1101</code>), 也就是 <code>1~13</code>，因为 <code>0000、1110、1111</code> 都被占用了。读取到的 value 需要将 xxxx 减 1，也就是整数 <code>0~12</code> 就是最终的 value。</li>
+</ol>
+
+<h5 id="增加元素">增加元素</h5>
+
+<p><code>ziplist</code> 是连续存储的，没有多余空间，这意味着每次插入一个元素，就需要扩展内存。如果占用内存过大，重新分配内存和拷贝内存就会有很大的消耗。所以其缺点是不适合存储 <strong>大型字符串</strong>, 存储元素不宜 <strong>过多</strong>.</p>
+
+<h5 id="级联更新">级联更新</h5>
+
+<p>每一个 entry 都是有 <code>prevlen</code>, 而且时而为 1 字节存储，时而为 5 字节存储，取决于字符串的字节长度是否大于 <strong>254</strong>, 如果某次操作导致字节长度从 254 变为 256, 那么其下一个节点所存储的 <code>prevlen</code> 就要从 1 个字节变为 5 个字节来存储，如果下一个节点刚好因此超过了 254 的长度，那么下下个节点也要更新&hellip; 这就是级联更新了～</p>
+
+<h4 id="quicklist">quicklist</h4>
+
+<p>Redis 中 list 的存储结构就是 <code>quicklist</code>. 下面的 language 是一个记录编程语言的集合。可以看到 <code>encoding</code> 即为 <code>quicklist</code>.</p>
+
+<pre><code class="language-bash">&gt; debug object language
+Value at:0x7fde1c4665f0 refcount:1 encoding:quicklist serializedlength:29 lru:11974264 lru_seconds_idle:62740 ql_nodes:1 ql_avg_node:3.00 ql_ziplist_max:-2 ql_compressed:0 ql_uncompressed_size:27
+</code></pre>
+
+<p>Redis 的 <code>quicklist</code> 是一种基于 <code>ziplist</code> 实现的可压缩（<code>quicklistLZF</code>）的双向链表，结合了链表和 ziplist 的 <code>优点</code> 组成的。下面可以看下他的结构体.</p>
+
+<pre><code class="language-c">/* quicklist is a 40 byte struct (on 64-bit systems) describing a quicklist.
+ * 'count' is the number of total entries.
+ * 'len' is the number of quicklist nodes.
+ * 'compress' is: -1 if compression disabled, otherwise it's the number
+ *                of quicklistNodes to leave uncompressed at ends of quicklist.
+ * 'fill' is the user-requested (or default) fill factor. */
+/**
+ * quicklist 是一个 40byte (64 位系统) 的结构
+ */
+typedef struct quicklist {
+    quicklistNode *head;
+    quicklistNode *tail;
+    unsigned long count;        /* 元素总数 */
+    unsigned long len;          /* quicklistNode 的长度 */
+    int fill : 16;              /* ziplist 的最大长度 */
+    unsigned int compress : 16; /* 节点压缩深度 */
+} quicklist;
+
+typedef struct quicklistNode {
+    struct quicklistNode *prev;
+    struct quicklistNode *next;
+    unsigned char *zl; /* 没有压缩，指向 ziplist, 否则指向 quicklistLZF
+    unsigned int sz;   /* ziplist 字节总数 */
+    unsigned int count : 16;     /* ziplist 元素数量 */
+    unsigned int encoding : 2;   /* RAW==1 or LZF==2 */
+		...
+} quicklistNode;
+
+//LZF 无损压缩算法，压缩过的 ziplist
+typedef struct quicklistLZF {
+    // 未压缩之前的大小
+    unsigned int sz; /* LZF size in bytes*/
+    // 存放压缩过的 ziplist 数组
+    char compressed [];
+} quicklistLZF;
+</code></pre>
+
+<h5 id="一张图展示结构">一张图展示结构</h5>
+
+<p><img src="https://raw.githubusercontent.com/xiaoheiAh/imgs/master/20191029112957.png" alt="quicklist" /></p>
+
+<h5 id="压缩深度">压缩深度</h5>
+
+<p><code>quicklist</code> 默认的压缩深度是 0，也就是不压缩。压缩的实际深度由配置参数 <code>list-compress-depth</code> 决定。为了支持快速的 push/pop 操作，<code>quicklist</code> 的首尾两个 ziplist 不压缩，此时深度就是 1。如果深度为 2，就表示 quicklist 的首尾第一个 ziplist 以及首尾第二个 ziplist 都不压缩。</p>
+
+<h2 id="set-集合">Set 集合</h2>
+
+<p>Redis 的集合相当于 Java 语言里面的 HashSet，它内部的键值对是无序的唯一的。它的内部实现相当于一个特殊的字典，字典中所有的 value 都是一个值<code>NULL</code>。</p>
+
+<h3 id="常用命令-2">常用命令</h3>
+
+<p><a href="https://redis.io/commands/sadd">SADD</a>,<a href="https://redis.io/commands/smembers">SMEMBERS</a>,<a href="https://redis.io/commands/spop">SPOP</a>,<a href="https://redis.io/commands/sismember">SISMEMBER</a>,<a href="https://redis.io/commands/scard">SCARD</a>&hellip;</p>
+
+<h2 id="hash-哈希">Hash 哈希</h2>
+
+<p>Redis 的 Hash相当于Java 中的 HashMap, 数组 + 链表的二维结构.与 HashMap 不同的地方在于 <code>rehash</code> 方式不同, HashMap 中的 <code>rehash</code> 是阻塞式的, 需要一次性全部 <code>rehash</code>, 而 redis 为了性能考虑, 采用的是 <code>渐进式 rehash</code>.</p>
+
+<h3 id="常用命令-3">常用命令</h3>
+
+<p><a href="https://redis.io/commands/hset">HSET</a>,<a href="https://redis.io/commands/hget">HGET</a>,<a href="https://redis.io/commands/hmset">HMSET</a>,<a href="https://redis.io/commands/hlen">HLEN</a>&hellip;</p>
+
+<pre><code class="language-bash">&gt; hset books java &quot;think in java&quot;  # 命令行的字符串如果包含空格，要用引号括起来
+(integer) 1
+&gt; hset books golang &quot;concurrency in go&quot;
+(integer) 1
+&gt; hset books python &quot;python cookbook&quot;
+(integer) 1
+&gt; hgetall books  # entries()，key 和 value 间隔出现
+1) &quot;java&quot;
+2) &quot;think in java&quot;
+3) &quot;golang&quot;
+4) &quot;concurrency in go&quot;
+5) &quot;python&quot;
+6) &quot;python cookbook&quot;
+&gt; hlen books
+(integer) 3
+&gt; hget books java
+&quot;think in java&quot;
+&gt; hset books golang &quot;learning go programming&quot;  # 因为是更新操作，所以返回 0
+(integer) 0
+&gt; hget books golang
+&quot;learning go programming&quot;
+&gt; hmset books java &quot;effective java&quot; python &quot;learning python&quot; golang &quot;modern golang programming&quot;  # 批量 set
+OK
+</code></pre>
+
+<h3 id="字典">字典</h3>
+
+<p>Redis 的 Hash 是通过 <code>dict</code> 结构来实现的, 该结构的底层是由哈希表来实现.类似于 HashMap, 数组+链表, 超过负载因子所对应的阈值时,进行 <code>rehash</code>, 扩容. 在具体实现中,使用了渐进式hash的方式来避免 HashMap 这种阻塞式的 rehash, 将 rehash 的工作分摊到对字典的增删改查中.</p>
+
+<h4 id="struct">struct</h4>
+
+<pre><code class="language-c">typedef struct dictEntry {
+    void *key; //键
+    union {
+        void *val;  //值
+        uint64_t u64;
+        int64_t s64;
+        double d;
+    } v;
+    struct dictEntry *next; //指向下一节点,形成链表
+} dictEntry;
+
+/* This is our hash table structure. Every dictionary has two of this as we
+ * implement incremental rehashing, for the old to the new table. */
+typedef struct dictht {
+    dictEntry **table; // 哈希表数组,数组的每一项都是 distEntry 的头结点
+    unsigned long size; // 哈希表的大小,也是触发扩容的阈值
+    unsigned long sizemask; // 哈希表大小掩码,用于计算索引值,总是等于 size-1
+    unsigned long used; // 哈希表中实际保存的节点数量
+} dictht;
+
+typedef struct dict {
+    dictType *type; //属性是一个指向 dictType 结构的指针,每个 dictType 结构保存了一簇用于操作特定类型键值对的函数,Redis 会为用途不同的字典设置不同的类型特定函数
+    void *privdata; // 保存了需要传给那些类型特定函数的可选参数
+    dictht ht[2]; // 在字典内部,维护了两张哈希表. 一般情况下,字典只使用 ht[0] 哈希表,ht[1] 哈希表只会在对 ht[0] 哈希表进行 rehash 时使用
+    long rehashidx; // 记录 rehash 的状态, 没有进行 rehash 则为 -1
+    unsigned long iterators; /* number of iterators currently running */
+} dict;
+
+</code></pre>
+
+<h4 id="一张图来表示">一张图来表示</h4>
+
+<p><img src="https://raw.githubusercontent.com/xiaoheiAh/imgs/master/20191103120536.png" alt="图片来自美团技术博客" /></p>
+
+<h4 id="何时扩容">何时扩容?</h4>
+
+<p>找到<code>dictAddRow</code> 函数观察源码可以发现,会在 <code>_dictExpandIfNeeded</code> 函数中进行扩容的判断.</p>
+
+<pre><code class="language-c">/* Expand the hash table if needed */
+static int _dictExpandIfNeeded(dict *d)
+{
+    /* Incremental rehashing already in progress. Return. */
+  	// 正在渐进式扩容, 就返回 OK
+    if (dictIsRehashing(d)) return DICT_OK;
+
+    /* If the hash table is empty expand it to the initial size. */
+  	// 如果哈希表 ht[0] size 为 0 ,初始化, 说明 redis 是懒加载的,延长初始化策略
+    if (d-&gt;ht[0].size == 0) return dictExpand(d, DICT_HT_INITIAL_SIZE);
+
+    /* If we reached the 1:1 ratio, and we are allowed to resize the hash
+     * table (global setting) or we should avoid it but the ratio between
+     * elements/buckets is over the &quot;safe&quot; threshold, we resize doubling
+     * the number of buckets. */
+    /*
+     * 如果哈希表ht[0]中保存的key个数与哈希表大小的比例已经达到1:1，即保存的节点数已经大于哈希表大小
+     * 且redis服务当前允许执行rehash，或者保存的节点数与哈希表大小的比例超过了安全阈值（默认值为5）
+     * 则将哈希表大小扩容为原来的两倍
+     */
+    if (d-&gt;ht[0].used &gt;= d-&gt;ht[0].size &amp;&amp;
+        (dict_can_resize ||
+         d-&gt;ht[0].used/d-&gt;ht[0].size &gt; dict_force_resize_ratio))
+    {
+        return dictExpand(d, d-&gt;ht[0].used*2);
+    }
+    return DICT_OK;
+}
+</code></pre>
+
+<p>正常情况下，当 hash 表中元素的个数等于第一维数组的长度时，就会开始扩容，扩容的新数组是原数组大小的 2 倍。不过如果 Redis 正在做 bgsave，为了减少内存页的过多分离 (Copy On Write)，Redis 尽量不去扩容 (<code>dict_can_resize</code>)，但是如果 hash 表已经非常满了，元素的个数已经达到了第一维数组长度的 5 倍 (<code>dict_force_resize_ratio</code>)，说明 hash 表已经过于拥挤了，这个时候就会强制扩容。</p>
+
+<h4 id="何时缩容">何时缩容?</h4>
+
+<p>当哈希表的负载因子小于 0.1 时,自动缩容.这个操作会在 redis 的定时任务中来完成.函数为 <code>databasesCron</code>,该函数的作用是在后台慢慢的处理过期,<code>rehashing</code>, 缩容.</p>
+
+<p><strong>执行条件:</strong> 没有子进程执行aof重写或者生成RDB文件</p>
+
+<pre><code class="language-c">/* 遍历所有的redis数据库,尝试缩容 */
+for (j = 0; j &lt; dbs_per_call; j++) {
+  tryResizeHashTables(resize_db % server.dbnum);
+  resize_db++;
+}
+/* If the percentage of used slots in the HT reaches HASHTABLE_MIN_FILL
+ * we resize the hash table to save memory */
+void tryResizeHashTables(int dbid) {
+    if (htNeedsResize(server.db[dbid].dict))
+        dictResize(server.db[dbid].dict);
+    if (htNeedsResize(server.db[dbid].expires))
+        dictResize(server.db[dbid].expires);
+}
+/* Hash table parameters */
+#define HASHTABLE_MIN_FILL        10      /* Minimal hash table fill 10% */
+int htNeedsResize(dict *dict) {
+    long long size, used;
+
+    size = dictSlots(dict);
+    used = dictSize(dict);
+    return (size &gt; DICT_HT_INITIAL_SIZE &amp;&amp;
+            (used*100/size &lt; HASHTABLE_MIN_FILL));
+}
+/* Resize the table to the minimal size that contains all the elements,
+ * but with the invariant of a USED/BUCKETS ratio near to &lt;= 1 */
+int dictResize(dict *d)
+{
+    int minimal;
+
+    if (!dict_can_resize || dictIsRehashing(d)) return DICT_ERR;
+    minimal = d-&gt;ht[0].used;
+    if (minimal &lt; DICT_HT_INITIAL_SIZE)
+        minimal = DICT_HT_INITIAL_SIZE;
+    return dictExpand(d, minimal);
+}
+</code></pre>
+
+<p>从 <code>htNeedsResize</code>函数中可以看到,当哈希表保存的key数量与哈希表的大小的比例小于10%时需要缩容.最小容量为<code>DICT_HT_INITIAL_SIZE = 4</code>. <code>dictResize</code> 函数中,当正在执行 aof 重写或生成 rdb 时, <code>dict_can_resize</code> 会变为 0, 也就说明上面的 <strong>执行条件</strong>.</p>
+
+<h4 id="渐进式-rehash">渐进式 rehash</h4>
+
+<p>从上述源码中可以看出,所有的扩容或者创建都经过 <code>dictExpand</code> 函数.</p>
+
+<pre><code class="language-c">/* Expand or create the hash table */
+int dictExpand(dict *d, unsigned long size)
+{
+    /* the size is invalid if it is smaller than the number of
+     * elements already inside the hash table */
+    if (dictIsRehashing(d) || d-&gt;ht[0].used &gt; size)
+        return DICT_ERR;
+		// 计算新的哈希表大小,获得大于等于size的第一个2次方
+    dictht n; /* the new hash table */
+    unsigned long realsize = _dictNextPower(size);
+
+    /* Rehashing to the same table size is not useful. */
+    if (realsize == d-&gt;ht[0].size) return DICT_ERR;
+
+    /* Allocate the new hash table and initialize all pointers to NULL */
+    n.size = realsize;
+    n.sizemask = realsize-1;
+    n.table = zcalloc(realsize*sizeof(dictEntry*));
+    n.used = 0;
+
+    /* Is this the first initialization? If so it's not really a rehashing
+     * we just set the first hash table so that it can accept keys. */
+  	// 第一次初始化也会通过这里来完成创建
+    if (d-&gt;ht[0].table == NULL) {
+        d-&gt;ht[0] = n;
+        return DICT_OK;
+    }
+
+    /* Prepare a second hash table for incremental rehashing */
+  	// ht[1] 开始派上用场,扩容时是在 ht[1] 上操作, rehash 完毕后,在交换到 ht[0]
+    d-&gt;ht[1] = n;
+    d-&gt;rehashidx = 0;
+    return DICT_OK;
+}
+</code></pre>
+
+<p>从 <code>dictExpand</code> 这个函数可以发现做了这么几件事:</p>
+
+<ol>
+<li>校验是否可以执行 <code>rehash</code></li>
+<li>创建一个新的哈希表 <code>n</code>, 分配更大的内存</li>
+<li>将哈希表 <code>n</code> 复制给 <code>ht[1]</code>, 将 <code>rehashidx</code> 标志置为 0 ,意味着开启了渐进式rehash. 该值也标志渐进式rehash当前已经进行到了哪个hash槽.</li>
+</ol>
+
+<p>该函数没有将key重新 <code>rehash</code> 到新的 <code>slot</code> 上,而是交由增删改查的操作, 以及后台定时任务来处理.</p>
+
+<h5 id="增删改查辅助rehash">增删改查辅助rehash</h5>
+
+<p>看源码其实可以发现在所有增删改查的源码中,开头都会有一个判断,是否处于渐进式rehash中.</p>
+
+<pre><code class="language-c">dictEntry *dictAddRaw(dict *d, void *key, dictEntry **existing)
+{
+    long index;
+    dictEntry *entry;
+    dictht *ht;
+
+    if (dictIsRehashing(d)) _dictRehashStep(d);
+		...
+}
+// 进入 rehash 后是 &gt;=0的值
+#define dictIsRehashing(d) ((d)-&gt;rehashidx != -1)
+/*
+ * 此函数仅执行一步hash表的重散列，并且仅当没有安全迭代器绑定到哈希表时。
+ * 当我们在重新散列中有迭代器时，我们不能混淆打乱两个散列表的数据，否则某些元素可能被遗漏或重复遍历。
+ *
+ * 该函数被在字典中查找或更新等普通操作调用，以致字典中的数据能自动的从哈系表１迁移到哈系表２
+ */
+static void _dictRehashStep(dict *d) {
+    if (d-&gt;iterators == 0) dictRehash(d,1);
+}
+
+</code></pre>
+
+<h5 id="后台任务rehash">后台任务rehash</h5>
+
+<p>虽然redis实现了在读写操作时,辅助服务器进行渐进式rehash操作,但是如果服务器比较空闲,redis数据库将很长时间内都一直使用两个哈希表.所以在redis周期函数中,如果发现有字典正在进行渐进式rehash操作,则会花费<strong>1毫秒</strong>的时间,帮助一起进行渐进式rehash操作.</p>
+
+<p>还是上面缩容时使用的任务函数<code>databasesCron</code>.源码如下:</p>
+
+<pre><code class="language-c">/* Rehash */
+if (server.activerehashing) {
+  for (j = 0; j &lt; dbs_per_call; j++) {
+    int work_done = incrementallyRehash(rehash_db);
+    if (work_done) {
+      /* If the function did some work, stop here, we'll do
+                 * more at the next cron loop. */
+      break;
+    } else {
+      /* If this db didn't need rehash, we'll try the next one. */
+      rehash_db++;
+      rehash_db %= server.dbnum;
+    }
+  }
+}
+</code></pre>
+
+<h4 id="渐进式rehash弊端">渐进式rehash弊端</h4>
+
+<p>渐进式rehash避免了redis阻塞,可以说非常完美,但是由于在rehash时,需要分配一个新的hash表,在rehash期间,同时有两个hash表在使用,会使得redis内存使用量瞬间突增,在Redis 满容状态下由于Rehash会导致大量Key驱逐.</p>
+
+<h2 id="zset-有序集合">Zset 有序集合</h2>
+
+<p>首先 <code>zset</code> 是一个 <code>set</code> 结构,拥有 <code>set</code> 的所有特性,其次他可以给每一个 <code>value</code> 赋予一个 <code>score</code> 作为权重.内部实现用的跳表(<code>skiplist</code>)</p>
+
+<h3 id="常用命令-4">常用命令</h3>
+
+<p><a href="https://redis.io/commands/zadd">ZADD</a>,<a href="https://redis.io/commands/zrange">ZRANGE</a>,<a href="https://redis.io/commands/zrevrange">ZREVRANGE</a>,<a href="https://redis.io/commands/zscore">ZSCORE</a>,<a href="https://redis.io/commands/zcard">ZCARD</a>,<a href="https://redis.io/commands/zrank">ZRANK</a>&hellip;</p>
+
+<pre><code class="language-c">&gt; zadd books 9.0 &quot;think in java&quot;
+(integer) 1
+&gt; zadd books 8.9 &quot;java concurrency&quot;
+(integer) 1
+&gt; zadd books 8.6 &quot;java cookbook&quot;
+(integer) 1
+&gt; zrange books 0 -1  # 按 score 排序列出，参数区间为排名范围
+1) &quot;java cookbook&quot;
+2) &quot;java concurrency&quot;
+3) &quot;think in java&quot;
+&gt; zrevrange books 0 -1  # 按 score 逆序列出，参数区间为排名范围
+1) &quot;think in java&quot;
+2) &quot;java concurrency&quot;
+3) &quot;java cookbook&quot;
+&gt; zcard books  # 相当于 count()
+(integer) 3
+&gt; zscore books &quot;java concurrency&quot;  # 获取指定 value 的 score
+&quot;8.9000000000000004&quot;  # 内部 score 使用 double 类型进行存储，所以存在小数点精度问题
+&gt; zrank books &quot;java concurrency&quot;  # 排名
+(integer) 1
+&gt; zrangebyscore books 0 8.91  # 根据分值区间遍历 zset
+1) &quot;java cookbook&quot;
+2) &quot;java concurrency&quot;
+&gt; zrangebyscore books -inf 8.91 withscores # 根据分值区间 (-∞, 8.91] 遍历 zset，同时返回分值。inf 代表 infinite，无穷大的意思。
+1) &quot;java cookbook&quot;
+2) &quot;8.5999999999999996&quot;
+3) &quot;java concurrency&quot;
+4) &quot;8.9000000000000004&quot;
+&gt; zrem books &quot;java concurrency&quot;  # 删除 value
+(integer) 1
+&gt; zrange books 0 -1
+1) &quot;java cookbook&quot;
+2) &quot;think in java&quot;
+</code></pre>
+
+<h3 id="数据结构">数据结构</h3>
+
+<p>众所周知, <code>Zset</code> 是一个有序的set集合, <code>redis</code> 通过 <code>hash table</code> 来存储 value 和 score 的映射关系,可以达到 <code>O(1)</code>, 通过 score 排序或者说按照 score 范围来获取这个区间的 value, 则是通过 <strong>跳表</strong> 来实现的. <code>Zset</code> 可以达到 <code>O(log(N))</code> 的插入和读写.</p>
+
+<h4 id="什么是跳跃列表">什么是跳跃列表?</h4>
+
+<p><img src="https://raw.githubusercontent.com/xiaoheiAh/imgs/master/20191102201627.png" alt="skiplist" /></p>
+
+<p>如图,跳跃列表是指具有纵向高度的有序链表.跳表会随机的某提升些链表的高度,并将每一层的节点进行连接,相当于构建<code>多级索引</code>,这样在查找的时候,从最高层开始查,可以过滤掉一大部分的范围,有点类似于二分查找.跳表也是典型的<code>空间换时间</code>的方式.</p>
+
+<p>每一个 kv 块对应的结构如下面的代码中的<code>zslnode</code>结构,kv header 也是这个结构,只不过 value 字段是 null 值——无效的,score 是 <code>Double.MIN_VALUE</code>,用来垫底的。</p>
+
+<h4 id="struct-1">struct</h4>
+
+<pre><code class="language-c">struct zslnode {
+  string value;
+  double score;
+  zslnode*[] forwards;  // 多层连接指针
+  zslnode* backward;  // 回溯指针
+}
+
+struct zsl {
+  zslnode* header; // 跳跃列表头指针
+  int maxLevel; // 跳跃列表当前的最高层
+  map&lt;string, zslnode*&gt; ht; // hash 结构的所有键值对
+}
+</code></pre>
+
+<h4 id="redis中跳表的优化">redis中跳表的优化</h4>
+
+<ol>
+<li>允许 score 是重复的</li>
+<li>比较不仅是通过 key(即 score), 也还会比较 data</li>
+<li>最底层(<code>Level 1</code>)是有反向指针的,所以是一个双向链表,这样适用于从大到小的排序需求(<code>ZREVRANGE</code>)</li>
+</ol>
+
+<h4 id="一次查找的过程">一次查找的过程</h4>
+
+<p><img src="https://raw.githubusercontent.com/xiaoheiAh/imgs/master/20191102202313.png" alt="lookup-order" /></p>
+
+<h4 id="redis中level是如何生成的">redis中level是如何生成的?</h4>
+
+<pre><code class="language-c">/* Returns a random level for the new skiplist node we are going to create.
+ * The return value of this function is between 1 and ZSKIPLIST_MAXLEVEL
+ * (both inclusive), with a powerlaw-alike distribution where higher
+ * levels are less likely to be returned. */
+int zslRandomLevel(void) {
+    int level = 1;
+    while ((random()&amp;0xFFFF) &lt; (ZSKIPLIST_P * 0xFFFF))
+        level += 1;
+    return (level&lt;ZSKIPLIST_MAXLEVEL) ? level : ZSKIPLIST_MAXLEVEL; 
+}
+</code></pre>
+
+<p><code>ZSKIPLIST_MAXLEVEL</code> 最大值是 <code>64</code>, 也就是最多 64 层.<code>ZSKIPLIST_P</code> 为 <code>1/4</code>, 也就是说有 25% 的概率有机会获得level,要获得更高的level,概率更小. 这也就导致了, redis中的跳表层级不会特别高,较扁平,较低层节点较多.有个小优化的地方: 跳表会记录下当前的最高层数 <code>MaxLevel</code> 这样就不需要从最顶层开始遍历了.</p>
+
+<h4 id="为什么使用跳表而不是红黑树或者哈希表">为什么使用跳表而不是红黑树或者哈希表?</h4>
+
+<ul>
+<li>skiplist和各种平衡树（如AVL、红黑树等）的元素是有序排列的，而哈希表不是有序的。因此，在哈希表上只能做单个key的查找，不适宜做范围查找。所谓范围查找，指的是查找那些大小在指定的两个值之间的所有节点。</li>
+<li>在做范围查找的时候，平衡树比skiplist操作要复杂。在平衡树上，我们找到指定范围的小值之后，还需要以中序遍历的顺序继续寻找其它不超过大值的节点。如果不对平衡树进行一定的改造，这里的中序遍历并不容易实现。而在skiplist上进行范围查找就非常简单，只需要在找到小值之后，对第1层链表进行若干步的遍历就可以实现。</li>
+<li>平衡树的插入和删除操作可能引发子树的调整，逻辑复杂，而skiplist的插入和删除只需要修改相邻节点的指针，操作简单又快速。</li>
+<li>从内存占用上来说，skiplist比平衡树更灵活一些。一般来说，平衡树每个节点包含2个指针（分别指向左右子树），而skiplist每个节点包含的指针数目平均为1/(1-p)，具体取决于参数p的大小。如果像Redis里的实现一样，取p=1/4，那么平均每个节点包含1.33个指针，比平衡树更有优势。</li>
+<li>查找单个key，skiplist和平衡树的时间复杂度都为O(log n)，大体相当；而哈希表在保持较低的哈希值冲突概率的前提下，查找时间复杂度接近O(1)，性能更高一些。所以我们平常使用的各种Map或dictionary结构，大都是基于哈希表实现的。</li>
+<li>从算法实现难度上来比较，skiplist比平衡树要简单得多。</li>
+</ul>
+
+<h2 id="参考">参考</h2>
+
+<ol>
+<li><a href="https://luoming1224.github.io/2018/11/12/[redis学习笔记]redis渐进式rehash机制/">渐进式 rehash 机制</a></li>
+<li><a href="https://tech.meituan.com/2018/07/27/redis-rehash-practice-optimization.html">美团针对Redis Rehash机制的探索和实践</a></li>
+<li><a href="https://zsr.github.io/2017/07/03/redis-zset内部实现/">zset内部实现</a></li>
+</ol>
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://xiaohei.im/2019/10/rabbitmq-ack-confirm/" title="RabbitMQ-消息确认机制"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://xiaohei.im/2019/11/distributed-lock/"
+                    title="Redis-分布式锁"><span>下一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        
+        <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal"
+            data-target="#donateModal"><span>赏</span></button>
+        
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content donate">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <div class="modal-body">
+                <div class="donate-box">
+                    <div class="donate-head">
+                        <p>感谢您的支持,我会继续努力的!</p>
+                    </div>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/donate/alipayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦~</p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/donate/wechatpayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+                        </div>
+                    </div>
+                    <div class="donate-footer">
+                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay"
+                                    aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+                            </li>
+                            <li role="presentation" class="">
+                                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab"
+                                    aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i>
+                                    微信支付</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/xiaoheiAh" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://xiaohei.im/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2017  -
+    2019
+    <div class="publishby">
+        Theme by <a href="https://github.com/xiaoheiAh" target="_blank"> xiaoheiAh </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+   window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/rust.min.js"></script>
+<script type="text/javascript"
+   src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script>
+hljs.configure({
+  tabReplace: '    ', 
+  classPrefix: ''     
+                      
+})
+hljs.initHighlightingOnLoad();
+</script>
+<script type="text/javascript" src="https://xiaohei.im/js/application.js"></script>
+<script type="text/javascript" src="https://xiaohei.im/js/plugin.js"></script>
+<script>
+      (function (window) {
+          var INSIGHT_CONFIG = {
+              TRANSLATION: {
+                  POSTS: '文章',
+                  PAGES: '页面',
+                  CATEGORIES: '分类',
+                  TAGS: '标签',
+                  UNTITLED: '(未命名)',
+              },
+              ROOT_URL: 'https:\/\/xiaohei.im\/',
+              CONTENT_URL: 'https:\/\/xiaohei.im\/searchindex.json ',
+          };
+          window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+      })(window);
+      </script>
+<script type="text/javascript" src="https://xiaohei.im/js/insight.js"></script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: 'e38fc798c72a7e4e1386',
+        clientSecret: 'e151aa3b7b98d3cfaa1f096b88fdd7897e2c8007',
+        repo: 'xiaoheiAh.github.io',
+        owner: 'xiaoheiAh',
+        admin: ['xiaoheiAh'],
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('comments');
+</script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98254666-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        Redis-数据库长什么样? - 赵小黑的博客
+      </title>
+    <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  
+  <meta name="theme-color" content="#000000" />
+  
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <meta name="description" content="" />
+  <meta name="generator" content="Hugo 0.58.0 with theme pure" />
+  <title>Redis-数据库长什么样? - 赵小黑的博客</title>
+  
+
+  <link rel="stylesheet" href="https://xiaohei.im/css/style.css">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css"> 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <meta property="og:title" content="Redis-数据库长什么样?" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiaohei.im/2019/11/db/" />
+<meta property="article:published_time" content="2019-11-06T11:00:32+08:00" />
+<meta property="article:modified_time" content="2019-11-06T11:00:32+08:00" />
+<meta itemprop="name" content="Redis-数据库长什么样?">
+<meta itemprop="description" content="">
+
+
+<meta itemprop="datePublished" content="2019-11-06T11:00:32&#43;08:00" />
+<meta itemprop="dateModified" content="2019-11-06T11:00:32&#43;08:00" />
+<meta itemprop="wordCount" content="1860">
+
+
+
+<meta itemprop="keywords" content="redis," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Redis-数据库长什么样?"/>
+<meta name="twitter:description" content=""/>
+
+  <!--[if lte IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+    <![endif]-->
+
+  <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+  </head>
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/xiaoheiAh" target="_blank">
+            <img class="img-circle img-rotate" src="https://xiaohei.im/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">赵小黑</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">Java Developer</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shanghai, China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav  menu-highlight">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>自用科学上网节点推荐(便宜又好用)<a href="https://tianlinzhao.com/aff.php?aff=4969" target="_blank" style="background-color:#FFFF00">点这里跳转</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/corejava/" class="category-list-link">corejava</a><span class="category-list-count">7</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/hystrix/" class="category-list-link">hystrix</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/leetcode/" class="category-list-link">leetcode</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">5</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="category-list-link">消息队列</a><span class="category-list-count">4</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/collections/" class="tag-list-link">collections</a><span
+                    class="tag-list-count">7</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/hugo/" class="tag-list-link">hugo</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/hystrix/" class="tag-list-link">hystrix</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rabbitmq/" class="tag-list-link">rabbitmq</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">5</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rust/" class="tag-list-link">rust</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rxjava/" class="tag-list-link">rxjava</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="tag-list-link">分布式锁</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="tag-list-link">响应式编程</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="tag-list-link">数据结构</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+  </div>
+</aside>
+
+    
+    
+  <aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+    <div class="slimContent">
+      <nav id="toc" class="article-toc">
+        <h3 class="toc-title">文章目录</h3>
+        <div class="toc-content always-active"><nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#服务器中的数据库">服务器中的数据库</a></li>
+<li><a href="#切换数据库">切换数据库</a></li>
+<li><a href="#键空间">键空间</a>
+<ul>
+<li><a href="#读写键空间后的操作">读写键空间后的操作</a></li>
+<li><a href="#过期时间保存">过期时间保存</a></li>
+</ul></li>
+<li><a href="#redis的过期键删除策略">Redis的过期键删除策略</a>
+<ul>
+<li><a href="#定时删除">定时删除</a>
+<ul>
+<li><a href="#优点">优点</a></li>
+<li><a href="#缺点">缺点</a></li>
+</ul></li>
+<li><a href="#惰性删除">惰性删除</a>
+<ul>
+<li><a href="#优点-1">优点</a></li>
+<li><a href="#缺点-1">缺点</a></li>
+</ul></li>
+<li><a href="#定期删除">定期删除</a>
+<ul>
+<li><a href="#优点-2">优点</a></li>
+<li><a href="#难点">难点</a></li>
+</ul></li>
+<li><a href="#redis采用方案">redis采用方案</a></li>
+</ul></li>
+<li><a href="#aof-rdb-复制功能对过期键的处理">AOF,RDB &amp; 复制功能对过期键的处理</a></li>
+<li><a href="#数据库通知">数据库通知</a></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+      </nav>
+    </div>
+  </aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2019/11/db/"
+    >Redis-数据库长什么样?</a
+  >
+</h1>
+
+      <div class="article-meta">
+        <span class="article-date">
+  <i class="icon icon-calendar-check"></i>
+<a href="https://xiaohei.im/2019/11/db/" class="article-date">
+  <time datetime="2019-11-06 11:00:32 &#43;0800 CST" itemprop="datePublished">2019-11-06</time>
+</a>
+</span><span class="article-category">
+  <i class="icon icon-folder"></i>
+  <a class="article-category-link" href="/categories/redis/"> redis </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+    <a class="article-tag-link" href="/tags/redis/"> redis </a>
+  </span>
+
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/11/db/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计:1860字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长:4分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      <h2 id="服务器中的数据库">服务器中的数据库</h2>
+
+<p>redis的数据库是保存在一个db数组中的,默认会新建16个数组.</p>
+
+<pre><code class="language-c"># src/server.h
+struct redisServer {
+  ...
+  redisDb *db; // db 存放的数组
+  int dbnum; /* 根据该属性决定创建数据库数量 默认: 16 */
+  ...
+}
+</code></pre>
+
+<h2 id="切换数据库">切换数据库</h2>
+
+<p><code>redis</code> 数据库从 0 开始计算,通过 <code>select</code> 命令切换数据库. <code>client</code> 会有一个属性指向当前选中的 DB.</p>
+
+<pre><code class="language-c"># src/server.h
+typedef struct client {
+  ...
+  redisDb *db; /* 指向当前选中的redisDb */
+  ...
+}
+</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/xiaoheiAh/imgs/master/20191106112623.png" alt="redis设计与实现-指向当前选中db图例" /></p>
+
+<h2 id="键空间">键空间</h2>
+
+<p><code>redisDb</code> 的结构是怎样的呢?</p>
+
+<pre><code class="language-c"># src/server.h
+/* Redis database representation. There are multiple databases identified
+ * by integers from 0 (the default database) up to the max configured
+ * database. The database number is the 'id' field in the structure. */
+typedef struct redisDb {
+    dict *dict;                 /* 键空间 */
+    dict *expires;              /* Timeout of keys with a timeout set */
+    dict *blocking_keys;        /* Keys with clients waiting for data (BLPOP)*/
+    dict *ready_keys;           /* Blocked keys that received a PUSH */
+    dict *watched_keys;         /* WATCHED keys for MULTI/EXEC CAS */
+    int id;                     /* Database ID */
+    long long avg_ttl;          /* Average TTL, just for stats */
+    list *defrag_later;         /* List of key names to attempt to defrag one by one, gradually. */
+} redisDb;
+</code></pre>
+
+<p><code>键空间</code> 指的是每一个数据库中存放用户设置键和值的地方. 可以看到上述结构中, <code>dict</code> 属性就是每一个数据库的键空间, 字典结构, 也就是我们命令的执行结构.例如 <code>set msg &quot;hello world~&quot;</code> .</p>
+
+<p>所以针对数据库的操作就是操作字典.</p>
+
+<h3 id="读写键空间后的操作">读写键空间后的操作</h3>
+
+<ol>
+<li>维护 <code>hit</code>, <code>miss</code> 次数, 可以利用 <code>info stats</code> 查看 <code>keyspace_hits</code> 以及 <code>keyspace_misses</code></li>
+<li>读取一个键后会更新键的 <code>LRU</code> ,用于计算键的闲置时间 <code>object idletime {key}</code> 查看</li>
+<li>服务器读取一个键后发现已经过期,则会删除这个键在执行其他操作</li>
+<li>如果客户端 <code>watch</code> 了某个键, 该键修改之后,会被标记为 <code>dirty</code>, 从而事务程序可以注意到该键已经被修改了</li>
+<li>服务器每修改一个键后, 都会对 <code>dirty</code> 计数器 +1 ,这个计数器会触发服务器的持久化和复制操作</li>
+<li>服务器开启数据库通知之后,键修改后会发送相应的数据库通知</li>
+</ol>
+
+<h3 id="过期时间保存">过期时间保存</h3>
+
+<p>上述的 <code>redisDb</code> 结构中有 <code>expires</code> 的字典, <code>redis</code> 就是将我们设置的过期时间存到了这个字典中.键就是数据库键,值是一个 <code>long long</code> 类型的整数, 保存了键的过期时间: 一个毫秒精度的 <code>UNIX</code> 时间戳.</p>
+
+<h2 id="redis的过期键删除策略">Redis的过期键删除策略</h2>
+
+<p>有这么三种删除方式.</p>
+
+<h3 id="定时删除">定时删除</h3>
+
+<p>设置键过期时间的同时,创建一个定时器,到期自动删除</p>
+
+<h4 id="优点">优点</h4>
+
+<p>内存友好,键过期就删除</p>
+
+<h4 id="缺点">缺点</h4>
+
+<ol>
+<li>对 CPU 不友好,过期键较多时,会占用较长时间,CPU 资源紧张的情况下会影响服务器的响应时间和吞吐量</li>
+<li>创建定时器需要用到 <code>redis</code> 的时间事件,实现方式为无序链表,查找效率低</li>
+</ol>
+
+<h3 id="惰性删除">惰性删除</h3>
+
+<p>无视键是否过期,每次从键空间取键时,先判断是否过期,过期就删除,没过期就返回.</p>
+
+<h4 id="优点-1">优点</h4>
+
+<p>对 CPU 友好,遇到过期键才删除</p>
+
+<h4 id="缺点-1">缺点</h4>
+
+<p>如果过期键很多,且一直不会被访问,就会导致大量内存被浪费</p>
+
+<h3 id="定期删除">定期删除</h3>
+
+<p>定期的在数据库中检查,删除过期的键.定期删除策略是上面两种策略的折中方案.</p>
+
+<h4 id="优点-2">优点</h4>
+
+<ol>
+<li>每隔一段时间删除过期键,可以减少删除操作对 CPU 的影响</li>
+<li>定期删除也可以减少过期键带来的内存浪费</li>
+</ol>
+
+<h4 id="难点">难点</h4>
+
+<p>确定删除操作执行的时长和频率</p>
+
+<h3 id="redis采用方案">redis采用方案</h3>
+
+<p><strong>惰性删除 + 定期删除</strong></p>
+
+<p>惰性删除是在所有读写数据库命令执行之前检查键是否过期来实现的.</p>
+
+<p>定期删除是通过 <code>redis</code> 的定时任务执行.在规定的时间内,多次遍历服务器的各个数据库,从 <code>expires</code> 字典中 <strong>随机抽查</strong> 一部分键的过期时间.<code>current_db</code> 会记录当前函数检查的进度,并在下一次函数执行时,接着上次的执行.循环往复地执行.</p>
+
+<h2 id="aof-rdb-复制功能对过期键的处理">AOF,RDB &amp; 复制功能对过期键的处理</h2>
+
+<ol>
+<li>生成 <code>RDB</code> 文件时,过期键不会被保存到新文件中</li>
+<li>载入 <code>RDB</code> 文件
+
+<ol>
+<li>以主服务器运行:未过期的键被载入,过期键忽略</li>
+<li>以从服务器运行:保存所有键,无论是否过期.由于主从服务器在进行数据同步时,从服务器数据库就会被清空,所以一般来讲,也不会造成什么影响.</li>
+</ol></li>
+<li><code>AOF</code> 写入时,键过期还没有被删除,<code>AOF</code> 文件不会受到影响,当键被惰性删除或被定期删除后,<code>AOF</code> 文件会追加一条 <code>DEL</code> 命令来显示记录该键已被删除</li>
+<li><code>AOF</code> 重写时,会对键过期进行确认,过期补充些.</li>
+<li>复制模式下,从服务器的过期键删除由主服务器控制.
+
+<ol>
+<li>主服务器删除一个键后,会显示发送 <code>DEL</code> 命令给从服务器.</li>
+<li>从服务器接收读命令时,如果键已过期,也不会将其删除,正常处理</li>
+<li>从服务器只在主服务器发送 <code>DEL</code> 命令才删除键</li>
+</ol></li>
+</ol>
+
+<p>主从复制不及时怎么办?会有脏读现象~</p>
+
+<h2 id="数据库通知">数据库通知</h2>
+
+<p>通过订阅的模式,可以实时获取键的变化,命令的执行情况.通过 <code>redis</code> 的 <code>pub/sub</code> 模式来实现.命令对数据库进行了操作后,就会触发该通知,置于能不能发送出去完全看你的配置了.</p>
+
+<p><code>notify_keyspace_events</code> 系统配置决定了服务器发送的配置类型.如果给定的 <code>type</code> 不是服务器允许发送的类型,程序就直接返回了.然后就判断能发送键通知就发送,能发送命令通知就发送.</p>
+
+<pre><code class="language-c">
+/* The API provided to the rest of the Redis core is a simple function:
+ *
+ * notifyKeyspaceEvent(char *event, robj *key, int dbid);
+ *
+ * 'event' is a C string representing the event name.
+ * 'key' is a Redis object representing the key name.
+ * 'dbid' is the database ID where the key lives.  */
+void notifyKeyspaceEvent(int type, char *event, robj *key, int dbid) {
+    sds chan;
+    robj *chanobj, *eventobj;
+    int len = -1;
+    char buf[24];
+
+    /* If any modules are interested in events, notify the module system now. 
+     * This bypasses the notifications configuration, but the module engine
+     * will only call event subscribers if the event type matches the types
+     * they are interested in. */
+     moduleNotifyKeyspaceEvent(type, event, key, dbid);
+    
+    /* If notifications for this class of events are off, return ASAP. */
+    if (!(server.notify_keyspace_events &amp; type)) return;
+
+    eventobj = createStringObject(event,strlen(event));
+
+    /* __keyspace@&lt;db&gt;__:&lt;key&gt; &lt;event&gt; notifications. */
+    if (server.notify_keyspace_events &amp; NOTIFY_KEYSPACE) {
+        chan = sdsnewlen(&quot;__keyspace@&quot;,11);
+        len = ll2string(buf,sizeof(buf),dbid);
+        chan = sdscatlen(chan, buf, len);
+        chan = sdscatlen(chan, &quot;__:&quot;, 3);
+        chan = sdscatsds(chan, key-&gt;ptr);
+        chanobj = createObject(OBJ_STRING, chan);
+        pubsubPublishMessage(chanobj, eventobj);
+        decrRefCount(chanobj);
+    }
+
+    /* __keyevent@&lt;db&gt;__:&lt;event&gt; &lt;key&gt; notifications. */
+    if (server.notify_keyspace_events &amp; NOTIFY_KEYEVENT) {
+        chan = sdsnewlen(&quot;__keyevent@&quot;,11);
+        if (len == -1) len = ll2string(buf,sizeof(buf),dbid);
+        chan = sdscatlen(chan, buf, len);
+        chan = sdscatlen(chan, &quot;__:&quot;, 3);
+        chan = sdscatsds(chan, eventobj-&gt;ptr);
+        chanobj = createObject(OBJ_STRING, chan);
+        pubsubPublishMessage(chanobj, key);
+        decrRefCount(chanobj);
+    }
+    decrRefCount(eventobj);
+}
+</code></pre>
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://xiaohei.im/2019/11/obj/" title="Redis-万物皆「对象」"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://xiaohei.im/2019/11/rdb/"
+                    title="Redis-RDB持久化"><span>下一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        
+        <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal"
+            data-target="#donateModal"><span>赏</span></button>
+        
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content donate">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <div class="modal-body">
+                <div class="donate-box">
+                    <div class="donate-head">
+                        <p>感谢您的支持,我会继续努力的!</p>
+                    </div>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/donate/alipayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦~</p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/donate/wechatpayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+                        </div>
+                    </div>
+                    <div class="donate-footer">
+                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay"
+                                    aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+                            </li>
+                            <li role="presentation" class="">
+                                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab"
+                                    aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i>
+                                    微信支付</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/xiaoheiAh" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://xiaohei.im/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2017  -
+    2019
+    <div class="publishby">
+        Theme by <a href="https://github.com/xiaoheiAh" target="_blank"> xiaoheiAh </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+   window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/rust.min.js"></script>
+<script type="text/javascript"
+   src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script>
+hljs.configure({
+  tabReplace: '    ', 
+  classPrefix: ''     
+                      
+})
+hljs.initHighlightingOnLoad();
+</script>
+<script type="text/javascript" src="https://xiaohei.im/js/application.js"></script>
+<script type="text/javascript" src="https://xiaohei.im/js/plugin.js"></script>
+<script>
+      (function (window) {
+          var INSIGHT_CONFIG = {
+              TRANSLATION: {
+                  POSTS: '文章',
+                  PAGES: '页面',
+                  CATEGORIES: '分类',
+                  TAGS: '标签',
+                  UNTITLED: '(未命名)',
+              },
+              ROOT_URL: 'https:\/\/xiaohei.im\/',
+              CONTENT_URL: 'https:\/\/xiaohei.im\/searchindex.json ',
+          };
+          window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+      })(window);
+      </script>
+<script type="text/javascript" src="https://xiaohei.im/js/insight.js"></script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: 'e38fc798c72a7e4e1386',
+        clientSecret: 'e151aa3b7b98d3cfaa1f096b88fdd7897e2c8007',
+        repo: 'xiaoheiAh.github.io',
+        owner: 'xiaoheiAh',
+        admin: ['xiaoheiAh'],
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('comments');
+</script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98254666-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

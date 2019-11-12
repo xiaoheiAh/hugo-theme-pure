@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        Hystrix命令执行流程 - 赵小黑的博客
+      </title>
+    <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  
+  <meta name="theme-color" content="#000000" />
+  
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <meta name="keywords"
+    content="学习笔记, Hystrix, Java, RxJava, 响应式编程" /><meta name="description" content="Hystrix RxJava 响应式编程 响应式编程" />
+  <meta name="generator" content="Hugo 0.58.0 with theme pure" />
+  <title>Hystrix命令执行流程 - 赵小黑的博客</title>
+  
+
+  <link rel="stylesheet" href="https://xiaohei.im/css/style.css">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css"> 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <meta property="og:title" content="Hystrix命令执行流程" />
+<meta property="og:description" content="Hystrix RxJava 响应式编程 响应式编程" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiaohei.im/2019/08/rxjava-in-hystrix/" />
+<meta property="article:published_time" content="2019-08-26T15:25:08+08:00" />
+<meta property="article:modified_time" content="2019-08-26T15:25:08+08:00" />
+<meta itemprop="name" content="Hystrix命令执行流程">
+<meta itemprop="description" content="Hystrix RxJava 响应式编程 响应式编程">
+
+
+<meta itemprop="datePublished" content="2019-08-26T15:25:08&#43;08:00" />
+<meta itemprop="dateModified" content="2019-08-26T15:25:08&#43;08:00" />
+<meta itemprop="wordCount" content="5220">
+
+
+
+<meta itemprop="keywords" content="rxjava,hystrix," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Hystrix命令执行流程"/>
+<meta name="twitter:description" content="Hystrix RxJava 响应式编程 响应式编程"/>
+
+  <!--[if lte IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+    <![endif]-->
+
+  <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+  </head>
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/xiaoheiAh" target="_blank">
+            <img class="img-circle img-rotate" src="https://xiaohei.im/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">赵小黑</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">Java Developer</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shanghai, China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav  menu-highlight">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>自用科学上网节点推荐(便宜又好用)<a href="https://tianlinzhao.com/aff.php?aff=4969" target="_blank" style="background-color:#FFFF00">点这里跳转</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/corejava/" class="category-list-link">corejava</a><span class="category-list-count">7</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/hystrix/" class="category-list-link">hystrix</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/leetcode/" class="category-list-link">leetcode</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">5</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="category-list-link">消息队列</a><span class="category-list-count">4</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/collections/" class="tag-list-link">collections</a><span
+                    class="tag-list-count">7</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/hugo/" class="tag-list-link">hugo</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/hystrix/" class="tag-list-link">hystrix</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rabbitmq/" class="tag-list-link">rabbitmq</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">5</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rust/" class="tag-list-link">rust</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rxjava/" class="tag-list-link">rxjava</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="tag-list-link">分布式锁</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="tag-list-link">响应式编程</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="tag-list-link">数据结构</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+  </div>
+</aside>
+
+    
+    
+  <aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+    <div class="slimContent">
+      <nav id="toc" class="article-toc">
+        <h3 class="toc-title">文章目录</h3>
+        <div class="toc-content always-active"><nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#前言">前言</a></li>
+<li><a href="#hystrix简单介绍">Hystrix简单介绍</a></li>
+<li><a href="#一次command执行">一次Command执行</a>
+<ul>
+<li><a href="#uml">UML</a></li>
+<li><a href="#样例代码">样例代码</a></li>
+<li><a href="#执行过程">执行过程</a>
+<ul>
+<li><a href="#流程图">流程图</a></li>
+<li><a href="#hystrixcommand-java">HystrixCommand.java</a>
+<ul>
+<li><a href="#execute">execute</a></li>
+<li><a href="#queue">queue</a></li>
+</ul></li>
+<li><a href="#blockingobservable-java">BlockingObservable.java</a></li>
+<li><a href="#blockingoperatortofuture-java">BlockingOperatorToFuture.java</a></li>
+<li><a href="#abstractcommand-java">AbstractCommand.java</a>
+<ul>
+<li><a href="#toobservable">toObservable</a></li>
+<li><a href="#handlerequestcachehitandemitvalues">handleRequestCacheHitAndEmitValues</a></li>
+<li><a href="#applyhystrixsemantics">applyHystrixSemantics</a></li>
+<li><a href="#executecommandandobserve">executeCommandAndObserve</a></li>
+<li><a href="#executecommandwithspecifiedisolation">executeCommandWithSpecifiedIsolation</a></li>
+<li><a href="#getuserexecutionobservable">getUserExecutionObservable</a></li>
+<li><a href="#getexecutionobservable">getExecutionObservable</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><a href="#总结">总结</a></li>
+<li><a href="#参考">参考</a></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+      </nav>
+    </div>
+  </aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2019/08/rxjava-in-hystrix/"
+    >Hystrix命令执行流程</a
+  >
+</h1>
+
+      <div class="article-meta">
+        <span class="article-date">
+  <i class="icon icon-calendar-check"></i>
+<a href="https://xiaohei.im/2019/08/rxjava-in-hystrix/" class="article-date">
+  <time datetime="2019-08-26 15:25:08 &#43;0800 CST" itemprop="datePublished">2019-08-26</time>
+</a>
+</span><span class="article-category">
+  <i class="icon icon-folder"></i>
+  <a class="article-category-link" href="/categories/hystrix/"> Hystrix </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+    <a class="article-tag-link" href="/tags/rxjava/"> rxjava </a>
+    <a class="article-tag-link" href="/tags/hystrix/"> hystrix </a>
+  </span>
+
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/08/rxjava-in-hystrix/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计:5220字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长:11分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      <h2 id="前言">前言</h2>
+
+<p>Hystrix已经不在维护了,但是成功的开源项目总是值得学习的.刚开始看 Hystrix 源码时,会发现一堆 Action,Function 的逻辑,这其实就是 RxJava 的特点了&ndash;<strong>响应式编程</strong>.上篇文章已经对RxJava作过<a href="/2019/rxjava-guide/">入门介绍</a>,不熟悉的同学可以先去看看.本文会简单介绍 Hystrix,再根据demo结合源码来了解Hystrix的执行流程.</p>
+
+<h2 id="hystrix简单介绍">Hystrix简单介绍</h2>
+
+<ol>
+<li><p>什么是 Hystrix?</p>
+
+<p>Hystrix 是一个<strong>延迟</strong>和<strong>容错库</strong>，旨在隔离对远程系统、服务和第三方库的访问点，停止级联故障，并在错误不可避免的复杂分布式系统中能够弹性恢复。</p></li>
+
+<li><p>核心概念</p>
+
+<ol>
+<li><p><strong>Command</strong> 命令</p>
+
+<p><strong>Command</strong> 是Hystrix的入口,对用户来说,我们只需要创建对应的 command,将需要保护的接口包装起来就可以.可以无需关注再之后的逻辑.与 Spring 深度集成后还可以通过注解的方式,就更加对开发友好了.</p></li>
+
+<li><p><strong>Circuit Breaker</strong> 断路器</p>
+
+<p><strong>断路器</strong>,是从电气领域引申过来的概念,具有<strong>过载</strong>、<strong>短路</strong>和<strong>欠电压保护</strong>功能，有保护线路和电源的能力.在Hystrix中即为当请求超过一定比例响应失败时,hystrix 会对请求进行拦截处理,保证服务的稳定性,以及防止出现服务之间级联雪崩的可能性.</p></li>
+
+<li><p><strong>Isolation</strong> 隔离策略</p>
+
+<p>隔离策略是 Hystrix 的设计亮点所在,利用<a href="https://docs.microsoft.com/en-us/azure/architecture/patterns/bulkhead">舱壁模式</a>的思想来对访问的资源进行隔离,每个资源是独立的依赖,单个资源的异常不应该影响到其他. Hystrix 的隔离策略目前有两种:<strong>线程池隔离</strong>,<strong>信号量隔离</strong>.</p></li>
+</ol>
+
+<p><img src="https://github.com/Netflix/Hystrix/wiki/images/soa-5-isolation-focused-640.png" alt="isolation" /></p></li>
+
+<li><p>Hystrix的运行流程</p></li>
+</ol>
+
+<blockquote>
+<p>官方的 <a href="https://github.com/Netflix/Hystrix/wiki/How-it-Works">How it Works</a> 对流程有很详细的介绍,图示清晰,相信看完流程图就能对运行流程有一定的了解.</p>
+</blockquote>
+
+<p><img src="https://raw.githubusercontent.com/wiki/Netflix/Hystrix/images/hystrix-command-flow-chart.png" alt="来自hystrix的github站点" /></p>
+
+<h2 id="一次command执行">一次Command执行</h2>
+
+<p><code>HystrixCommand</code>是标准的<a href="https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/command.html">命令模式</a>实现,每一次请求即为一次命令的创建执行经历的过程.从上述<a href="#Hystrix简单介绍">Hystrix流程图</a>可以看出创建流程最终会指向<code>toObservable</code>,在之前<a href="/2019/rxjava-guide/">RxJava入门</a>时有介绍到<code>Observable</code>即为被观察者,作用是发送数据给观察者进行相应的,因此可以知道这个方法应该是较为关键的.</p>
+
+<h3 id="uml">UML</h3>
+
+<p><img src="https://i.loli.net/2019/08/29/gVF4dlR6tivBcT8.png" alt="hystrixcommman-uml.png" /></p>
+
+<ol>
+<li>HystrixInvokable 标记这个一个可执行的接口,没有任何抽象方法或常量</li>
+<li>HystrixExecutable 是为<code>HystrixCommand</code>设计的接口,主要提供执行命令的抽象方法,例如:<code>execute()</code>,<code>queue()</code>,<code>observe()</code></li>
+<li>HystrixObservable 是为<code>Observable</code>设计的接口,主要提供自动订阅(<code>observe()</code>)和生成Observable(<code>toObservable()</code>)的抽象方法</li>
+<li>HystrixInvokableInfo 提供大量的状态查询(获取属性配置,是否开启断路器等)</li>
+<li>AbstractCommand <strong>核心逻辑</strong>的实现</li>
+<li>HystrixCommand 定制逻辑实现以及留给用户实现的接口(比如:<code>run()</code>)</li>
+</ol>
+
+<h3 id="样例代码">样例代码</h3>
+
+<p>通过新建一个 command 来看 Hystrix 是如何创建并执行的.HystrixCommand 是一个抽象类,其中有一个<code>run</code>方法需要我们实现自己的业务逻辑,以下是偷懒采用匿名内部类的形式呈现.构造方法的内部实现我们就不关注了,直接看下执行的逻辑吧.</p>
+
+<pre><code class="language-java">HystrixCommand demo = new HystrixCommand&lt;String&gt;(HystrixCommandGroupKey.Factory.asKey(&quot;demo-group&quot;)) {
+            @Override
+            protected String run() {
+                return &quot;Hello World~&quot;;
+            }
+        };
+demo.execute();
+</code></pre>
+
+<h3 id="执行过程">执行过程</h3>
+
+<h4 id="流程图">流程图</h4>
+
+<p><img src="https://raw.githubusercontent.com/wiki/Netflix/Hystrix/images/hystrix-return-flow.png" alt="execute" /></p>
+
+<p>这是官方给出的一次完整调用的链路.上述的 demo 中我们直接调用了<code>execute</code>方法,所以调用的路径为<code>execute() -&gt; queue() -&gt; toObservable() -&gt; toBlocking() -&gt; toFuture() -&gt; get()</code>.核心的逻辑其实就在<code>toObservable()</code>中.</p>
+
+<h4 id="hystrixcommand-java">HystrixCommand.java</h4>
+
+<h5 id="execute">execute</h5>
+
+<p><code>execute</code>方法为同步调用返回结果,并对异常作处理.内部会调用<code>queue</code></p>
+
+<pre><code class="language-java">// 同步调用执行
+public R execute() {
+  try {
+    // queue()返回的是Future类型的对象,所以这里是阻塞get
+    return queue().get();
+  } catch (Exception e) {
+    throw decomposeException(e);
+  }
+}
+</code></pre>
+
+<h5 id="queue">queue</h5>
+
+<p><code>queue</code>的第一行代码完成了核心的订阅逻辑.</p>
+
+<ol>
+<li><code>toObservable()</code> 生成了 Hystrix 的 Observable 对象</li>
+<li>将 <code>Observable</code> 转换为 <code>BlockingObservable</code> 可以阻塞控制数据发送</li>
+
+<li><p><code>toFuture</code> 实现对 <code>BlockingObservable</code> 的订阅</p>
+
+<pre><code class="language-java">public Future&lt;R&gt; queue() {
+// 着重关注的是这行代码
+// 完成了Observable的创建及订阅
+// toBlocking()是将Observable转为BlockingObservable,转换后的Observable可以阻塞数据的发送
+final Future&lt;R&gt; delegate = toObservable().toBlocking().toFuture();
+
+final Future&lt;R&gt; f = new Future&lt;R&gt;() {
+// 由于toObservable().toBlocking().toFuture()返回的Future如果中断了,
+// 不会对当前线程进行中断,所以这里将返回的Future进行了再次包装,处理异常逻辑
+...
+}
+
+// 判断是否已经结束了,有异常则直接抛出
+if (f.isDone()) {
+try {
+  f.get();
+  return f;
+} catch (Exception e) {
+			// 省略这段判断
+}
+}
+
+return f;
+}
+</code></pre></li>
+</ol>
+
+<h4 id="blockingobservable-java">BlockingObservable.java</h4>
+
+<pre><code class="language-java">// 被包装的Observable
+private final Observable&lt;? extends T&gt; o;
+
+// toBlocking()会调用该静态方法将 源Observable简单包装成BlockingObservable
+public static &lt;T&gt; BlockingObservable&lt;T&gt; from(final Observable&lt;? extends T&gt; o) {
+  return new BlockingObservable&lt;T&gt;(o);
+}
+
+public Future&lt;T&gt; toFuture() {
+  return BlockingOperatorToFuture.toFuture((Observable&lt;T&gt;)o);
+}
+</code></pre>
+
+<h4 id="blockingoperatortofuture-java">BlockingOperatorToFuture.java</h4>
+
+<blockquote>
+<p><a href="http://reactivex.io/documentation/operators/to.html">ReactiveX 关于toFuture的解读</a></p>
+
+<p>The <code>toFuture</code> operator applies to the <code>BlockingObservable</code> subclass, so in order to use it, you must first convert your source Observable into a <code>BlockingObservable</code> by means of either the <code>BlockingObservable.from</code> method or the <code>Observable.toBlocking</code> operator.</p>
+</blockquote>
+
+<p><code>toFuture</code>只能作用于<code>BlockingObservable</code>所以也才会有上文想要转换为BlockingObservable的操作</p>
+
+<pre><code class="language-java">// 该操作将 源Observable转换为返回单个数据项的Future
+public static &lt;T&gt; Future&lt;T&gt; toFuture(Observable&lt;? extends T&gt; that) {
+  	// CountDownLatch 判断是否完成
+    final CountDownLatch finished = new CountDownLatch(1);
+  	// 存储执行结果
+    final AtomicReference&lt;T&gt; value = new AtomicReference&lt;T&gt;();
+  	// 存储错误结果
+    final AtomicReference&lt;Throwable&gt; error = new AtomicReference&lt;Throwable&gt;();
+
+  	// single()方法可以限制Observable只发送单条数据
+  	// 如果有多条数据 会抛 IllegalArgumentException
+  	// 如果没有数据可以发送 会抛 NoSuchElementException
+    @SuppressWarnings(&quot;unchecked&quot;)
+    final Subscription s = ((Observable&lt;T&gt;)that).single().subscribe(new Subscriber&lt;T&gt;() {
+				// single()返回的Observable就可以对其进行标准的处理了
+        @Override
+        public void onCompleted() {
+            finished.countDown();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            error.compareAndSet(null, e);
+            finished.countDown();
+        }
+
+        @Override
+        public void onNext(T v) {
+            // &quot;single&quot; guarantees there is only one &quot;onNext&quot;
+            value.set(v);
+        }
+    });
+		
+  	// 最后将Subscription返回的数据封装成Future,实现对应的逻辑
+    return new Future&lt;T&gt;() {
+			// 可以查看源码
+    };
+
+}
+</code></pre>
+
+<h4 id="abstractcommand-java">AbstractCommand.java</h4>
+
+<p><code>AbstractCommand</code>是<code>toObservable</code>实现的地方,属于Hystrix的核心逻辑,代码较长,可以和方法调用的流程图一起食用.<code>toObservable</code>主要是完成缓存和创建Observable,requestLog的逻辑,当第一次创建Observable时,<code>applyHystrixSemantics</code>方法是Hystrix的语义实现,可以跳着看.</p>
+
+<blockquote>
+<p><strong>tips</strong>: 下文中有很多 Action和 Function,他们很相似,都有call方法,但是区别在于Function有返回值,而Action没有,方法后跟着的数字代表有几个入参.Func0/Func3即没有入参和有三个入参</p>
+</blockquote>
+
+<h5 id="toobservable">toObservable</h5>
+
+<p><code>toObservable</code>代码较长且分层还是清晰的,所以下面一块一块写.其逻辑和文章开始提到的<a href="#Hystrix简单介绍">Hystrix流程图</a>是完全一致的.</p>
+
+<p><img src="https://i.loli.net/2019/09/02/CpGLzZtPXHuwsv8.png" alt="toObservable.png" /></p>
+
+<pre><code class="language-java">public Observable&lt;R&gt; toObservable() {
+    final AbstractCommand&lt;R&gt; _cmd = this;
+  	// 此处省略掉了很多个Action和Function,大部分是来做扫尾清理的函数,所以用到的时候再说
+  
+  	// defer在上篇rxjava入门中提到过,是一种创建型的操作符,每次订阅时会产生新的Observable,回调方法中所实现的才是真正我们需要的Observable
+    return Observable.defer(new Func0&lt;Observable&lt;R&gt;&gt;() {
+        @Override
+        public Observable&lt;R&gt; call() {
+          	
+						// 校验命令的状态,保证其只执行一次
+            if (!commandState.compareAndSet(CommandState.NOT_STARTED, CommandState.OBSERVABLE_CHAIN_CREATED)) {
+                IllegalStateException ex = new IllegalStateException(&quot;This instance can only be executed once. Please instantiate a new instance.&quot;);
+                //TODO make a new error type for this
+                throw new HystrixRuntimeException(FailureType.BAD_REQUEST_EXCEPTION, _cmd.getClass(), getLogMessagePrefix() + &quot; command executed multiple times - this is not permitted.&quot;, ex, null);
+            }
+
+            commandStartTimestamp = System.currentTimeMillis();
+						// properties为当前command的所有属性
+          	// 允许记录请求log时会保存当前执行的command
+            if (properties.requestLogEnabled().get()) {
+                // log this command execution regardless of what happened
+                if (currentRequestLog != null) {
+                    currentRequestLog.addExecutedCommand(_cmd);
+                }
+            }
+						
+          	// 是否开启了请求缓存
+            final boolean requestCacheEnabled = isRequestCachingEnabled();
+          	// 获取缓存key
+            final String cacheKey = getCacheKey();
+
+            // 开启缓存后,尝试从缓存中取
+            if (requestCacheEnabled) {
+                HystrixCommandResponseFromCache&lt;R&gt; fromCache = (HystrixCommandResponseFromCache&lt;R&gt;) requestCache.get(cacheKey);
+                if (fromCache != null) {
+                    isResponseFromCache = true;
+                    return handleRequestCacheHitAndEmitValues(fromCache, _cmd);
+                }
+            }
+          	// 没有开启请求缓存时,就执行正常的逻辑
+            Observable&lt;R&gt; hystrixObservable =
+              			// 这里又通过defer创建了我们需要的Observable
+                    Observable.defer(applyHystrixSemantics)
+              							// 发送前会先走一遍hook,默认executionHook是空实现的,所以这里就跳过了
+                            .map(wrapWithAllOnNextHooks);
+          
+            // 得到最后的封装好的Observable后,将其放入缓存
+            if (requestCacheEnabled &amp;&amp; cacheKey != null) {
+                // wrap it for caching
+                HystrixCachedObservable&lt;R&gt; toCache = HystrixCachedObservable.from(hystrixObservable, _cmd);
+                HystrixCommandResponseFromCache&lt;R&gt; fromCache = (HystrixCommandResponseFromCache&lt;R&gt;) requestCache.putIfAbsent(cacheKey, toCache);
+                if (fromCache != null) {
+                    // another thread beat us so we'll use the cached value instead
+                    toCache.unsubscribe();
+                    isResponseFromCache = true;
+                    return handleRequestCacheHitAndEmitValues(fromCache, _cmd);
+                } else {
+                    // we just created an ObservableCommand so we cast and return it
+                    afterCache = toCache.toObservable();
+                }
+            } else {
+                afterCache = hystrixObservable;
+            }
+
+            return afterCache
+              			// 终止时的操作
+                    .doOnTerminate(terminateCommandCleanup)     // perform cleanup once (either on normal terminal state (this line), or unsubscribe (next line))
+              			// 取消订阅时的操作
+                    .doOnUnsubscribe(unsubscribeCommandCleanup) // perform cleanup once
+              			// 完成时的操作
+                    .doOnCompleted(fireOnCompletedHook);
+        }
+    }
+                     
+</code></pre>
+
+<h5 id="handlerequestcachehitandemitvalues">handleRequestCacheHitAndEmitValues</h5>
+
+<p>缓存击中时的处理</p>
+
+<pre><code class="language-java">private Observable&lt;R&gt; handleRequestCacheHitAndEmitValues(final HystrixCommandResponseFromCache&lt;R&gt; fromCache, final AbstractCommand&lt;R&gt; _cmd) {
+        try {
+          	// Hystrix中有大量的hook 如果有心做二次开发的,可以利用这些hook做到很完善的监控
+            executionHook.onCacheHit(this);
+        } catch (Throwable hookEx) {
+            logger.warn(&quot;Error calling HystrixCommandExecutionHook.onCacheHit&quot;, hookEx);
+        }   
+  // 将缓存的结果赋给当前command
+	return fromCache.toObservableWithStateCopiedInto(this)
+    				// doOnTerminate 或者是后面看到的doOnUnsubscribe,doOnError,都指的是在响应onTerminate/onUnsubscribe/onError后的操作,即在Observable的生命周期上注册一个动作优雅的处理逻辑
+            .doOnTerminate(new Action0() {
+                @Override
+                public void call() {
+                  	// 命令最终状态的不同进行不同处理
+                    if (commandState.compareAndSet(CommandState.OBSERVABLE_CHAIN_CREATED, CommandState.TERMINAL)) {
+                        cleanUpAfterResponseFromCache(false); //user code never ran
+                    } else if (commandState.compareAndSet(CommandState.USER_CODE_EXECUTED, CommandState.TERMINAL)) {
+                        cleanUpAfterResponseFromCache(true); //user code did run
+                    }
+                }
+            })
+            .doOnUnsubscribe(new Action0() {
+                @Override
+                public void call() {
+	                  // 命令最终状态的不同进行不同处理
+                    if (commandState.compareAndSet(CommandState.OBSERVABLE_CHAIN_CREATED, CommandState.UNSUBSCRIBED)) {
+                        cleanUpAfterResponseFromCache(false); //user code never ran
+                    } else if (commandState.compareAndSet(CommandState.USER_CODE_EXECUTED, CommandState.UNSUBSCRIBED)) {
+                        cleanUpAfterResponseFromCache(true); //user code did run
+                    }
+                }
+            });
+}       
+</code></pre>
+
+<h5 id="applyhystrixsemantics">applyHystrixSemantics</h5>
+
+<p>因为本片文章的主要目的是在讲执行流程,所以失败回退和断路器相关的就留到以后的文章中再写.</p>
+
+<p><img src="https://i.loli.net/2019/09/02/M3djoYyUaVGFptB.png" alt="applyHystrixSemantics.png" /></p>
+
+<pre><code class="language-java">final Func0&lt;Observable&lt;R&gt;&gt; applyHystrixSemantics = new Func0&lt;Observable&lt;R&gt;&gt;() {
+    @Override
+    public Observable&lt;R&gt; call() {
+      	// 不再订阅了就返回不发送数据的Observable
+        if (commandState.get().equals(CommandState.UNSUBSCRIBED)) {
+          	// 不发送任何数据或通知
+            return Observable.never();
+        }
+        return applyHystrixSemantics(_cmd);
+    }
+};
+
+private Observable&lt;R&gt; applyHystrixSemantics(final AbstractCommand&lt;R&gt; _cmd) {
+	// 标记开始执行的hook
+  // 如果hook内抛异常了,会快速失败且没有fallback处理
+  executionHook.onStart(_cmd);
+
+  /* determine if we're allowed to execute */
+  // 断路器核心逻辑: 判断是否允许执行(TODO)
+  if (circuitBreaker.allowRequest()) {
+    // Hystrix自己造的信号量轮子,之所以不用juc下,官方解释为juc的Semphore实现太复杂,而且没有动态调节的信号量大小的能力,简而言之,不满足需求!
+    // 根据不同隔离策略(线程池隔离/信号量隔离)获取不同的TryableSemphore
+    final TryableSemaphore executionSemaphore = getExecutionSemaphore();
+    // Semaphore释放标志
+    final AtomicBoolean semaphoreHasBeenReleased = new AtomicBoolean(false);
+    
+    // 释放信号量的Action
+    final Action0 singleSemaphoreRelease = new Action0() {
+      @Override
+      public void call() {
+        if (semaphoreHasBeenReleased.compareAndSet(false, true)) {
+          executionSemaphore.release();
+        }
+      }
+    };
+
+    // 异常处理
+    final Action1&lt;Throwable&gt; markExceptionThrown = new Action1&lt;Throwable&gt;() {
+      @Override
+      public void call(Throwable t) {
+        // HystrixEventNotifier是hystrix的插件,不同的事件发送不同的通知,默认是空实现.
+        eventNotifier.markEvent(HystrixEventType.EXCEPTION_THROWN, commandKey);
+      }
+    };
+		
+    // 线程池隔离的TryableSemphore始终为true
+    if (executionSemaphore.tryAcquire()) {
+      try {
+        /* used to track userThreadExecutionTime */
+        // executionResult是一次命令执行的结果信息封装
+        // 这里设置起始时间是为了记录命令的生命周期,执行过程中会set其他属性进去
+        executionResult = executionResult.setInvocationStartTime(System.currentTimeMillis());
+        return executeCommandAndObserve(_cmd)
+          // 报错时的处理
+          .doOnError(markExceptionThrown)
+          // 终止时释放
+          .doOnTerminate(singleSemaphoreRelease)
+          // 取消订阅时释放
+          .doOnUnsubscribe(singleSemaphoreRelease);
+      } catch (RuntimeException e) {
+        return Observable.error(e);
+      }
+    } else {
+      // tryAcquire失败后会做fallback处理,TODO
+      return handleSemaphoreRejectionViaFallback();
+    }
+  } else {
+    // 断路器短路(拒绝请求)fallback处理 TODO
+    return handleShortCircuitViaFallback();
+  }
+}
+
+</code></pre>
+
+<h5 id="executecommandandobserve">executeCommandAndObserve</h5>
+
+<p><img src="https://i.loli.net/2019/09/02/qjDKmSk7QWUvO8X.png" alt="executeCommandAndObserve.png" /></p>
+
+<pre><code class="language-java">/**
+ * 执行run方法的地方
+ */
+private Observable&lt;R&gt; executeCommandAndObserve(final AbstractCommand&lt;R&gt; _cmd) {
+  	// 获取当前上下文
+    final HystrixRequestContext currentRequestContext = HystrixRequestContext.getContextForCurrentThread();
+
+  	// 发送数据时的Action响应
+    final Action1&lt;R&gt; markEmits = new Action1&lt;R&gt;() {
+        @Override
+        public void call(R r) {
+          	// 如果onNext时需要上报时,做以下处理
+            if (shouldOutputOnNextEvents()) {
+              	// result标记
+                executionResult = executionResult.addEvent(HystrixEventType.EMIT);
+              	// 通知
+                eventNotifier.markEvent(HystrixEventType.EMIT, commandKey);
+            }
+          	// commandIsScalar是一个我不解的地方,在网上也没有查到好的解释
+          	// 该方法为抽象方法,有HystrixCommand实现返回true.HystrixObservableCommand返回false
+            if (commandIsScalar()) {
+              	// 耗时
+                long latency = System.currentTimeMillis() - executionResult.getStartTimestamp();
+              	// 通知
+                eventNotifier.markCommandExecution(getCommandKey(), properties.executionIsolationStrategy().get(), (int) latency, executionResult.getOrderedList());
+                eventNotifier.markEvent(HystrixEventType.SUCCESS, commandKey);
+                executionResult = executionResult.addEvent((int) latency, HystrixEventType.SUCCESS);
+              	// 断路器标记成功(断路器半开时的反馈,决定是否关闭断路器)
+                circuitBreaker.markSuccess();
+            }
+        }
+    };
+
+    final Action0 markOnCompleted = new Action0() {
+        @Override
+        public void call() {
+            if (!commandIsScalar()) {
+							// 同markEmits 类似处理
+            }
+        }
+    };
+
+  	// 失败回退的逻辑
+    final Func1&lt;Throwable, Observable&lt;R&gt;&gt; handleFallback = new Func1&lt;Throwable, Observable&lt;R&gt;&gt;() {
+        @Override
+        public Observable&lt;R&gt; call(Throwable t) {
+          // 不是重点略过了
+        }
+    };
+
+  	// 请求上下文的处理
+    final Action1&lt;Notification&lt;? super R&gt;&gt; setRequestContext = new Action1&lt;Notification&lt;? super R&gt;&gt;() {
+        @Override
+        public void call(Notification&lt;? super R&gt; rNotification) {
+            setRequestContextIfNeeded(currentRequestContext);
+        }
+    };
+
+    Observable&lt;R&gt; execution;
+  	// 如果有执行超时限制,会将包装后的Observable再转变为支持TimeOut的
+    if (properties.executionTimeoutEnabled().get()) {
+      	// 根据不同的隔离策略包装为不同的Observable
+        execution = executeCommandWithSpecifiedIsolation(_cmd)
+          			// lift 是rxjava中一种基本操作符 可以将Observable转换成另一种Observable
+          			// 包装为带有超时限制的Observable
+                .lift(new HystrixObservableTimeoutOperator&lt;R&gt;(_cmd));
+    } else {
+        execution = executeCommandWithSpecifiedIsolation(_cmd);
+    }
+
+    return execution.doOnNext(markEmits)
+            .doOnCompleted(markOnCompleted)
+            .onErrorResumeNext(handleFallback)
+            .doOnEach(setRequestContext);
+}
+</code></pre>
+
+<h5 id="executecommandwithspecifiedisolation">executeCommandWithSpecifiedIsolation</h5>
+
+<p>根据不同的隔离策略创建不同的执行<code>Observable</code></p>
+
+<p><img src="https://i.loli.net/2019/09/02/GCKHtruabSk3FDA.png" alt="executeCommandSpecfi.png" /></p>
+
+<pre><code class="language-java">private Observable&lt;R&gt; executeCommandWithSpecifiedIsolation(final AbstractCommand&lt;R&gt; _cmd) {
+    if (properties.executionIsolationStrategy().get() == ExecutionIsolationStrategy.THREAD) {
+        // mark that we are executing in a thread (even if we end up being rejected we still were a THREAD execution and not SEMAPHORE)
+        return Observable.defer(new Func0&lt;Observable&lt;R&gt;&gt;() {
+            @Override
+            public Observable&lt;R&gt; call() {
+              	// 由于源码太长,这里只关注正常的流程,需要详细了解可以去看看源码
+                if (threadState.compareAndSet(ThreadState.NOT_USING_THREAD, ThreadState.STARTED)) {
+                    try {
+                        return getUserExecutionObservable(_cmd);
+                    } catch (Throwable ex) {
+                        return Observable.error(ex);
+                    }
+                } else {
+                    //command has already been unsubscribed, so return immediately
+                    return Observable.error(new RuntimeException(&quot;unsubscribed before executing run()&quot;));
+                }
+            }})
+        .doOnTerminate(new Action0() {})
+        .doOnUnsubscribe(new Action0() {})
+        // 指定在某一个线程上执行,是rxjava中很重要的线程调度的概念
+        .subscribeOn(threadPool.getScheduler(new Func0&lt;Boolean&gt;() {
+        }));
+    } else { // 信号量隔离策略
+        return Observable.defer(new Func0&lt;Observable&lt;R&gt;&gt;() {
+						// 逻辑与线程池大致相同
+        });
+    }
+}
+</code></pre>
+
+<h5 id="getuserexecutionobservable">getUserExecutionObservable</h5>
+
+<p>获取用户执行的逻辑</p>
+
+<pre><code class="language-java">private Observable&lt;R&gt; getUserExecutionObservable(final AbstractCommand&lt;R&gt; _cmd) {
+    Observable&lt;R&gt; userObservable;
+
+    try {
+      	// getExecutionObservable是抽象方法,有HystrixCommand自行实现
+        userObservable = getExecutionObservable();
+    } catch (Throwable ex) {
+        // the run() method is a user provided implementation so can throw instead of using Observable.onError
+        // so we catch it here and turn it into Observable.error
+        userObservable = Observable.error(ex);
+    }
+		// 将Observable作其他中转
+    return userObservable
+            .lift(new ExecutionHookApplication(_cmd))
+            .lift(new DeprecatedOnRunHookApplication(_cmd));
+}
+</code></pre>
+
+<p><strong>lift操作符</strong></p>
+
+<p>lift可以转换成一个新的Observable,它很像一个代理,将原来的Observable代理到自己这里,订阅时通知原来的Observable发送数据,经自己这里流转加工处理再返回给订阅者.<code>Map/FlatMap</code>操作符底层其实就是用的<code>lift</code>进行实现的.</p>
+
+<h5 id="getexecutionobservable">getExecutionObservable</h5>
+
+<pre><code class="language-java">@Override
+final protected Observable&lt;R&gt; getExecutionObservable() {
+  return Observable.defer(new Func0&lt;Observable&lt;R&gt;&gt;() {
+    @Override
+    public Observable&lt;R&gt; call() {
+      try {
+        // just操作符就是直接执行的Observable
+        // run方法就是我们实现的业务逻辑: Hello World~
+        return Observable.just(run());
+      } catch (Throwable ex) {
+        return Observable.error(ex);
+      }
+    }
+  }).doOnSubscribe(new Action0() {
+    @Override
+    public void call() {
+     	// 执行订阅时将执行线程记为当前线程,必要时我们可以interrupt
+      executionThread.set(Thread.currentThread());
+    }
+  });
+}
+</code></pre>
+
+<h2 id="总结">总结</h2>
+
+<p>希望自己能把埋下的坑一一填完: 容错机制,metrics,断路器等等&hellip;</p>
+
+<h2 id="参考">参考</h2>
+
+<ol>
+<li><a href="https://github.com/Netflix/Hystrix/wiki/How-it-Works">Hystrix How it Works</a></li>
+<li><a href="http://reactivex.io/documentation/observable.html">ReactiveX官网</a></li>
+<li><a href="https://github.com/ruanyf/document-style-guide">阮一峰: 中文技术文档写作规范</a></li>
+<li><a href="https://blog.csdn.net/qq_24530405/article/details/66969886">RxJava lift 原理解析</a></li>
+</ol>
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://xiaohei.im/2019/08/rxjava-guide/" title="RxJava入门"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://xiaohei.im/2019/09/amqp-0-9-1-model-explained/"
+                    title="AMQP消息模型"><span>下一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        
+        <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal"
+            data-target="#donateModal"><span>赏</span></button>
+        
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content donate">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <div class="modal-body">
+                <div class="donate-box">
+                    <div class="donate-head">
+                        <p>感谢您的支持,我会继续努力的!</p>
+                    </div>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/donate/alipayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦~</p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/donate/wechatpayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+                        </div>
+                    </div>
+                    <div class="donate-footer">
+                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay"
+                                    aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+                            </li>
+                            <li role="presentation" class="">
+                                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab"
+                                    aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i>
+                                    微信支付</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/xiaoheiAh" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://xiaohei.im/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2017  -
+    2019
+    <div class="publishby">
+        Theme by <a href="https://github.com/xiaoheiAh" target="_blank"> xiaoheiAh </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+   window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/rust.min.js"></script>
+<script type="text/javascript"
+   src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script>
+hljs.configure({
+  tabReplace: '    ', 
+  classPrefix: ''     
+                      
+})
+hljs.initHighlightingOnLoad();
+</script>
+<script type="text/javascript" src="https://xiaohei.im/js/application.js"></script>
+<script type="text/javascript" src="https://xiaohei.im/js/plugin.js"></script>
+<script>
+      (function (window) {
+          var INSIGHT_CONFIG = {
+              TRANSLATION: {
+                  POSTS: '文章',
+                  PAGES: '页面',
+                  CATEGORIES: '分类',
+                  TAGS: '标签',
+                  UNTITLED: '(未命名)',
+              },
+              ROOT_URL: 'https:\/\/xiaohei.im\/',
+              CONTENT_URL: 'https:\/\/xiaohei.im\/searchindex.json ',
+          };
+          window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+      })(window);
+      </script>
+<script type="text/javascript" src="https://xiaohei.im/js/insight.js"></script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: 'e38fc798c72a7e4e1386',
+        clientSecret: 'e151aa3b7b98d3cfaa1f096b88fdd7897e2c8007',
+        repo: 'xiaoheiAh.github.io',
+        owner: 'xiaoheiAh',
+        admin: ['xiaoheiAh'],
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('comments');
+</script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98254666-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

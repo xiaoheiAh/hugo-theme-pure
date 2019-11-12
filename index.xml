@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>赵小黑的博客</title>
+    <link>https://xiaohei.im/</link>
+    <description>Recent content on 赵小黑的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 08 Nov 2019 15:18:05 +0800</lastBuildDate>
+    
+        <atom:link href="https://xiaohei.im/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Posts</title>
+      <link>https://xiaohei.im/posts/</link>
+      <pubDate>Fri, 08 Nov 2019 15:18:05 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/posts/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>关于自己</title>
+      <link>https://xiaohei.im/about/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/about/</guid>
+      <description>xiaoheiAh~ 联系方式 github: @xiaoheiAh gmail: xiaohei.zyx@gmail.com 节点推荐 -&amp;gt; http://1t.click/aCyT @githubchart</description>
+    </item>
+    
+    <item>
+      <title>Concurrencies</title>
+      <link></link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid></guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Langs</title>
+      <link></link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid></guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Springboots</title>
+      <link></link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid></guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

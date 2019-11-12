@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rxjava on 赵小黑的博客</title>
+    <link>https://xiaohei.im/tags/rxjava/</link>
+    <description>Recent content in rxjava on 赵小黑的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 26 Aug 2019 15:25:08 +0800</lastBuildDate>
+    
+        <atom:link href="https://xiaohei.im/tags/rxjava/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Hystrix命令执行流程</title>
+      <link>https://xiaohei.im/2019/08/rxjava-in-hystrix/</link>
+      <pubDate>Mon, 26 Aug 2019 15:25:08 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/08/rxjava-in-hystrix/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>RxJava入门</title>
+      <link>https://xiaohei.im/2019/08/rxjava-guide/</link>
+      <pubDate>Wed, 21 Aug 2019 16:09:48 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/08/rxjava-guide/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文基于 rxjava 1.x 版本&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

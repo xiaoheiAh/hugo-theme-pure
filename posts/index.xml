@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on 赵小黑的博客</title>
+    <link>https://xiaohei.im/posts/</link>
+    <description>Recent content in Posts on 赵小黑的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 08 Nov 2019 15:18:05 +0800</lastBuildDate>
+    
+        <atom:link href="https://xiaohei.im/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title></title>
+      <link>https://xiaohei.im/2019/11/aof/</link>
+      <pubDate>Fri, 08 Nov 2019 15:18:05 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/11/aof/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Redis-RDB持久化</title>
+      <link>https://xiaohei.im/2019/11/rdb/</link>
+      <pubDate>Wed, 06 Nov 2019 19:08:56 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/11/rdb/</guid>
+      <description>&lt;p&gt;&lt;code&gt;redis&lt;/code&gt; 为内存数据库,一旦服务器进程退出,服务器中的数据就不见了.所以内存中的数据需要持久化的硬盘中来保证可以在必要的时候进行故障恢复. &lt;code&gt;RDB&lt;/code&gt; 就是 &lt;code&gt;redis&lt;/code&gt; 提供的一种持久化方式.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Redis-数据库长什么样?</title>
+      <link>https://xiaohei.im/2019/11/db/</link>
+      <pubDate>Wed, 06 Nov 2019 11:00:32 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/11/db/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Redis-万物皆「对象」</title>
+      <link>https://xiaohei.im/2019/11/obj/</link>
+      <pubDate>Mon, 04 Nov 2019 18:56:15 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/11/obj/</guid>
+      <description>&lt;p&gt;Redis有很多种数据结构,但其并没有直接使用这些数据结构来构建这个 &lt;code&gt;NOSQL&lt;/code&gt;, 而是通过 &lt;code&gt;对象系统&lt;/code&gt; 完成了对所有数据结构的统一管理, 实现内存回收, 对象共享等特性~&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Redis-分布式锁</title>
+      <link>https://xiaohei.im/2019/11/distributed-lock/</link>
+      <pubDate>Sun, 03 Nov 2019 14:49:56 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/11/distributed-lock/</guid>
+      <description>&lt;p&gt;分布式锁有很多中实现(纯数据库,zookeeper,redis),纯数据库的受限于数据库性能,zk 可以保证加锁的顺序,是公平锁.Redis中的实现就是接下来要学习的.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Redis - 数据结构</title>
+      <link>https://xiaohei.im/2019/10/data-structure/</link>
+      <pubDate>Thu, 24 Oct 2019 09:59:11 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/10/data-structure/</guid>
+      <description>&lt;p&gt;系统学习 redis 相关的知识，从数据结构开始～&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>RabbitMQ-消息确认机制</title>
+      <link>https://xiaohei.im/2019/10/rabbitmq-ack-confirm/</link>
+      <pubDate>Wed, 23 Oct 2019 11:22:13 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/10/rabbitmq-ack-confirm/</guid>
+      <description>&lt;p&gt;RabbitMQ在保证生产端与消费端的数据安全上,提供了消息确认的机制来保证. 消费端到 &lt;code&gt;broker&lt;/code&gt; 端的确认常叫做&lt;code&gt;ack机制&lt;/code&gt;,  &lt;code&gt;broker&lt;/code&gt; 到生产端常叫做&lt;code&gt;confirm&lt;/code&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hexo =&gt; Hugo主题移植记录</title>
+      <link>https://xiaohei.im/2019/09/hugo-theme-dev-note/</link>
+      <pubDate>Mon, 23 Sep 2019 19:08:35 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/09/hugo-theme-dev-note/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;最近使用&lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt;作为博客引擎后,闲不下来总想去找一些简单好看的主题.在&lt;a href=&#34;https://themes.gohugo.io/&#34;&gt;官方的主题列表&lt;/a&gt;搜罗了一圈后,选择了&lt;a href=&#34;https://github.com/joway/hugo-theme-yinyang&#34;&gt;yinyang&lt;/a&gt;,非常简单,但是用了一段时间还是想找个功能全点的,无意中瞄到了一个博主的博客,主题特别吸引我,但是是 &lt;code&gt;hexo&lt;/code&gt; 平台的,搜了半天也没有人移植,就自己来吧~ 移植的过程中,遇到了挺多问题,也是这些问题慢慢的熟悉了hugo的模板结构.下面就来写一写自己遇到的问题~&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>RabbitMQ-消息分发机制</title>
+      <link>https://xiaohei.im/2019/09/rabbitmq-msg-distribution/</link>
+      <pubDate>Sat, 21 Sep 2019 18:42:13 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/09/rabbitmq-msg-distribution/</guid>
+      <description>&lt;p&gt;rabbitmq有多种使用模式,在这里记录下不同模式的消息路由规则&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>RabbitMQ-入门及高可用集群部署</title>
+      <link>https://xiaohei.im/2019/09/rabbitmq-guide-and-ha-cluster/</link>
+      <pubDate>Wed, 04 Sep 2019 14:42:13 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/09/rabbitmq-guide-and-ha-cluster/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>AMQP消息模型</title>
+      <link>https://xiaohei.im/2019/09/amqp-0-9-1-model-explained/</link>
+      <pubDate>Tue, 03 Sep 2019 10:04:49 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/09/amqp-0-9-1-model-explained/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hystrix命令执行流程</title>
+      <link>https://xiaohei.im/2019/08/rxjava-in-hystrix/</link>
+      <pubDate>Mon, 26 Aug 2019 15:25:08 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/08/rxjava-in-hystrix/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>RxJava入门</title>
+      <link>https://xiaohei.im/2019/08/rxjava-guide/</link>
+      <pubDate>Wed, 21 Aug 2019 16:09:48 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/08/rxjava-guide/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文基于 rxjava 1.x 版本&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>[LeetCode In Rust]189-Rotate Array</title>
+      <link>https://xiaohei.im/2019/08/189-rotate-array/</link>
+      <pubDate>Wed, 21 Aug 2019 15:29:34 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/08/189-rotate-array/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>[LeetCode In Rust]026-Remove Duplicates From Sorted Array</title>
+      <link>https://xiaohei.im/2019/08/026-remove-duplicates-from-sorted-array/</link>
+      <pubDate>Tue, 20 Aug 2019 15:54:47 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/08/026-remove-duplicates-from-sorted-array/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>rust踩坑笔记</title>
+      <link>https://xiaohei.im/2019/08/rust/</link>
+      <pubDate>Tue, 20 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/08/rust/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>[LeetCode In Rust]001-Two Sum</title>
+      <link>https://xiaohei.im/2019/08/001-two-sum/</link>
+      <pubDate>Fri, 16 Aug 2019 18:22:05 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/08/001-two-sum/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Arraylist</title>
+      <link>https://xiaohei.im/2019/08/arraylist/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/08/arraylist/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Hashmap</title>
+      <link>https://xiaohei.im/2019/08/hashmap/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/08/hashmap/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Hashset</title>
+      <link>https://xiaohei.im/2019/08/hashset/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/08/hashset/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Linkedhashmap</title>
+      <link>https://xiaohei.im/2019/08/linkedhashmap/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/08/linkedhashmap/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Linkedlist</title>
+      <link>https://xiaohei.im/2019/08/linkedlist/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/08/linkedlist/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Treemap</title>
+      <link>https://xiaohei.im/2019/08/treemap/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/08/treemap/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Treeset</title>
+      <link>https://xiaohei.im/2019/08/treeset/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/08/treeset/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

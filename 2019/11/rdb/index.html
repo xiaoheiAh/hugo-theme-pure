@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        Redis-RDB持久化 - 赵小黑的博客
+      </title>
+    <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  
+  <meta name="theme-color" content="#000000" />
+  
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <meta name="description" content="redis 为内存数据库,一旦服务器进程退出,服务器中的数据就不见了.所以内存中的数据需要持久化的硬盘中来保证可以在必要的时候进行故障恢复. RDB 就是 redis 提供的一种持久化方式.
+" />
+  <meta name="generator" content="Hugo 0.58.0 with theme pure" />
+  <title>Redis-RDB持久化 - 赵小黑的博客</title>
+  
+
+  <link rel="stylesheet" href="https://xiaohei.im/css/style.css">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css"> 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <meta property="og:title" content="Redis-RDB持久化" />
+<meta property="og:description" content="redis 为内存数据库,一旦服务器进程退出,服务器中的数据就不见了.所以内存中的数据需要持久化的硬盘中来保证可以在必要的时候进行故障恢复. RDB 就是 redis 提供的一种持久化方式." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiaohei.im/2019/11/rdb/" />
+<meta property="article:published_time" content="2019-11-06T19:08:56+08:00" />
+<meta property="article:modified_time" content="2019-11-06T19:08:56+08:00" />
+<meta itemprop="name" content="Redis-RDB持久化">
+<meta itemprop="description" content="redis 为内存数据库,一旦服务器进程退出,服务器中的数据就不见了.所以内存中的数据需要持久化的硬盘中来保证可以在必要的时候进行故障恢复. RDB 就是 redis 提供的一种持久化方式.">
+
+
+<meta itemprop="datePublished" content="2019-11-06T19:08:56&#43;08:00" />
+<meta itemprop="dateModified" content="2019-11-06T19:08:56&#43;08:00" />
+<meta itemprop="wordCount" content="3445">
+
+
+
+<meta itemprop="keywords" content="redis," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Redis-RDB持久化"/>
+<meta name="twitter:description" content="redis 为内存数据库,一旦服务器进程退出,服务器中的数据就不见了.所以内存中的数据需要持久化的硬盘中来保证可以在必要的时候进行故障恢复. RDB 就是 redis 提供的一种持久化方式."/>
+
+  <!--[if lte IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+    <![endif]-->
+
+  <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+  </head>
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/xiaoheiAh" target="_blank">
+            <img class="img-circle img-rotate" src="https://xiaohei.im/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">赵小黑</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">Java Developer</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shanghai, China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav  menu-highlight">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>自用科学上网节点推荐(便宜又好用)<a href="https://tianlinzhao.com/aff.php?aff=4969" target="_blank" style="background-color:#FFFF00">点这里跳转</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/corejava/" class="category-list-link">corejava</a><span class="category-list-count">7</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/hystrix/" class="category-list-link">hystrix</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/leetcode/" class="category-list-link">leetcode</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">5</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="category-list-link">消息队列</a><span class="category-list-count">4</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/collections/" class="tag-list-link">collections</a><span
+                    class="tag-list-count">7</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/hugo/" class="tag-list-link">hugo</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/hystrix/" class="tag-list-link">hystrix</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rabbitmq/" class="tag-list-link">rabbitmq</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">5</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rust/" class="tag-list-link">rust</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rxjava/" class="tag-list-link">rxjava</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="tag-list-link">分布式锁</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="tag-list-link">响应式编程</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="tag-list-link">数据结构</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+  </div>
+</aside>
+
+    
+    
+  <aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+    <div class="slimContent">
+      <nav id="toc" class="article-toc">
+        <h3 class="toc-title">文章目录</h3>
+        <div class="toc-content always-active"><nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#介绍">介绍</a>
+<ul>
+<li><a href="#如何执行">如何执行?</a></li>
+<li><a href="#如何载入">如何载入?</a></li>
+<li><a href="#bgsave-执行时的状态">BGSAVE 执行时的状态</a></li>
+</ul></li>
+<li><a href="#定时执行bgsave">定时执行BGSAVE</a>
+<ul>
+<li><a href="#快照策略-snapshotting">快照策略 Snapshotting</a>
+<ul>
+<li><a href="#默认的保存条件">默认的保存条件</a></li>
+</ul></li>
+<li><a href="#dirty-计数器-lastsave-属性">dirty 计数器 &amp; lastsave 属性</a></li>
+<li><a href="#定时执行过程">定时执行过程</a>
+<ul>
+<li><a href="#满足条件逻辑">满足条件逻辑</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#rdb-文件结构">RDB 文件结构</a>
+<ul>
+<li><a href="#解析rdb结构">解析RDB结构</a>
+<ul>
+<li><a href="#value-type">value type</a></li>
+<li><a href="#键值编码格式">键值编码格式</a></li>
+</ul></li>
+<li><a href="#length-encoding">Length Encoding</a>
+<ul>
+<li><a href="#如何工作">如何工作?</a></li>
+<li><a href="#编码结果是">编码结果是?</a></li>
+</ul></li>
+<li><a href="#string-encoding">String Encoding</a></li>
+</ul></li>
+<li><a href="#分析rdb文件">分析RDB文件</a>
+<ul>
+<li><a href="#魔数和版本号">魔数和版本号</a></li>
+<li><a href="#辅助字段-aux-fields">辅助字段 Aux Fields</a></li>
+<li><a href="#数据库相关标记">数据库相关标记</a></li>
+<li><a href="#key-value-结构">Key Value 结构</a></li>
+<li><a href="#结束符-校验码">结束符 &amp; 校验码</a></li>
+</ul></li>
+<li><a href="#参考">参考</a></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+      </nav>
+    </div>
+  </aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2019/11/rdb/"
+    >Redis-RDB持久化</a
+  >
+</h1>
+
+      <div class="article-meta">
+        <span class="article-date">
+  <i class="icon icon-calendar-check"></i>
+<a href="https://xiaohei.im/2019/11/rdb/" class="article-date">
+  <time datetime="2019-11-06 19:08:56 &#43;0800 CST" itemprop="datePublished">2019-11-06</time>
+</a>
+</span><span class="article-category">
+  <i class="icon icon-folder"></i>
+  <a class="article-category-link" href="/categories/redis/"> redis </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+    <a class="article-tag-link" href="/tags/redis/"> redis </a>
+  </span>
+
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/11/rdb/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计:3445字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长:7分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      <p><code>redis</code> 为内存数据库,一旦服务器进程退出,服务器中的数据就不见了.所以内存中的数据需要持久化的硬盘中来保证可以在必要的时候进行故障恢复. <code>RDB</code> 就是 <code>redis</code> 提供的一种持久化方式.</p>
+
+<blockquote>
+<p>官方关于持久化的文章: <a href="https://redis.io/topics/persistence">https://redis.io/topics/persistence</a></p>
+</blockquote>
+
+<h2 id="介绍">介绍</h2>
+
+<p><code>RDB</code> 是 <code>redis</code> 提供的一种持久化方式,可以手动执行,也可以通过定时任务定期执行,可以将某个时间节点的数据库状态保存到一个 <code>RDB</code> 文件中,叫做 <code>dump.rdb</code>.如果开启了压缩算法( <code>LZF</code> )的支持,则可以利用算法减少文件大小.服务器意外宕机或者断电后重启都可以通过该文件来恢复数据库状态.</p>
+
+<h3 id="如何执行">如何执行?</h3>
+
+<p>有两个命令可以生成 <code>RDB</code> 文件.</p>
+
+<ol>
+<li><strong>SAVE:</strong> 执行时进程阻塞,无法处理其他命令</li>
+<li><strong>BGSAVE:</strong> 新建一个子进程来后台生成 <code>RDB</code> 文件</li>
+</ol>
+
+<p>具体实现逻辑在: <code>src/rdb.c/rdbSave()</code>,从官方文档可知,该实现是基于 <code>cow</code> 的.</p>
+
+<blockquote>
+<p><a href="https://redis.io/topics/persistence">https://redis.io/topics/persistence</a></p>
+
+<p>This method allows Redis to benefit from copy-on-write semantics.</p>
+</blockquote>
+
+<h3 id="如何载入">如何载入?</h3>
+
+<p><code>RDB</code> 文件会在 <code>redis</code> 启动时自动载入.</p>
+
+<p>由于 <code>AOF</code> 持久化的实时性更好,所以如果同时开启了 <code>AOF</code> , <code>RDB</code> 两种持久化,会优先使用 <code>AOF</code> 来恢复.</p>
+
+<h3 id="bgsave-执行时的状态">BGSAVE 执行时的状态</h3>
+
+<p><code>BGSAVE</code> 执行期间会拒绝 <code>SAVE/BGSAVE</code> 的命令,避免产生 <code>竞争条件</code>.</p>
+
+<p><code>BGSAVE</code> 执行期间 <code>BGREWRITEAOF</code> 命令会延迟到 <code>BGSAVE</code> 执行完之后执行.</p>
+
+<p><code>BGREWRITEAOF</code> 在执行时, <code>BGSAVE</code> 命令会被拒绝.</p>
+
+<p><code>BGSAVE</code> 和 <code>BGREWRITEAOF</code> 命令的权衡完全是性能方面的考虑.毕竟都会有大量的磁盘写入,影响性能.</p>
+
+<h2 id="定时执行bgsave">定时执行BGSAVE</h2>
+
+<p><code>BGSAVE</code> 不会阻塞服务器进程,所以 <code>redis</code> 允许用户通过配置, 定时执行 <code>BGSAVE</code> 命令.</p>
+
+<h3 id="快照策略-snapshotting">快照策略 Snapshotting</h3>
+
+<p>可以通过设置 N 秒内至少 M 次修改来触发一次 <code>BGSAVE</code>.</p>
+
+<pre><code class="language-bash">save 60 1000 # 60s内有至少1000次修改时 bgsave 一次
+</code></pre>
+
+<h4 id="默认的保存条件">默认的保存条件</h4>
+
+<pre><code class="language-bash">save 900 1
+save 300 10
+save 60 10000
+</code></pre>
+
+<h3 id="dirty-计数器-lastsave-属性">dirty 计数器 &amp; lastsave 属性</h3>
+
+<p><code>redis</code> 中维护了一个计数器,来记录距离上一次 <code>SAVE/BGSAVE</code> 后服务器对所有数据库进行了多少次增删改,叫做 <code>dirty计数器</code>.属于 <code>redisServer</code> 结构体的属性之一.</p>
+
+<p><code>lastsave</code> 是记录了上一次成功执行 <code>SAVE/BGSAVE</code> 的 <code>UNIX时间戳</code> , 同样是 <code>redisServer</code> 结构体的属性之一.</p>
+
+<pre><code class="language-c"># src/server.h
+struct redisServer {
+  ...
+  long long dirty; /* Changes to DB from the last save */
+  time_t lastsave; /* Unix time of last successful save */
+  ...
+}
+</code></pre>
+
+<h3 id="定时执行过程">定时执行过程</h3>
+
+<p><code>redis</code> 有一个定时任务 <code>serverCron</code> , 每隔 <code>100ms</code> 就会执行一次,用于维护服务器.该任务就会检查 <code>save</code> 设置的保存条件是否满足,满足则执行 <code>BGSAVE</code></p>
+
+<h4 id="满足条件逻辑">满足条件逻辑</h4>
+
+<p>遍历设置的 <code>save</code> 参数, 计算当前时间到 <code>lastsave</code> 的间隔 <code>interval</code> , 如果 <code>dirty</code> &gt; <code>save.change</code> &amp; <code>interval</code> &gt; <code>save.seconds</code> 那么就执行保存</p>
+
+<h2 id="rdb-文件结构">RDB 文件结构</h2>
+
+<blockquote>
+<p><a href="https://github.com/sripathikrishnan/redis-rdb-tools/wiki/Redis-RDB-Dump-File-Format">https://github.com/sripathikrishnan/redis-rdb-tools/wiki/Redis-RDB-Dump-File-Format</a></p>
+
+<p>写下这篇文章时参考版本为 2019.09.05 更新的版本</p>
+</blockquote>
+
+<p><code>RDB</code> 文件格式对读写进行了很多优化,这类优化导致其格式与内存中存在的形式极其相似,同时利用 <code>LZF</code> 压缩算法来优化文件的大小.一般来讲, <code>redis</code> 对象都会提前标记自身的大小,所以备份<code>RDB</code> 在读取这些 <code>object</code> 时,可以提前知道要分配多少内存.</p>
+
+<h3 id="解析rdb结构">解析RDB结构</h3>
+
+<p>下面的代码展示的是 16 进制下 <code>RDB</code> 文件的结构,便于理解</p>
+
+<pre><code class="language-bash">----------------------------# RDB is a binary format. There are no new lines or spaces in the file.
+52 45 44 49 53              # 魔数 REDIS的16进制表示,代表这是个RDB文件
+30 30 30 37                 # 4位ascii码表示当前RDB版本号,这里表示&quot;0007&quot; = 7
+----------------------------
+FE 00                       # FE 表明这是数据库选择标记. 00 表示选中0号数据库
+----------------------------# Key-Value pair starts
+FD $unsigned int            # FD 是秒级过期时间的标记. 紧接着是 4 byte unsigned int 过期时间
+$value-type                 # 1 byte 标记 value 类型 - set, map, sorted set etc.
+$string-encoded-key         # 经过编码后的键
+$encoded-value              # 值,编码格式取决去 $value-type
+----------------------------
+FC $unsigned long           # FC 表明是毫秒级过期时间. 过期时间值是 8 bytes的 unsigned long,是一个unit时间戳
+$value-type                 # 同上秒级时间
+$string-encoded-key         # 同上秒级时间
+$encoded-value              # 同上秒级时间
+----------------------------
+$value-type                 # 这一栏是没有过期时间的key-value
+$string-encoded-key
+$encoded-value
+----------------------------
+FE $length-encoding         # 前一个数据库的编码完成,选择新的数据库进行处理.数据库编号会根据 length-encoding 格式获得
+----------------------------
+...                         # Key value pairs for this database, additonal database
+                            
+FF                          ## 表明 RDB 文件结束了 
+8 byte checksum             ## 8byte CRC 64 校验码
+</code></pre>
+
+<h4 id="value-type">value type</h4>
+
+<p>1 byte 表示了 <code>value</code> 的类型.</p>
+
+<table>
+<thead>
+<tr>
+<th>type(以下为十进制表示)</th>
+<th>编码类型</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>0</td>
+<td>String</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>List</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Set</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Sorted Set</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>Hash</td>
+</tr>
+
+<tr>
+<td>9</td>
+<td>Zipmap</td>
+</tr>
+
+<tr>
+<td>10</td>
+<td>Ziplist</td>
+</tr>
+
+<tr>
+<td>11</td>
+<td>Intset</td>
+</tr>
+
+<tr>
+<td>12</td>
+<td>Sorted Set in Ziplist</td>
+</tr>
+
+<tr>
+<td>13</td>
+<td>HashMap in Ziplist</td>
+</tr>
+</tbody>
+</table>
+
+<h4 id="键值编码格式">键值编码格式</h4>
+
+<p>键(<code>key</code>)都是字符串,所以使用<code>string</code> 编码格式.</p>
+
+<p>值(<code>value</code>)就会有不同的区分:</p>
+
+<ul>
+<li>如果 <code>value type</code> 为 0 ,会是简单的字符串.</li>
+<li>如果 <code>value type</code> 为 9,10,11,12, 值会被包装为 <code>string</code>, 在读到该字符串后,会进一步解析.</li>
+<li>如果 <code>value type</code> 为 1,2,3,4, 值会是一个字符串数组.</li>
+</ul>
+
+<h3 id="length-encoding">Length Encoding</h3>
+
+<p>长度编码是用来存储对象的长度的.是一种可变字节码,旨在使用尽可能少的字节.</p>
+
+<h4 id="如何工作">如何工作?</h4>
+
+<ol>
+<li>从流中读取 1byte,得到高两位.</li>
+<li>如果是 <code>00</code> 开头, 那么剩下 6 位表示长度</li>
+<li>如果是 <code>01</code> 开头, 会再从流中读取 1byte,合起来总共 14 位作为长度.</li>
+<li>如果是 <code>10</code> 开头, 会直接丢弃剩下的 6 位.再从流中读取 4bytes作为长度.</li>
+<li>如果是 <code>11</code> 开头, 说明这个对象是一种特殊编码格式. 剩下的 6 位表示了它的格式类型.这个编码通常用来将数字存储为字符串,或者存储被编码过得字符串(<a href="#String-Encoding">String Encoding</a>).</li>
+</ol>
+
+<h4 id="编码结果是">编码结果是?</h4>
+
+<p>从上述可得,可能的编码格式是这样的:</p>
+
+<ol>
+<li>1 byte 最多存储到 63</li>
+<li>2 bytes 最多存储到 16383</li>
+<li>5 bytes 最多存储到 2^32 - 1</li>
+</ol>
+
+<h3 id="string-encoding">String Encoding</h3>
+
+<p><code>redis</code> 的字符串是二进制安全的,所以可以存储 anything. 没有任何字符串结尾的标记.最好将 <code>redis</code> 字符串视为一个字节数组.</p>
+
+<p>有三种类型的字符串:</p>
+
+<ol>
+<li>长度编码字符串</li>
+</ol>
+
+<p>这是最简单的一种,字符串的长度会利用 <code>Length Encoding</code> 编码作为前缀,后面跟着字符串的编码</p>
+
+<ol>
+<li>数字作为字符串</li>
+</ol>
+
+<p>这里就将上面 <a href="#Length-Encoding">Length Encoding</a> 的特殊编码格式联系起来了,数字作为字符串时以 <code>11</code> 开头,剩下的 6 位表示不同的数字类型</p>
+
+<ul>
+<li>0 表示接下来是一个 8 位数字</li>
+<li>1 表示接下来是一个 16  位数字</li>
+<li>2 表示接下来是一个 32 位数字</li>
+</ul>
+
+<ol>
+<li>压缩字符串</li>
+</ol>
+
+<p>压缩字符串的 <code>Length Encoding</code> 还是以 <code>11</code> 开头的, 但是剩下的6 位二进制的值为 4, 表明后面读取到的是一个压缩字符串.压缩字符串会存储压缩前和压缩后的长度.解析规则如下:</p>
+
+<ul>
+<li>根据 <code>Length Encoding</code> 读取压缩的长度 <code>clen</code></li>
+<li>根据 <code>Length Encoding</code> 读取未压缩的长度</li>
+<li>从流中读取 <code>clen</code> bytes 的数据</li>
+<li>利用 <code>LZF</code> 算法进行解析</li>
+</ul>
+
+<h2 id="分析rdb文件">分析RDB文件</h2>
+
+<p>利用 <code>od</code> 命令来分析来看看 <code>rdb</code> 文件长什么样子.我将 <code>redis</code> 数据库清空后,执行了 <code>set msg hello</code>,所以现在只有一个键 <code>msg</code>, 值为 <code>hello</code>.下面的命令第一行输出的是 16 进制,下面一行输出的是对应的 <code>ascii</code>. 下面进行解析~</p>
+
+<pre><code class="language-bash">➜ od -A x -t x1c -v dump.rdb
+0000000    52  45  44  49  53  30  30  30  39  fa  09  72  65  64  69  73
+           R   E   D   I   S   0   0   0   9 372  \t   r   e   d   i   s
+0000010    2d  76  65  72  05  35  2e  30  2e  34  fa  0a  72  65  64  69
+           -   v   e   r 005   5   .   0   .   4 372  \n   r   e   d   i
+0000020    73  2d  62  69  74  73  c0  40  fa  05  63  74  69  6d  65  c2
+           s   -   b   i   t   s 300   @ 372 005   c   t   i   m   e 051
+0000030    29  e8  c3  5d  fa  08  75  73  65  64  2d  6d  65  6d  c2  d0
+           ) 350 303   ] 372  \b   u   s   e   d   -   m   e   m 302 007
+0000040    07  10  00  fa  0c  61  6f  66  2d  70  72  65  61  6d  62  6c
+          \a 020  \0 372  \f   a   o   f   -   p   r   e   a   m   b   l
+0000050    65  c0  00  fe  00  fb  01  00  00  03  6d  73  67  05  68  65
+           e 300  \0 376  \0 373 001  \0  \0 003   m   s   g 005   h   e
+0000060    6c  6c  6f  ff  fc  0e  6b  79  fe  47  1a  36
+           l   l   o 377 374 016   k   y 376   G 032   6
+000006c
+</code></pre>
+
+<h3 id="魔数和版本号">魔数和版本号</h3>
+
+<p>前 5 个字节就是我们看到的 <code>REDIS</code>,以及后四个字节对应的版本号<code>9</code></p>
+
+<h3 id="辅助字段-aux-fields">辅助字段 Aux Fields</h3>
+
+<p>这是 <code>Version 7</code> 之后加入的字段, <code>Redis设计与实现</code> 所使用的版本是没有这个,所以一开始有点懵~ 只能看代码了.</p>
+
+<pre><code class="language-c"># src/rdb.c
+/* 该函数负责执行 RDB 文件的写入 */
+int rdbSave(char *filename, rdbSaveInfo *rsi) {
+	//伪代码
+  1. 创建一个临时文件 temp-$pid.rdb,并处理创建失败的逻辑
+  2. 新建一个redis封装的I/O流
+  3. 写入rdb文件 rdbSaveRio()
+  4. 将文件重命名, 默认重命名为 dump.rdb
+  5. 更新服务器的一些状态: dirty计数器置0,更新lastsave等
+}
+</code></pre>
+
+<p>然后我们来看下写入的 <code>Aux Fields</code>, 在函数 <code>rdbSaveRio</code> 中</p>
+
+<pre><code class="language-c">int rdbSaveRio(rio *rdb, int *error, int flags, rdbSaveInfo *rsi) {
+	 // 忽略所有只看重点
+   if (server.rdb_checksum)
+        rdb-&gt;update_cksum = rioGenericUpdateChecksum; // 生成校验码
+    snprintf(magic,sizeof(magic),&quot;REDIS%04d&quot;,RDB_VERSION); // 生成魔数及版本号
+    if (rdbWriteRaw(rdb,magic,9) == -1) goto werr; // 写入魔数及版本号
+    if (rdbSaveInfoAuxFields(rdb,flags,rsi) == -1) goto werr; // 写入 AuxFileds
+}
+
+/* Save a few default AUX fields with information about the RDB generated. */
+int rdbSaveInfoAuxFields(rio *rdb, int flags, rdbSaveInfo *rsi) {
+    int redis_bits = (sizeof(void*) == 8) ? 64 : 32;
+    int aof_preamble = (flags &amp; RDB_SAVE_AOF_PREAMBLE) != 0;
+
+    /* Add a few fields about the state when the RDB was created. */
+    if (rdbSaveAuxFieldStrStr(rdb,&quot;redis-ver&quot;,REDIS_VERSION) == -1) return -1;
+    if (rdbSaveAuxFieldStrInt(rdb,&quot;redis-bits&quot;,redis_bits) == -1) return -1;
+    if (rdbSaveAuxFieldStrInt(rdb,&quot;ctime&quot;,time(NULL)) == -1) return -1;
+    if (rdbSaveAuxFieldStrInt(rdb,&quot;used-mem&quot;,zmalloc_used_memory()) == -1) return -1;
+
+    /* Handle saving options that generate aux fields. */
+    if (rsi) {
+        if (rdbSaveAuxFieldStrInt(rdb,&quot;repl-stream-db&quot;,rsi-&gt;repl_stream_db)
+            == -1) return -1;
+        if (rdbSaveAuxFieldStrStr(rdb,&quot;repl-id&quot;,server.replid)
+            == -1) return -1;
+        if (rdbSaveAuxFieldStrInt(rdb,&quot;repl-offset&quot;,server.master_repl_offset)
+            == -1) return -1;
+    }
+    if (rdbSaveAuxFieldStrInt(rdb,&quot;aof-preamble&quot;,aof_preamble) == -1) return -1;
+    return 1;
+}
+</code></pre>
+
+<p>以上可以看出会写入这些字段.</p>
+
+<ul>
+<li><p><code>redis-ver</code>：版本号</p></li>
+
+<li><p><code>redis-bits</code>：OS 操作系统位数 <sup>32</sup>&frasl;<sub>64</sub></p></li>
+
+<li><p><code>ctime</code>：RDB文件创建时间</p></li>
+
+<li><p><code>used-mem</code>：使用内存大小</p></li>
+
+<li><p><code>repl-stream-db</code>：在server.master客户端中选择的数据库</p></li>
+
+<li><p><code>repl-id</code>：当前实例 replication ID</p></li>
+
+<li><p><code>repl-offset</code>：当前实例复制的偏移量</p></li>
+</ul>
+
+<p>每一个属性写入前都会写入 <code>0XFA</code>, 标记这是一个辅助字段.在上面命令行输出中,<code>ascii</code> 展示为 <code>372</code></p>
+
+<h3 id="数据库相关标记">数据库相关标记</h3>
+
+<pre><code class="language-bash">0000050    65  c0  00  fe  00  fb  01  00  00  03  6d  73  67  05  68  65
+           e 300  \0 376  \0 373 001  \0  \0 003   m   s   g 005   h   e
+</code></pre>
+
+<p>这一行中的 <code>0XFE</code> 表示选择数据库,后面紧接着 <code>00</code> 即为,选择 0 号数据库. <code>0XFB</code> 是标记了当前数据库中键存储的数量,这里用到了 <code>Length Encoding</code>, <code>01</code> 是我们存储的字典中<code>key-value</code>的数量,<code>00</code> 是过期字典(<code>expires</code>)中的数量.</p>
+
+<blockquote>
+<p>redisDB中有两个属性, <code>dict</code> 记录了我们写入的所有键, <code>expires</code> 存储了我们设置有过期时间的键以及其过期时间.</p>
+</blockquote>
+
+<h3 id="key-value-结构">Key Value 结构</h3>
+
+<p>我们设置了 <code>msg</code> -&gt; <code>hello</code>,在输出中是这样的.</p>
+
+<pre><code class="language-bash">0000050    65  c0  00  fe  00  fb  01  00  00  03  6d  73  67  05  68  65
+           e 300  \0 376  \0 373 001  \0  \0 003   m   s   g 005   h   e
+</code></pre>
+
+<p>在 <code>msg</code> 前面的字段 <code>\0 003</code>, 表示他是 <code>string</code> 类型, 且长度为 <code>3</code>, <code>005 hello</code>, 表示是长度为 <code>5</code> 的 <code>hello</code>.</p>
+
+<p>还有其他数据结构这里就不做展示了.</p>
+
+<h3 id="结束符-校验码">结束符 &amp; 校验码</h3>
+
+<pre><code class="language-bash">0000060    6c  6c  6f  ff  fc  0e  6b  79  fe  47  1a  36
+           l   l   o 377 374 016   k   y 376   G 032   6
+</code></pre>
+
+<p>最后一行输出中 <code>0xff</code> , 文件结束符, 剩下的八个字节就是 <code>CRC64</code> 校验码了.</p>
+
+<h2 id="参考">参考</h2>
+
+<ol>
+<li><p><a href="https://cloud.tencent.com/developer/article/1179710">https://cloud.tencent.com/developer/article/1179710</a></p></li>
+
+<li><p><a href="https://juejin.im/post/5d8dc285f265da5b9e0d3089">Redis5.0 RDB文件解析</a></p></li>
+</ol>
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://xiaohei.im/2019/11/db/" title="Redis-数据库长什么样?"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://xiaohei.im/2019/11/aof/"
+                    title=""><span>下一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        
+        <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal"
+            data-target="#donateModal"><span>赏</span></button>
+        
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content donate">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <div class="modal-body">
+                <div class="donate-box">
+                    <div class="donate-head">
+                        <p>感谢您的支持,我会继续努力的!</p>
+                    </div>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/donate/alipayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦~</p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/donate/wechatpayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+                        </div>
+                    </div>
+                    <div class="donate-footer">
+                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay"
+                                    aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+                            </li>
+                            <li role="presentation" class="">
+                                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab"
+                                    aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i>
+                                    微信支付</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/xiaoheiAh" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://xiaohei.im/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2017  -
+    2019
+    <div class="publishby">
+        Theme by <a href="https://github.com/xiaoheiAh" target="_blank"> xiaoheiAh </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+   window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/rust.min.js"></script>
+<script type="text/javascript"
+   src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script>
+hljs.configure({
+  tabReplace: '    ', 
+  classPrefix: ''     
+                      
+})
+hljs.initHighlightingOnLoad();
+</script>
+<script type="text/javascript" src="https://xiaohei.im/js/application.js"></script>
+<script type="text/javascript" src="https://xiaohei.im/js/plugin.js"></script>
+<script>
+      (function (window) {
+          var INSIGHT_CONFIG = {
+              TRANSLATION: {
+                  POSTS: '文章',
+                  PAGES: '页面',
+                  CATEGORIES: '分类',
+                  TAGS: '标签',
+                  UNTITLED: '(未命名)',
+              },
+              ROOT_URL: 'https:\/\/xiaohei.im\/',
+              CONTENT_URL: 'https:\/\/xiaohei.im\/searchindex.json ',
+          };
+          window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+      })(window);
+      </script>
+<script type="text/javascript" src="https://xiaohei.im/js/insight.js"></script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: 'e38fc798c72a7e4e1386',
+        clientSecret: 'e151aa3b7b98d3cfaa1f096b88fdd7897e2c8007',
+        repo: 'xiaoheiAh.github.io',
+        owner: 'xiaoheiAh',
+        admin: ['xiaoheiAh'],
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('comments');
+</script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98254666-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

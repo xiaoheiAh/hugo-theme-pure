@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rabbitmq on 赵小黑的博客</title>
+    <link>https://xiaohei.im/tags/rabbitmq/</link>
+    <description>Recent content in rabbitmq on 赵小黑的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 23 Oct 2019 11:22:13 +0800</lastBuildDate>
+    
+        <atom:link href="https://xiaohei.im/tags/rabbitmq/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>RabbitMQ-消息确认机制</title>
+      <link>https://xiaohei.im/2019/10/rabbitmq-ack-confirm/</link>
+      <pubDate>Wed, 23 Oct 2019 11:22:13 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/10/rabbitmq-ack-confirm/</guid>
+      <description>&lt;p&gt;RabbitMQ在保证生产端与消费端的数据安全上,提供了消息确认的机制来保证. 消费端到 &lt;code&gt;broker&lt;/code&gt; 端的确认常叫做&lt;code&gt;ack机制&lt;/code&gt;,  &lt;code&gt;broker&lt;/code&gt; 到生产端常叫做&lt;code&gt;confirm&lt;/code&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>RabbitMQ-消息分发机制</title>
+      <link>https://xiaohei.im/2019/09/rabbitmq-msg-distribution/</link>
+      <pubDate>Sat, 21 Sep 2019 18:42:13 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/09/rabbitmq-msg-distribution/</guid>
+      <description>&lt;p&gt;rabbitmq有多种使用模式,在这里记录下不同模式的消息路由规则&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>RabbitMQ-入门及高可用集群部署</title>
+      <link>https://xiaohei.im/2019/09/rabbitmq-guide-and-ha-cluster/</link>
+      <pubDate>Wed, 04 Sep 2019 14:42:13 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/09/rabbitmq-guide-and-ha-cluster/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>AMQP消息模型</title>
+      <link>https://xiaohei.im/2019/09/amqp-0-9-1-model-explained/</link>
+      <pubDate>Tue, 03 Sep 2019 10:04:49 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/2019/09/amqp-0-9-1-model-explained/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

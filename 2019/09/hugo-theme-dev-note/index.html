@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        Hexo =&gt; Hugo主题移植记录 - 赵小黑的博客
+      </title>
+    <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  
+  <meta name="theme-color" content="#000000" />
+  
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <meta name="description" content="从hexo移植主题,适配hugo" />
+  <meta name="generator" content="Hugo 0.58.0 with theme pure" />
+  <title>Hexo =&gt; Hugo主题移植记录 - 赵小黑的博客</title>
+  
+
+  <link rel="stylesheet" href="https://xiaohei.im/css/style.css">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css"> 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <meta property="og:title" content="Hexo =&gt; Hugo主题移植记录" />
+<meta property="og:description" content="从hexo移植主题,适配hugo" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiaohei.im/2019/09/hugo-theme-dev-note/" />
+<meta property="article:published_time" content="2019-09-23T19:08:35+08:00" />
+<meta property="article:modified_time" content="2019-09-23T19:08:35+08:00" />
+<meta itemprop="name" content="Hexo =&gt; Hugo主题移植记录">
+<meta itemprop="description" content="从hexo移植主题,适配hugo">
+
+
+<meta itemprop="datePublished" content="2019-09-23T19:08:35&#43;08:00" />
+<meta itemprop="dateModified" content="2019-09-23T19:08:35&#43;08:00" />
+<meta itemprop="wordCount" content="2146">
+
+
+
+<meta itemprop="keywords" content="hugo," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Hexo =&gt; Hugo主题移植记录"/>
+<meta name="twitter:description" content="从hexo移植主题,适配hugo"/>
+
+  <!--[if lte IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+    <![endif]-->
+
+  <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+  </head>
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/xiaoheiAh" target="_blank">
+            <img class="img-circle img-rotate" src="https://xiaohei.im/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">赵小黑</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">Java Developer</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shanghai, China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav  menu-highlight">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>自用科学上网节点推荐(便宜又好用)<a href="https://tianlinzhao.com/aff.php?aff=4969" target="_blank" style="background-color:#FFFF00">点这里跳转</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/corejava/" class="category-list-link">corejava</a><span class="category-list-count">7</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/hystrix/" class="category-list-link">hystrix</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/leetcode/" class="category-list-link">leetcode</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">5</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="category-list-link">消息队列</a><span class="category-list-count">4</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/collections/" class="tag-list-link">collections</a><span
+                    class="tag-list-count">7</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/hugo/" class="tag-list-link">hugo</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/hystrix/" class="tag-list-link">hystrix</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rabbitmq/" class="tag-list-link">rabbitmq</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">5</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rust/" class="tag-list-link">rust</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rxjava/" class="tag-list-link">rxjava</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="tag-list-link">分布式锁</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="tag-list-link">响应式编程</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="tag-list-link">数据结构</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+  </div>
+</aside>
+
+    
+    
+  <aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+    <div class="slimContent">
+      <nav id="toc" class="article-toc">
+        <h3 class="toc-title">文章目录</h3>
+        <div class="toc-content always-active">
+        </div>
+      </nav>
+    </div>
+  </aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2019/09/hugo-theme-dev-note/"
+    >Hexo =&gt; Hugo主题移植记录</a
+  >
+</h1>
+
+      <div class="article-meta">
+        <span class="article-date">
+  <i class="icon icon-calendar-check"></i>
+<a href="https://xiaohei.im/2019/09/hugo-theme-dev-note/" class="article-date">
+  <time datetime="2019-09-23 19:08:35 &#43;0800 CST" itemprop="datePublished">2019-09-23</time>
+</a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+    <a class="article-tag-link" href="/tags/hugo/"> hugo </a>
+  </span>
+
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/09/hugo-theme-dev-note/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计:2146字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长:5分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      <blockquote>
+<p>最近使用<a href="https://gohugo.io/">Hugo</a>作为博客引擎后,闲不下来总想去找一些简单好看的主题.在<a href="https://themes.gohugo.io/">官方的主题列表</a>搜罗了一圈后,选择了<a href="https://github.com/joway/hugo-theme-yinyang">yinyang</a>,非常简单,但是用了一段时间还是想找个功能全点的,无意中瞄到了一个博主的博客,主题特别吸引我,但是是 <code>hexo</code> 平台的,搜了半天也没有人移植,就自己来吧~ 移植的过程中,遇到了挺多问题,也是这些问题慢慢的熟悉了hugo的模板结构.下面就来写一写自己遇到的问题~</p>
+</blockquote>
+
+<h2 id="页面变量参数">页面变量参数</h2>
+
+<blockquote>
+<p><a href="https://gohugo.io/variables/">https://gohugo.io/variables/</a></p>
+</blockquote>
+
+<p>hugo的页面有基本的变量(我更愿意称为<strong>属性</strong>,根据这些属性来实现我们的主题模板.最主要的有三类:<code>Site</code>, <code>Page</code>, <code>Taxonomy</code>.</p>
+
+<h3 id="site">.Site</h3>
+
+<blockquote>
+<p>站点相关的属性,即config.toml(yml)文件中的配置.</p>
+</blockquote>
+
+<p>在页面模板中,我们可以使用<code>{{- .Site.Autor }}</code>这样的方式来获取你想要的站点属性.具体的站点属性可以查看<a href="https://gohugo.io/variables/site/">https://gohugo.io/variables/site/</a>. <code>.Site</code> 属于全局配置,在 <strong>作用域</strong> 得当的情况下是可以正常调用的.非正常情况我们下面再讲.</p>
+
+<h4 id="常用属性">常用属性</h4>
+
+<ol>
+<li><p><code>.Site.Pages</code> : 获取所有文章(包含生成的一些分类页,比如说 <code>标签页</code>),按时间倒序排序.返回是一个数组.我们经常用来渲染一个列表.比如 <code>归档</code> 页面.</p></li>
+
+<li><p><code>.Site.Taxonomies</code> : 获取所有的分类(这里的分类是广义上的),可以获取到按<code>tag</code>分类的集合,也可以获取到按<code>category</code>分类的集合,可以用这个属性来完成<code>分类</code>的页面.下面这段代码就代表着我可以拿到所有的 <code>分类页</code> ,循环得到分类页的链接和标题.</p></li>
+</ol>
+
+<pre><code class="language-html">{{- range .Site.Taxonomies.categories }}
+&lt;li&gt;&lt;a href=&quot;{{ .Page.Permalink }}&quot;&gt;{{ .Page.Title }}&lt;/a&gt;&lt;/li&gt;
+{{- end }}
+</code></pre>
+
+<ol start="3">
+<li><code>.Site.Params</code> 可以获取到我们在<code>config.toml</code>的<code>Params</code>标签下设置的内容.也是很重要的属性.比如说下面的例子.我可以设置日期的格式化样式,展示成你想要的类型.</li>
+</ol>
+
+<pre><code class="language-html">&lt;p&gt;{{ .Date.Format (.Site.Params.dateFormatToUse | default &quot;2006-01-02&quot;)}}&lt;/p&gt;
+</code></pre>
+
+<h3 id="page">.Page</h3>
+
+<blockquote>
+<p>页面中定义的属性.</p>
+</blockquote>
+
+<p>页面属性可以大致分为两部分,一个是<code>Hugo</code>原生的属性,一个是每一篇文章的文件头,即<code>front matter</code>中的属性.具体的属性可以在<a href="https://gohugo.io/variables/page/查看">https://gohugo.io/variables/page/查看</a>. 在一个页面的作用域中使用时可以直接调用.比如我们想要知道页面的创建日期就可以直接 <code>{{ .Date }}</code> 即可.</p>
+
+<h4 id="常用属性-1">常用属性</h4>
+
+<ol>
+<li><code>.Date/.Title/.ReadingTime/.WordCount</code> 见名知意</li>
+<li><code>.Permalink/.RelPermalink</code> 永久链接及相对连接</li>
+<li><code>.Summary</code> 摘要,默认70字</li>
+<li><code>.Pages</code> 为什么页面中还有一个这样的属性呢? <code>Page</code>是包含生成的<code>分类页</code>, <code>标签页</code>的,所有当处于这些页面时会返回一个集合,若是我们自己真正写的文件,即<code>markdown</code>文件,会返回<code>nil</code>的.</li>
+</ol>
+
+<h4 id="taxonomies">.Taxonomies</h4>
+
+<blockquote>
+<p>用作内容分类的管理. 我们经常在写文章时会写上 <code>categories</code> 或者 <code>tags</code>, 这些标签类目就是 <code>.Taxonomies</code> 的集中展示, <code>Hugo</code> 默认会有 <code>categories</code> 和 <code>tags</code> 两种分类. 你也可以自己再自定义设置. 具体参考: <a href="https://gohugo.io/content-management/taxonomies">https://gohugo.io/content-management/taxonomies</a></p>
+</blockquote>
+
+<h4 id="使用案例">使用案例</h4>
+
+<blockquote>
+<p>官方提供了多种 <code>Template</code> 实现常用的遍历.</p>
+</blockquote>
+
+<p>我通常会用来写标签页(<code>tags</code>)和分类页(<code>categories</code>). 直接调用 <code>.Taxonomies</code> 会获得所有的分类项(即: <code>tags</code>, <code>categories</code>, <code>自定义分类项</code>), <code>.Taxonomies.tags</code> 就可以获得所有的标签,以及标签下的所有文章.以下就是我的主题中 <code>标签</code> 页的实现逻辑.</p>
+
+<pre><code class="language-html">{{- $tags := .Site.Taxonomies.tags }}
+&lt;main class=&quot;main&quot; role=&quot;main&quot;&gt;
+    &lt;article class=&quot;article article-tags post-type-list&quot; itemscope=&quot;&quot;&gt;
+        &lt;header class=&quot;article-header&quot;&gt;
+            &lt;h1 itemprop=&quot;name&quot; class=&quot;hidden-xs&quot;&gt;{{- .Title }}&lt;/h1&gt;
+            &lt;p class=&quot;text-muted hidden-xs&quot;&gt;{{- T &quot;total_tag&quot; (len $tags) }}&lt;/p&gt;
+            &lt;nav role=&quot;navigation&quot; id=&quot;nav-main&quot; class=&quot;okayNav&quot;&gt;
+                &lt;ul&gt;
+                    &lt;li&gt;&lt;a href=&quot;{{- &quot;tags&quot; | relURL }}&quot;&gt;{{- T &quot;nav_all&quot; }}&lt;/a&gt;&lt;/li&gt;
+                    {{- range $tags }}
+                    &lt;li&gt;&lt;a href=&quot;{{ .Page.Permalink }}&quot;&gt;{{ .Page.Title }}&lt;/a&gt;&lt;/li&gt;
+                    {{- end }}
+                &lt;/ul&gt;
+            &lt;/nav&gt;
+        &lt;/header&gt;
+        &lt;!-- /header --&gt;
+        &lt;div class=&quot;article-body&quot;&gt;
+            {{- range $name, $taxonomy := $tags  }}
+            &lt;h3 class=&quot;panel-title mb-1x&quot;&gt;
+                &lt;a href=&quot;{{ &quot;/tags/&quot; | relURL}}{{ $name | urlize }}&quot; title=&quot;#{{- $name }}&quot;&gt;# {{ $name }}&lt;/a&gt;
+                &lt;small class=&quot;text-muted&quot;&gt;(Total {{- .Count }} articles)&lt;/small&gt;
+            &lt;/h3&gt;
+            &lt;div class=&quot;row&quot;&gt;
+                {{- range $taxonomy }}
+                &lt;div class=&quot;col-md-6&quot;&gt;
+                    {{ .Page.Scratch.Set &quot;type&quot; &quot;card&quot;}}
+                    {{- partial &quot;item-post.html&quot; . }}
+                &lt;/div&gt;
+                {{- end }}
+            &lt;/div&gt;
+            {{- end }}
+        &lt;/div&gt;
+    &lt;/article&gt;
+&lt;/main&gt;
+</code></pre>
+
+<h2 id="上下文传递">上下文传递</h2>
+
+<blockquote>
+<p>刚开始写 Hugo 的页面时,最让我头疼的地方就在在于此.现在想想他的逻辑是很标准的.不同的代码块上下文隔离.</p>
+</blockquote>
+
+<p>在Hugo中,上下文的传递一般是靠<code>.</code>符号来完成的. 用的最多的就是再组装页面时,需要将当前页面的作用域传递到 <code>partial</code> 的页面中去以便组装进来的页面可以获得当前页面的属性.</p>
+
+<p>以下是我的 <code>baseof.html</code> 页面, 可以看到 <code>partial</code> 相关的代码中都有 <code>.</code> 符号, 这里就是将当前页面的属性传递下去了, 其他页面也就可以正常使用该页面的属性了.</p>
+
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;{{ .Site.Language }}&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot; /&gt;
+    &lt;title&gt;
+      {{- block &quot;title&quot; . -}}
+      {{ if .IsPage }}
+        {{ .Title }} - {{ .Site.Title }}
+      {{ else}}
+        {{ .Site.Title}}{{ end }}
+      {{- end -}}
+    &lt;/title&gt;
+    {{ partial &quot;head.html&quot; . }}
+  &lt;/head&gt;
+  &lt;body class=&quot;main-center&quot; itemscope itemtype=&quot;http://schema.org/WebPage&quot;&gt;
+    {{- partial &quot;header.html&quot; .}}
+    {{- if and (.Site.Params.sidebar) (or (ne .Params.sidebar &quot;none&quot;) (ne .Params.sidebar &quot;custom&quot;))}}
+        {{- partial &quot;sidebar.html&quot; . }}
+    {{end}}
+    {{ block &quot;content&quot; . }}{{ end }}
+    {{- partial &quot;footer.html&quot; . }}
+    {{- partial &quot;script.html&quot; . }}
+  &lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre>
+
+<h2 id="页面组织">页面组织</h2>
+
+<h3 id="baseofhtml">baseof.html</h3>
+
+<p><code>baseof</code> 可以理解为一种模板,符合规范定义的页面都会按照 <code>baseof.html</code> 的框架完成最后的渲染,具体可以查看<a href="https://gohugo.io/templates/base/">官网页</a>, 以本次移植主题的 <code>baseof.html</code> 来说一下.</p>
+
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;{{ .Site.Language }}&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot; /&gt;
+    &lt;title&gt;
+      {{- block &quot;title&quot; . -}}
+      {{ if .IsPage }}
+        {{ .Title }} - {{ .Site.Title }}
+      {{ else}}
+        {{ .Site.Title}}{{ end }}
+      {{- end -}}
+    &lt;/title&gt;
+    {{ partial &quot;head.html&quot; . }}
+  &lt;/head&gt;
+  &lt;body class=&quot;main-center&quot; itemscope itemtype=&quot;http://schema.org/WebPage&quot;&gt;
+    {{- partial &quot;header.html&quot; .}}
+    {{- if and (.Site.Params.sidebar) (or (ne .Params.sidebar &quot;none&quot;) (ne .Params.sidebar &quot;custom&quot;))}}
+        {{- partial &quot;sidebar.html&quot; . }}
+    {{end}}
+    {{ block &quot;content&quot; . }}{{ end }}
+    {{- partial &quot;footer.html&quot; . }}
+    {{- partial &quot;script.html&quot; . }}
+  &lt;/body&gt;
+&lt;/html&gt;
+
+
+</code></pre>
+
+<p>可以看到上面的页面中就是一个完整的 <code>HTML</code> 结构,我在其中组装了很多页面,比如<code>head</code>,<code>header</code>,<code>footer</code>等等,这些在最后渲染的时候都会加入进来组成一个完整的页面.</p>
+
+<p>在上面还有一个关键字 <strong>block</strong>, 比如 <code>{{ block &quot;title&quot; }}</code>, <code>{{ block &quot;content&quot;}}</code>.该关键字允许你自定义一个模板嵌进来, 只要按照规定的方式来.比如说我的文章页 <code>single.html</code>.</p>
+
+<pre><code class="language-html">{{- define &quot;content&quot;}}
+&lt;main class=&quot;main&quot; role=&quot;main&quot;&gt;
+  {{- partial &quot;article.html&quot; . }}
+&lt;/main&gt;
+{{- end}}
+</code></pre>
+
+<p>这里我们定义了 <code>content</code> 的模板, 和 <code>baseof.html</code> 的模板呼应,在渲染一篇文章时,就会将<code>single.html</code> 嵌入 <code>baseof.html</code> 生成最后的页面了.</p>
+
+<h3 id="模板页面查询规则">模板页面查询规则</h3>
+
+<p>Hugo要怎么知道文章页还是标签页对应的模板是什么呢?答案: 有一套以多个属性作为依据的查询各类模板的标准.具体可以查看<a href="https://gohugo.io/templates/lookup-order/">官网页</a>.</p>
+
+<p>以文章页来举例, <code>Hugo</code> 官网上的内容页寻址规则如下:</p>
+
+<p><figure><img src="https://raw.githubusercontent.com/xiaoheiAh/imgs/master/20191015150712.png" alt="single-lookup-order"></figure></p>
+
+<p>由上可见,会按照该顺序依次往下找,我一般会写在<code>layouts/_default/single.html</code> 下,这样可以在所有页面下通用.</p>
+
+<p>这里有个小坑也是之前文档没看好遇到的: 标签页和分类页这种对应的查找规则要按照<a href="https://gohugo.io/templates/lookup-order/#examples-layout-lookup-for-taxonomy-terms-pages">该指引</a>.</p>
+
+<h2 id="参考">参考</h2>
+
+<ol>
+<li><a href="https://harmstyler.me/posts/2019/how-to-pass-variables-to-a-partial-template-in-hugo/">https://harmstyler.me/posts/2019/how-to-pass-variables-to-a-partial-template-in-hugo/</a></li>
+<li><a href="https://www.qikqiak.com/post/hugo-integrated-algolia-search/">https://www.qikqiak.com/post/hugo-integrated-algolia-search/</a></li>
+</ol>
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://xiaohei.im/2019/09/rabbitmq-msg-distribution/" title="RabbitMQ-消息分发机制"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://xiaohei.im/2019/10/rabbitmq-ack-confirm/"
+                    title="RabbitMQ-消息确认机制"><span>下一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        
+        <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal"
+            data-target="#donateModal"><span>赏</span></button>
+        
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content donate">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <div class="modal-body">
+                <div class="donate-box">
+                    <div class="donate-head">
+                        <p>感谢您的支持,我会继续努力的!</p>
+                    </div>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/donate/alipayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦~</p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/donate/wechatpayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+                        </div>
+                    </div>
+                    <div class="donate-footer">
+                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay"
+                                    aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+                            </li>
+                            <li role="presentation" class="">
+                                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab"
+                                    aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i>
+                                    微信支付</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/xiaoheiAh" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://xiaohei.im/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2017  -
+    2019
+    <div class="publishby">
+        Theme by <a href="https://github.com/xiaoheiAh" target="_blank"> xiaoheiAh </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+   window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/rust.min.js"></script>
+<script type="text/javascript"
+   src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script>
+hljs.configure({
+  tabReplace: '    ', 
+  classPrefix: ''     
+                      
+})
+hljs.initHighlightingOnLoad();
+</script>
+<script type="text/javascript" src="https://xiaohei.im/js/application.js"></script>
+<script type="text/javascript" src="https://xiaohei.im/js/plugin.js"></script>
+<script>
+      (function (window) {
+          var INSIGHT_CONFIG = {
+              TRANSLATION: {
+                  POSTS: '文章',
+                  PAGES: '页面',
+                  CATEGORIES: '分类',
+                  TAGS: '标签',
+                  UNTITLED: '(未命名)',
+              },
+              ROOT_URL: 'https:\/\/xiaohei.im\/',
+              CONTENT_URL: 'https:\/\/xiaohei.im\/searchindex.json ',
+          };
+          window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+      })(window);
+      </script>
+<script type="text/javascript" src="https://xiaohei.im/js/insight.js"></script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: 'e38fc798c72a7e4e1386',
+        clientSecret: 'e151aa3b7b98d3cfaa1f096b88fdd7897e2c8007',
+        repo: 'xiaoheiAh.github.io',
+        owner: 'xiaoheiAh',
+        admin: ['xiaoheiAh'],
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('comments');
+</script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98254666-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

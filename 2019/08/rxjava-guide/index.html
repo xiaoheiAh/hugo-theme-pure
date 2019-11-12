@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        RxJava入门 - 赵小黑的博客
+      </title>
+    <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  
+  <meta name="theme-color" content="#000000" />
+  
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <meta name="keywords"
+    content="学习笔记, rust, 背压, backpressure, 响应式编程" /><meta name="description" content="rxjava入门 背压 观察者模式 map flatmap zip 响应式编程" />
+  <meta name="generator" content="Hugo 0.58.0 with theme pure" />
+  <title>RxJava入门 - 赵小黑的博客</title>
+  
+
+  <link rel="stylesheet" href="https://xiaohei.im/css/style.css">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css"> 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <meta property="og:title" content="RxJava入门" />
+<meta property="og:description" content="rxjava入门 背压 观察者模式 map flatmap zip 响应式编程" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiaohei.im/2019/08/rxjava-guide/" />
+<meta property="article:published_time" content="2019-08-21T16:09:48+08:00" />
+<meta property="article:modified_time" content="2019-08-21T16:09:48+08:00" />
+<meta itemprop="name" content="RxJava入门">
+<meta itemprop="description" content="rxjava入门 背压 观察者模式 map flatmap zip 响应式编程">
+
+
+<meta itemprop="datePublished" content="2019-08-21T16:09:48&#43;08:00" />
+<meta itemprop="dateModified" content="2019-08-21T16:09:48&#43;08:00" />
+<meta itemprop="wordCount" content="3856">
+
+
+
+<meta itemprop="keywords" content="rxjava,响应式编程," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="RxJava入门"/>
+<meta name="twitter:description" content="rxjava入门 背压 观察者模式 map flatmap zip 响应式编程"/>
+
+  <!--[if lte IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+    <![endif]-->
+
+  <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+  </head>
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/xiaoheiAh" target="_blank">
+            <img class="img-circle img-rotate" src="https://xiaohei.im/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">赵小黑</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">Java Developer</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shanghai, China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav  menu-highlight">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>自用科学上网节点推荐(便宜又好用)<a href="https://tianlinzhao.com/aff.php?aff=4969" target="_blank" style="background-color:#FFFF00">点这里跳转</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/corejava/" class="category-list-link">corejava</a><span class="category-list-count">7</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/hystrix/" class="category-list-link">hystrix</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/leetcode/" class="category-list-link">leetcode</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">5</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="category-list-link">消息队列</a><span class="category-list-count">4</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/collections/" class="tag-list-link">collections</a><span
+                    class="tag-list-count">7</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/hugo/" class="tag-list-link">hugo</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/hystrix/" class="tag-list-link">hystrix</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rabbitmq/" class="tag-list-link">rabbitmq</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">5</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rust/" class="tag-list-link">rust</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rxjava/" class="tag-list-link">rxjava</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="tag-list-link">分布式锁</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="tag-list-link">响应式编程</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="tag-list-link">数据结构</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+  </div>
+</aside>
+
+    
+    
+  <aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+    <div class="slimContent">
+      <nav id="toc" class="article-toc">
+        <h3 class="toc-title">文章目录</h3>
+        <div class="toc-content always-active"><nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#前言">前言</a></li>
+<li><a href="#rxjava是什么">RxJava是什么</a>
+<ul>
+<li><a href="#reactive-x">Reactive X</a></li>
+<li><a href="#概念">概念</a></li>
+<li><a href="#hot-or-cold-observables">&ldquo;Hot&rdquo; or &ldquo;Cold&rdquo; Observables</a></li>
+</ul></li>
+<li><a href="#rxjava入门">RxJava入门</a>
+<ul>
+<li><a href="#hello-world">Hello World</a></li>
+<li><a href="#操作符-operators">操作符 Operators</a>
+<ul>
+<li><a href="#创建型操作符">创建型操作符</a>
+<ul>
+<li><a href="#create">Create</a></li>
+<li><a href="#defer">Defer</a></li>
+<li><a href="#just">Just</a></li>
+<li><a href="#interval">Interval</a>
+<ul>
+<li><a href="#参数">参数</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#转换操作符">转换操作符</a>
+<ul>
+<li><a href="#buffer">Buffer</a></li>
+</ul></li>
+<li><a href="#合并操作符">合并操作符</a>
+<ul>
+<li><a href="#zip">Zip</a></li>
+</ul></li>
+<li><a href="#背压操作符">背压操作符</a>
+<ul>
+<li><a href="#背压支持">背压支持</a></li>
+<li><a href="#onbackpressurebuffer-onbackpressuredrop">onBackpressurebuffer/onBackpressureDrop</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><a href="#总结">总结</a></li>
+<li><a href="#参考">参考</a></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+      </nav>
+    </div>
+  </aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2019/08/rxjava-guide/"
+    >RxJava入门</a
+  >
+</h1>
+
+      <div class="article-meta">
+        <span class="article-date">
+  <i class="icon icon-calendar-check"></i>
+<a href="https://xiaohei.im/2019/08/rxjava-guide/" class="article-date">
+  <time datetime="2019-08-21 16:09:48 &#43;0800 CST" itemprop="datePublished">2019-08-21</time>
+</a>
+</span><span class="article-category">
+  <i class="icon icon-folder"></i>
+  <a class="article-category-link" href="/categories/hystrix/"> Hystrix </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+    <a class="article-tag-link" href="/tags/rxjava/"> rxjava </a>
+    <a class="article-tag-link" href="/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/"> 响应式编程 </a>
+  </span>
+
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/08/rxjava-guide/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计:3856字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长:8分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      <blockquote>
+<p>本文基于 rxjava 1.x 版本</p>
+</blockquote>
+
+<h2 id="前言">前言</h2>
+
+<p>写这篇文章是因为之前在看Hystrix时,觉得响应式编程很有意思,之前也了解到Spring5主打特性就是响应式,就想来试试水,入个门.本文主要介绍RxJava的特点,入门操作</p>
+
+<h2 id="rxjava是什么">RxJava是什么</h2>
+
+<h3 id="reactive-x">Reactive X</h3>
+
+<p><code>ReactiveX</code>是使用<code>Observable</code>序列来组合异步操作且基于事件驱动的一个库.其继承自<a href="https://zh.wikipedia.org/wiki/观察者模式">观察者模式</a>来支持数据流或者事件流通过添加操作符(operators)的方式来声明式的操作,并抽象出对低级别线程(low-level thread),同步,线程安全,并发数据结构,非阻塞IO问题的关注.</p>
+
+<p>ReactiveX 在不同语言中都有实现,RxJava 只是在JVM上实现的一套罢了.</p>
+
+<h3 id="概念">概念</h3>
+
+<blockquote>
+<p>观察者模式是该框架的灵魂~</p>
+</blockquote>
+
+<p><img src="https://i.loli.net/2019/08/21/PT56HZ2obO8vU3V.png" alt="WX20190821-171445.png" /></p>
+
+<p>上图可以表述为: <strong>观察者</strong>(Observer) <strong>订阅</strong>(subscribe)<strong>被观察者</strong>(Observable),当Observable产生事件或数据时,会调用Observer的方法进行回调.</p>
+
+<p>听起来有点别扭,这里举一个形象点的例子.</p>
+
+<p><strong>显示器开关</strong></p>
+
+<p>显示器开关即为 Observable, 显示器为 Observer,这两个组件就会形成联系.当开关按下时,显示器就会通电点亮,这里即可抽象成Observable发出一个事件,Observer对事件做了处理.做什么样的处理其实在Subscribe时就已经决定了.</p>
+
+<p><strong>回调方法</strong></p>
+
+<p>在subscribe时会要求实现对应的回调方法,标准方法有以下三个:</p>
+
+<ul>
+<li><strong>onNext</strong></li>
+</ul>
+
+<p>Observable调用这个方法发射数据，方法的参数就是Observable发射的数据，这个方法可能会被调用多次，取决于你的实现。</p>
+
+<ul>
+<li><strong>onError</strong></li>
+</ul>
+
+<p>当Observable遇到错误或者无法返回期望的数据时会调用这个方法，这个调用会终止Observable，后续不会再调用onNext和onCompleted，onError方法的参数是抛出的异常。</p>
+
+<ul>
+<li><strong>onCompleted</strong></li>
+</ul>
+
+<p>正常终止，如果没有遇到错误，Observable在最后一次调用onNext之后调用此方法。</p>
+
+<h3 id="hot-or-cold-observables">&ldquo;Hot&rdquo; or &ldquo;Cold&rdquo; Observables</h3>
+
+<p>Observable何时开始发送数据呢?基于此问题,可以将Observable分为两类: <code>Hot</code> &amp; <code>Cold</code> . 可以理解为主动型和被动型.</p>
+
+<p><strong>Hot Observable</strong>: Observable一经创建,就会开始发送数据. 所以后面订阅的Observer可能消费不到Observable完整的数据.</p>
+
+<p><strong>Cold Observable</strong>: Observable会等到有Observer订阅时才开始发送数据,此时Observer会消费到完整的数据</p>
+
+<h2 id="rxjava入门">RxJava入门</h2>
+
+<h3 id="hello-world">Hello World</h3>
+
+<pre><code class="language-java">Observable.create(new Observable.OnSubscribe&lt;String&gt;() {
+    @Override
+    public void call(Subscriber&lt;? super String&gt; subscriber) {
+      subscriber.onNext(&quot;Hello World&quot;);
+      subscriber.onCompleted();
+      //subscriber.onError(new RuntimeException(&quot;error&quot;));
+    }
+  	}).subscribe(new Subscriber&lt;String&gt;() {
+    @Override
+    public void onCompleted() {
+      System.out.println(&quot;观察结束啦~~~&quot;);
+    }
+
+    @Override
+    public void onError(Throwable e) {
+      System.out.println(&quot;观察出错啦~~~&quot;);
+    }
+
+    @Override
+    public void onNext(String s) {
+      System.out.println(&quot;onNext:&quot; + s);
+    }
+  });
+}
+</code></pre>
+
+<pre><code class="language-java">// onNext:Hello World
+// 观察结束啦~~~
+// 注释掉上一行 打开下一行注释 就会输出
+// onNext:Hello World
+// 观察出错啦~~~
+</code></pre>
+
+<p>上述即为一个标准的创建观察者被观察者并订阅,实现订阅逻辑.</p>
+
+<p><strong>疑问</strong></p>
+
+<ol>
+<li>为什么<code>subscribe</code>方法的参数是<code>Subscriber</code>呢?</li>
+</ol>
+
+<p>在rxjava中Observer是接口,Subscriber实现了Observer并提供了拓展.所以普遍用这个.</p>
+
+<ol>
+<li>为什么是Observable.subscribe(Observer)?用上面的显示器开关的例子来说就相当于显示器开关订阅显示器.</li>
+</ol>
+
+<p>为了保证流式风格~rxjava提供了一系列的操作符来对Observable发出的数据做处理,流式风格可以使操作符使用起来更友好.所以就当做Observable订阅了Observer吧🤦‍♂</p>
+
+<h3 id="操作符-operators">操作符 Operators</h3>
+
+<p>单纯的使用上面的<code>Hello World</code>撸码只能说是观察者模式的运用罢了,操作符才是<code>ReactiveX</code>最强大的地方.我们可以通过功能不同的操作符对Observable发出的数据做过滤(filter),转换(map)来满足业务的需求.其实就可以当作是Java8的<code>lambda</code>特性.</p>
+
+<blockquote>
+<p>Observable在经过操作符处理后还是一个Observable,对应上述的<strong>流式风格</strong></p>
+</blockquote>
+
+<p>案例: 假设我们需要监听鼠标在一个直角坐标系中的点击,取得所有在第一象限点击的坐标.</p>
+
+<p><img src="https://i.loli.net/2019/08/22/eQnOjomU7IufBpk.png" alt="marble.png" /></p>
+
+<p>从该流程图可以看出,鼠标点击后会发出很多数据,一次点击一个点,我们对数据进行filter,得到了下方时间轴上的数据源.这就是我们想要的.下面来看下常用的操作符有哪些?</p>
+
+<h4 id="创建型操作符">创建型操作符</h4>
+
+<blockquote>
+<p>用于创建Observable对象的操作符</p>
+</blockquote>
+
+<h5 id="create">Create</h5>
+
+<p>创建一个Observable,需要传递一个<code>Function</code>来完成调用Observer的逻辑.</p>
+
+<p>一个标准的Observable必须只能调用一次(<strong>Exactly Once</strong>)<code>onCompleted</code>或者<code>onError</code>,并且在调用后不能再调用Observer的其他方法(eg: onNext).</p>
+
+<p><strong>sample code</strong></p>
+
+<pre><code class="language-java">Observable.create(new Observable.OnSubscribe&lt;Integer&gt;() {
+    @Override
+    public void call(Subscriber&lt;? super Integer&gt; observer) {
+        try {
+            if (!observer.isUnsubscribed()) {
+                for (int i = 1; i &lt; 5; i++) {
+                    observer.onNext(i);
+                }
+                observer.onCompleted();
+            }
+        } catch (Exception e) {
+            observer.onError(e);
+        }
+    }
+ } ).subscribe(new Subscriber&lt;Integer&gt;() {
+        @Override
+        public void onNext(Integer item) {
+            System.out.println(&quot;Next: &quot; + item);
+        }
+
+        @Override
+        public void onError(Throwable error) {
+            System.err.println(&quot;Error: &quot; + error.getMessage());
+        }
+
+        @Override
+        public void onCompleted() {
+            System.out.println(&quot;Sequence complete.&quot;);
+        }
+    });
+</code></pre>
+
+<pre><code class="language-bash">Next: 1
+Next: 2
+Next: 3
+Next: 4
+Sequence complete.
+</code></pre>
+
+<h5 id="defer">Defer</h5>
+
+<p>直到有Observer订阅时才会创建,并且会为每一个Observer创建新的Observable,这样可以保证所有Observer可以看到相同的数据,并且从头开始消费.</p>
+
+<p><strong>sample code</strong></p>
+
+<pre><code class="language-java">Observable&lt;String&gt; defer = Observable.defer(new Func0&lt;Observable&lt;String&gt;&gt;() {
+    @Override
+    public Observable&lt;String&gt; call() {
+        return Observable.just(&quot;Hello&quot;, &quot;World&quot;);
+    }
+});
+
+defer.subscribe(new Subscriber&lt;String&gt;() {
+    @Override
+    public void onCompleted() {
+        System.out.println(&quot;第一个订阅完成啦~&quot;);
+    }
+
+    @Override
+    public void onError(Throwable e) {
+        System.out.println(&quot;第一个订阅报错啦~&quot;);
+    }
+
+    @Override
+    public void onNext(String s) {
+        System.out.println(&quot;第一个订阅收到:&quot; + s);
+    }
+});
+
+defer.subscribe(new Subscriber&lt;String&gt;() {
+		//与上一个订阅逻辑相同
+});
+
+</code></pre>
+
+<pre><code class="language-bash">第一个订阅收到:Hello
+第一个订阅收到:World
+第一个订阅完成啦~
+第二个订阅收到:Hello
+第二个订阅收到:World
+第二个订阅完成啦~
+</code></pre>
+
+<p><strong>Note:</strong></p>
+
+<p>Defer在RxJava中的实现其实有点像指派,可以看到构建时,传参为<code>Func0&lt;Observable&lt;T&gt;&gt;</code>,Observer真正订阅的是传参中的Observable.</p>
+
+<h5 id="just">Just</h5>
+
+<p>在上文<code>Defer</code>中代码中就用了<code>Just</code>,指的是可以发送特定的数据.代码一致就不作展示了.</p>
+
+<h5 id="interval">Interval</h5>
+
+<p>可以按照指定时间间隔从0开始发送无限递增序列.</p>
+
+<h6 id="参数">参数</h6>
+
+<ul>
+<li>initalDelay   延迟多长时间开始第一次发送</li>
+<li>period          指定时间间隔</li>
+<li>unit               时间单位</li>
+</ul>
+
+<p>如下例子:延迟0秒后开始发送,每1秒发送一次. 因为sleep 100秒,会发送0-99终止</p>
+
+<p><strong>sample code</strong></p>
+
+<pre><code class="language-java">Observable.interval(0,1,TimeUnit.SECONDS).subscribe(new Action1&lt;Long&gt;() {
+  	// 这里只实现了OnNext方法,onError和onCompleted可以有默认实现.一种偷懒写法
+    @Override
+    public void call(Long aLong) {
+        System.out.println(aLong);
+    }
+});
+try {
+  	//阻塞当前线程使程序一直跑
+    TimeUnit.SECONDS.sleep(100);
+} catch (InterruptedException e) {
+    e.printStackTrace();
+}
+</code></pre>
+
+<h4 id="转换操作符">转换操作符</h4>
+
+<blockquote>
+<p>将Observable发出的数据进行各类转换的操作符</p>
+</blockquote>
+
+<h5 id="buffer">Buffer</h5>
+
+<p><img src="https://i.loli.net/2019/08/22/IC3vbhSDGgUYku5.png" alt="buffer.png" /></p>
+
+<p>如上图所示,buffer定期将数据收集到集合中,并将集合打包发送.</p>
+
+<p><strong>sample code</strong></p>
+
+<pre><code class="language-java">Observable.just(2,3,5,6)
+        .buffer(3)
+        .subscribe(new Action1&lt;List&lt;Integer&gt;&gt;() {
+            @Override
+            public void call(List&lt;Integer&gt; integers) {
+                System.out.println(integers);
+            }
+        });
+</code></pre>
+
+<pre><code class="language-bash">[2, 3, 5]
+[6]
+</code></pre>
+
+<p><strong>Window</strong></p>
+
+<p>window和buffer是非常像的两个操作符,区别在于buffer会将存起来的item打包再发出去,而window则只是单纯的将item堆起来,达到阈值再发出去,不对原数据结构做修改.</p>
+
+<p><img src="https://i.loli.net/2019/08/22/kqIb5j6xfPDdOZn.png" alt="window.png" /></p>
+
+<p><strong>sample code</strong></p>
+
+<pre><code class="language-java">Observable.just(2,3,5,6)
+        .window(3)
+        .subscribe(new Action1&lt;Observable&lt;Integer&gt;&gt;() {
+            @Override
+            public void call(Observable&lt;Integer&gt; integerObservable) {
+                integerObservable.subscribe(new Action1&lt;Integer&gt;() {
+                    @Override
+                    public void call(Integer integer) {
+                        // do anything
+                    }
+                });
+            }
+        });
+</code></pre>
+
+<h4 id="合并操作符">合并操作符</h4>
+
+<blockquote>
+<p>将多个Observable合并为一个的操作符</p>
+</blockquote>
+
+<h5 id="zip">Zip</h5>
+
+<p>使用一个函数组合多个Observable发射的数据集合，然后再发射这个结果。如果多个Observable发射的数据量不一样，则以最少的Observable为标准进行组合.</p>
+
+<p><img src="https://i.loli.net/2019/08/22/Nu4TCMEHKGA3Y1V.png" alt="zip.png" /></p>
+
+<p><strong>sample code</strong></p>
+
+<pre><code class="language-java">Observable&lt;Integer&gt;  observable1=Observable.just(1,2,3,4);
+Observable&lt;Integer&gt;  observable2=Observable.just(4,5,6);
+Observable.zip(observable1, observable2, new Func2&lt;Integer, Integer, String&gt;() {
+    @Override
+    public String call(Integer item1, Integer item2) {
+        return item1+&quot;and&quot;+item2;
+    }
+}).subscribe(new Action1&lt;String&gt;() {
+    @Override
+    public void call(String s) {
+        System.out.println(s);
+    }
+}); 
+</code></pre>
+
+<pre><code class="language-bash">1and4
+2and5
+3and6
+</code></pre>
+
+<h4 id="背压操作符">背压操作符</h4>
+
+<blockquote>
+<p>用于平衡Observer消费速度,Observable生产速度的操作符</p>
+</blockquote>
+
+<p>背压是指在异步场景中,被观察者发送事件速度远快于观察者的处理速度的情况下，一种告诉上游的被观察者降低发送速度的策略.下图可以很好阐释背压机制是如何运行的.</p>
+
+<p><img src="https://i.loli.net/2019/09/02/4TyQFgBkIAO1R2c.png" alt="backpressure.png" /></p>
+
+<p>宗旨就是<strong>下游告诉上游我能处理多少你就给我发多少.</strong></p>
+
+<pre><code class="language-java">//被观察者将产生100000个事件
+Observable observable=Observable.range(1,100000);
+observable.observeOn(Schedulers.newThread())
+        .subscribe(new Subscriber() {
+            @Override
+            public void onCompleted() {
+
+            }
+            @Override
+            public void onError(Throwable e) {
+
+            }
+            @Override
+            public void onNext(Object o) {
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+              	System.out.println(&quot;on Next Request...&quot;);
+                request(1);
+            }
+        });
+</code></pre>
+
+<h5 id="背压支持">背压支持</h5>
+
+<p>上述样例代码中创建Observable使用的是<code>range</code>操作符,这是因为他是支持背压的,如果用<code>interval</code>,request的方法将不起作用.因为<code>interval</code>不支持背压.那什么样的Observable支持背压呢?</p>
+
+<p>在前面介绍概念时,有提到过<code>Hot</code>&amp;<code>Cold</code>的区别,<code>Hot</code>类型的Observable,即一经创建就开始发送,<strong>不支持</strong>背压,<code>Cold</code>类型的Observable也只是<strong>部分</strong>支持.</p>
+
+<h5 id="onbackpressurebuffer-onbackpressuredrop">onBackpressurebuffer/onBackpressureDrop</h5>
+
+<p>不支持背压的操作符我们可以如何实现背压呢?就通过<code>onBackpressurebuffer/onBackpressureDrop</code>来实现.顾名思义一个是缓存,一个是丢弃.</p>
+
+<p>这里以<code>drop</code>方式来展示.</p>
+
+<pre><code class="language-java">Observable.interval(1, TimeUnit.MILLISECONDS)
+  .onBackpressureDrop()
+  //指定observer调度io线程上,并将缓存size置为1,这个缓存会提前将数据存好在消费,
+  //默认在PC上是128,设置小一点可以快速的看到drop的效果
+  .observeOn(Schedulers.io(), 1)
+  .subscribe(new Subscriber&lt;Long&gt;() {
+    @Override
+    public void onCompleted() {
+
+    }
+
+    @Override
+    public void onError(Throwable e) {
+      System.out.println(&quot;Error:&quot; + e.getMessage());
+    }
+
+    @Override
+    public void onNext(Long aLong) {
+      System.out.println(&quot;订阅 &quot; + aLong);
+      try {
+        TimeUnit.MILLISECONDS.sleep(100);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+ 	})
+</code></pre>
+
+<pre><code class="language-bash">订阅 0
+订阅 103
+订阅 207
+订阅 300
+订阅 417
+订阅 519
+订阅 624
+订阅 726
+订阅 827
+订阅 931
+订阅 1035
+订阅 1138
+订阅 1244
+订阅 1349
+</code></pre>
+
+<p>可以很明显的看出很多数据被丢掉了,这就是背压的效果.</p>
+
+<h2 id="总结">总结</h2>
+
+<p>写了这么多后,想来说说自己的感受.</p>
+
+<ol>
+<li>转变思想: 响应式编程的思想跟我们现在后端开发思路是有区别的.可能刚开始会不适应.</li>
+<li>不易调试: 流式风格写着爽,调着难</li>
+</ol>
+
+<h2 id="参考">参考</h2>
+
+<p><a href="http://reactivex.io/documentation/">ReactiveX官网</a></p>
+
+<p><a href="https://zhuanlan.zhihu.com/p/24473022">关于RxJava最友好的文章——背压（Backpressure)</a></p>
+
+<p><a href="http://zhangtielei.com/posts/blog-rxjava-backpressure.html">如何形象地描述RxJava中的背压和流控机制？</a></p>
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://xiaohei.im/2019/08/189-rotate-array/" title="[LeetCode In Rust]189-Rotate Array"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://xiaohei.im/2019/08/rxjava-in-hystrix/"
+                    title="Hystrix命令执行流程"><span>下一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        
+        <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal"
+            data-target="#donateModal"><span>赏</span></button>
+        
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content donate">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <div class="modal-body">
+                <div class="donate-box">
+                    <div class="donate-head">
+                        <p>感谢您的支持,我会继续努力的!</p>
+                    </div>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/donate/alipayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦~</p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/donate/wechatpayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+                        </div>
+                    </div>
+                    <div class="donate-footer">
+                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay"
+                                    aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+                            </li>
+                            <li role="presentation" class="">
+                                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab"
+                                    aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i>
+                                    微信支付</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/xiaoheiAh" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://xiaohei.im/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2017  -
+    2019
+    <div class="publishby">
+        Theme by <a href="https://github.com/xiaoheiAh" target="_blank"> xiaoheiAh </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+   window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/rust.min.js"></script>
+<script type="text/javascript"
+   src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script>
+hljs.configure({
+  tabReplace: '    ', 
+  classPrefix: ''     
+                      
+})
+hljs.initHighlightingOnLoad();
+</script>
+<script type="text/javascript" src="https://xiaohei.im/js/application.js"></script>
+<script type="text/javascript" src="https://xiaohei.im/js/plugin.js"></script>
+<script>
+      (function (window) {
+          var INSIGHT_CONFIG = {
+              TRANSLATION: {
+                  POSTS: '文章',
+                  PAGES: '页面',
+                  CATEGORIES: '分类',
+                  TAGS: '标签',
+                  UNTITLED: '(未命名)',
+              },
+              ROOT_URL: 'https:\/\/xiaohei.im\/',
+              CONTENT_URL: 'https:\/\/xiaohei.im\/searchindex.json ',
+          };
+          window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+      })(window);
+      </script>
+<script type="text/javascript" src="https://xiaohei.im/js/insight.js"></script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: 'e38fc798c72a7e4e1386',
+        clientSecret: 'e151aa3b7b98d3cfaa1f096b88fdd7897e2c8007',
+        repo: 'xiaoheiAh.github.io',
+        owner: 'xiaoheiAh',
+        admin: ['xiaoheiAh'],
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('comments');
+</script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98254666-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

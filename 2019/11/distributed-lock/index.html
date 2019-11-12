@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        Redis-分布式锁 - 赵小黑的博客
+      </title>
+    <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  
+  <meta name="theme-color" content="#000000" />
+  
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <meta name="description" content="分布式锁有很多中实现(纯数据库,zookeeper,redis),纯数据库的受限于数据库性能,zk 可以保证加锁的顺序,是公平锁.Redis中的实现就是接下来要学习的.
+" />
+  <meta name="generator" content="Hugo 0.58.0 with theme pure" />
+  <title>Redis-分布式锁 - 赵小黑的博客</title>
+  
+
+  <link rel="stylesheet" href="https://xiaohei.im/css/style.css">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css"> 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <meta property="og:title" content="Redis-分布式锁" />
+<meta property="og:description" content="分布式锁有很多中实现(纯数据库,zookeeper,redis),纯数据库的受限于数据库性能,zk 可以保证加锁的顺序,是公平锁.Redis中的实现就是接下来要学习的." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiaohei.im/2019/11/distributed-lock/" />
+<meta property="article:published_time" content="2019-11-03T14:49:56+08:00" />
+<meta property="article:modified_time" content="2019-11-03T14:49:56+08:00" />
+<meta itemprop="name" content="Redis-分布式锁">
+<meta itemprop="description" content="分布式锁有很多中实现(纯数据库,zookeeper,redis),纯数据库的受限于数据库性能,zk 可以保证加锁的顺序,是公平锁.Redis中的实现就是接下来要学习的.">
+
+
+<meta itemprop="datePublished" content="2019-11-03T14:49:56&#43;08:00" />
+<meta itemprop="dateModified" content="2019-11-03T14:49:56&#43;08:00" />
+<meta itemprop="wordCount" content="1961">
+
+
+
+<meta itemprop="keywords" content="分布式锁,redis," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Redis-分布式锁"/>
+<meta name="twitter:description" content="分布式锁有很多中实现(纯数据库,zookeeper,redis),纯数据库的受限于数据库性能,zk 可以保证加锁的顺序,是公平锁.Redis中的实现就是接下来要学习的."/>
+
+  <!--[if lte IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+    <![endif]-->
+
+  <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+  </head>
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/xiaoheiAh" target="_blank">
+            <img class="img-circle img-rotate" src="https://xiaohei.im/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">赵小黑</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">Java Developer</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shanghai, China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav  menu-highlight">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>自用科学上网节点推荐(便宜又好用)<a href="https://tianlinzhao.com/aff.php?aff=4969" target="_blank" style="background-color:#FFFF00">点这里跳转</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/corejava/" class="category-list-link">corejava</a><span class="category-list-count">7</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/hystrix/" class="category-list-link">hystrix</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/leetcode/" class="category-list-link">leetcode</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">5</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="category-list-link">消息队列</a><span class="category-list-count">4</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/collections/" class="tag-list-link">collections</a><span
+                    class="tag-list-count">7</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/hugo/" class="tag-list-link">hugo</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/hystrix/" class="tag-list-link">hystrix</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rabbitmq/" class="tag-list-link">rabbitmq</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">5</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rust/" class="tag-list-link">rust</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rxjava/" class="tag-list-link">rxjava</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="tag-list-link">分布式锁</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="tag-list-link">响应式编程</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="tag-list-link">数据结构</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+  </div>
+</aside>
+
+    
+    
+  <aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+    <div class="slimContent">
+      <nav id="toc" class="article-toc">
+        <h3 class="toc-title">文章目录</h3>
+        <div class="toc-content always-active"><nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#为什么使用分布式锁">为什么使用分布式锁?</a>
+<ul>
+<li><a href="#分布式锁的特点">分布式锁的特点?</a></li>
+</ul></li>
+<li><a href="#如何使用分布式锁">如何使用分布式锁?</a>
+<ul>
+<li><a href="#简单粗暴版">简单粗暴版</a></li>
+<li><a href="#redission版">Redission版</a></li>
+<li><a href="#redlock">RedLock</a>
+<ul>
+<li><a href="#加锁过程">加锁过程</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#分布式锁的一些问题">分布式锁的一些问题</a>
+<ul>
+<li><a href="#锁被其他客户端释放">锁被其他客户端释放</a>
+<ul>
+<li><a href="#如何解决">如何解决?</a></li>
+</ul></li>
+<li><a href="#超时问题">超时问题</a>
+<ul>
+<li><a href="#如何解决-1">如何解决?</a></li>
+</ul></li>
+<li><a href="#时钟不一致">时钟不一致</a>
+<ul>
+<li><a href="#如何解决-2">如何解决?</a></li>
+</ul></li>
+<li><a href="#性能-故障恢复和-fsync">性能、故障恢复和 fsync</a></li>
+</ul></li>
+<li><a href="#参考">参考</a></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+      </nav>
+    </div>
+  </aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2019/11/distributed-lock/"
+    >Redis-分布式锁</a
+  >
+</h1>
+
+      <div class="article-meta">
+        <span class="article-date">
+  <i class="icon icon-calendar-check"></i>
+<a href="https://xiaohei.im/2019/11/distributed-lock/" class="article-date">
+  <time datetime="2019-11-03 14:49:56 &#43;0800 CST" itemprop="datePublished">2019-11-03</time>
+</a>
+</span><span class="article-category">
+  <i class="icon icon-folder"></i>
+  <a class="article-category-link" href="/categories/redis/"> redis </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+    <a class="article-tag-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/"> 分布式锁 </a>
+    <a class="article-tag-link" href="/tags/redis/"> redis </a>
+  </span>
+
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/11/distributed-lock/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计:1961字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长:4分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      <p>分布式锁有很多中实现(纯数据库,zookeeper,redis),纯数据库的受限于数据库性能,zk 可以保证加锁的顺序,是公平锁.Redis中的实现就是接下来要学习的.</p>
+
+<h2 id="为什么使用分布式锁">为什么使用分布式锁?</h2>
+
+<p>在分布式环境下想要保证只能有一个请求更新一条数据,普通的加锁(比如 Java 中的 <code>synchronized</code>,<code>JUC</code> 中的各种 <code>Lock</code>)都不能胜任. 分布式锁的意义在于可以将操作锁的权利中心化,从而串行控制业务的执行.但是使用分布式锁也有很多弊端,后面再说.</p>
+
+<h3 id="分布式锁的特点">分布式锁的特点?</h3>
+
+<ol>
+<li><strong>互斥:</strong>具有强排他性,需要保证不同节点不同线程的互斥</li>
+<li><strong>可重入:</strong>同一个节点的同一个线程如果获得了锁,那也可以再次获得</li>
+<li><strong>高效,高可用:</strong>加锁解锁要高效,高可用保证分布式锁服务不会宕机失效</li>
+<li><strong>阻塞/非阻塞:</strong>像 <code>ReentrantLock</code> 支持 <code>lock</code>, <code>tryLock</code>, <code>tryLock(long timeout)</code></li>
+<li><strong>支持公平锁/非公平锁(Option)</strong></li>
+</ol>
+
+<h2 id="如何使用分布式锁">如何使用分布式锁?</h2>
+
+<p>Redis中有多种实现分布式锁的方式,一个一个看看.</p>
+
+<h3 id="简单粗暴版">简单粗暴版</h3>
+
+<p>设置一个坑,让所有节点去抢就好.即语义为: <code>set if not exist</code>, 抢到后执行逻辑,逻辑完成后在<code>del</code>即可.</p>
+
+<p><code>redis 2.8</code> 版本之前我们会通过以下方式:</p>
+
+<pre><code>setnx {resource-name} {anystring}
+</code></pre>
+
+<p>我们还需要加一个过期时间,以免各种异常宕机情况导致锁无法释放的问题.</p>
+
+<pre><code class="language-bash">expire key {max-lock-time}
+</code></pre>
+
+<p>这两条命令并不是原子操作的,所以我们需要通过 <code>Lua</code> 脚本来保证其原子性</p>
+
+<p><code>redis 2.8</code> 版本之后官方提供了 nx ex 的原子操作,使用起来更加简单了.</p>
+
+<pre><code class="language-bash">set {resource-name} {anystring} nx ex {max-lock-time}
+</code></pre>
+
+<h3 id="redission版">Redission版</h3>
+
+<blockquote>
+<p><a href="https://github.com/redisson/redisson">https://github.com/redisson/redisson</a></p>
+</blockquote>
+
+<p><code>Redission</code> 和 <code>Jedis</code> 都是 Java 中的 redis 客户端, <code>Jedis</code> 使用的是阻塞式 I/O, 而 <code>Redission</code> 使用的 <code>Netty</code> 来进行通信,而且 API 封装更友好, 继承了 <code>java.util.concurrent.locks.Lock</code> 的接口,可以像操作本地 <code>Lock</code> 一样操作分布式锁. 而且 <code>Redission</code> 还提供了不同编程模式的 API: <code>sync/async</code>, <code>Reactive</code>, <code>RxJava</code>, 非常人性化. <code>Redission</code> 有丰富的接口实现以及对不同异常情况的处理设计很值得学习.</p>
+
+<pre><code class="language-java">// 1. 设置 config
+Config config = new Config();
+// 2. 创建 redission 实例
+RedissonClient redisson = Redisson.create(config);
+// 4. 获取锁
+RLock lock = redisson.getLock(&quot;myLock&quot;);
+// 5. 加锁
+// 方式一
+// 加锁以后10秒钟自动解锁
+// 无需调用unlock方法手动解锁
+lock.lock(10, TimeUnit.SECONDS);
+// 方式二
+// 尝试加锁，最多等待100秒，上锁以后10秒自动解锁
+boolean res = lock.tryLock(100, 10, TimeUnit.SECONDS);
+if (res) {
+   try {
+     ...
+   } finally {
+       lock.unlock();
+   }
+}
+// 方式三
+// 异步加锁
+RLock lock = redisson.getLock(&quot;anyLock&quot;);
+lock.lockAsync();
+lock.lockAsync(10, TimeUnit.SECONDS);
+Future&lt;Boolean&gt; res = lock.tryLockAsync(100, 10, TimeUnit.SECONDS);
+</code></pre>
+
+<h3 id="redlock">RedLock</h3>
+
+<blockquote>
+<p><a href="https://redis.io/topics/distlock">https://redis.io/topics/distlock</a></p>
+</blockquote>
+
+<p>上述的分布式锁实现都是基于单实例实现,所以会出现单点问题.胆大<code>RedLock</code> 基本原理是利用多个 <code>Redis</code> 集群，用多数的集群加锁成功，减少Redis某个集群出故障，造成分布式锁出现问题的概率。</p>
+
+<h4 id="加锁过程">加锁过程</h4>
+
+<ol>
+<li>客户端获取当前的时间戳。</li>
+<li>对 N 个 Redis 实例进行获取锁的操作，具体的操作同单机分布式锁。对 Redis 实例的操作时间需要远小于分布式锁的超时时间，这样可以保证在少数 Redis 节点 Down 掉的时候仍可快速对下一个节点进行操作。</li>
+<li>客户端会记录所有实例返回加锁成功的时间，只有从多半的实例（在这里例子中 &gt;= 3）获取到了锁，且操作的时间远小于分布式锁的超时时间，锁才被人为是正确获取。</li>
+<li>如果锁被成功获取了，当前分布式锁的合法时间为初始设定的合法时间减去上锁所花的时间。</li>
+<li>若分布式锁获取失败，会强制对所有实例进行锁释放的操作，即使这个实例上不存在相应的键值。</li>
+</ol>
+
+<h2 id="分布式锁的一些问题">分布式锁的一些问题</h2>
+
+<h3 id="锁被其他客户端释放">锁被其他客户端释放</h3>
+
+<p>如果线程 A 在获取锁后处理业务时间过长,导致锁被自动释放了,此时 线程 B 重新获取到了锁. 线程 A 在执行完业务逻辑后释放锁(<code>DEL</code>操作),这是就会把线程 B 获取到的锁给释放掉.</p>
+
+<h4 id="如何解决">如何解决?</h4>
+
+<p>在设置 <code>value</code> 时,生成一个随机 token, 删除 key 时先做判断,只有在 token 与自己持有的相等时,才能删除. 由于需要保证原子性, 我们需要通过 <code>Lua</code> 脚本来实现.像下面这样,不过 <code>Redission</code> 已经有对应的实现了.</p>
+
+<pre><code class="language-lua">if redis.call(&quot;get&quot;,KEYS[1]) == ARGV[1] then
+    return redis.call(&quot;del&quot;,KEYS[1])
+else
+    return 0
+end
+</code></pre>
+
+<h3 id="超时问题">超时问题</h3>
+
+<p>如果在加锁和释放锁之间的业务逻辑过长,超出了锁的过期时间,那么就可能会导致另一个线程获取到锁,导致逻辑不能严格的串行执行.所以分布式锁的初衷是: 逻辑越短越好,持有锁的时间越短越好.</p>
+
+<h4 id="如何解决-1">如何解决?</h4>
+
+<p>这个目前没有太好解决的方案,后面如果看到了,就更新到这里.自己觉得: 尽量保证持锁时间短,优化代码逻辑.虽然可以延长锁的时间,但是会影响吞吐量的吧.如果真的有多个客户端持有了锁,还需要尽量保证业务逻辑中数据的幂等性,日志监控,及时报警,这样也可以做到尽快的人工介入.</p>
+
+<blockquote>
+<p>技术莫得银弹~适合的才是最好的.</p>
+</blockquote>
+
+<h3 id="时钟不一致">时钟不一致</h3>
+
+<p><code>RedLock</code> 强依赖时间,所以机器时间不一致会有很大的问题</p>
+
+<h4 id="如何解决-2">如何解决?</h4>
+
+<ol>
+<li>人为调整</li>
+<li>NTP自动调整: 可以将时间精度控制在一定范围内.</li>
+</ol>
+
+<h3 id="性能-故障恢复和-fsync">性能、故障恢复和 fsync</h3>
+
+<p>假设 Redis 没有持久性，当一个客户端获得了 5 个实例中的 3 个锁，若 3 个锁所在的实例 Down 掉了，实例再次启动时，其他的客户端也可以再次获得锁。</p>
+
+<p>这个问题会因为开启了 Redis 的持久化而改观，对于 AOF 持久化（区别与 RDB 的二进制持久化，是文本持久化）。默认采用的是每秒钟通过 <code>fsync</code> 落盘，这意味着会丢失一秒内的数据，如果需要更有安全保证的持久化，可以设置 <code>fsync=always</code>，但对应的会损失一部分性能。</p>
+
+<p>更好的解决办法是在实例 Down 掉后延迟一个略长于锁合法时间的时间，这样就可以保证在实例启动起来时锁一定是过期的，从而无须以损失性能为代价而使用 <code>fsync=always</code> 的持久化。</p>
+
+<h2 id="参考">参考</h2>
+
+<ol>
+<li><a href="https://juejin.im/post/5bbb0d8df265da0abd3533a5">再有人问你分布式锁，这篇文章扔给他</a></li>
+<li><a href="https://blog.brickgao.com/2018/05/06/distributed-lock-with-redlock/">RedLock中译</a></li>
+</ol>
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://xiaohei.im/2019/10/data-structure/" title="Redis - 数据结构"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://xiaohei.im/2019/11/obj/"
+                    title="Redis-万物皆「对象」"><span>下一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        
+        <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal"
+            data-target="#donateModal"><span>赏</span></button>
+        
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content donate">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <div class="modal-body">
+                <div class="donate-box">
+                    <div class="donate-head">
+                        <p>感谢您的支持,我会继续努力的!</p>
+                    </div>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/donate/alipayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦~</p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/donate/wechatpayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+                        </div>
+                    </div>
+                    <div class="donate-footer">
+                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay"
+                                    aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+                            </li>
+                            <li role="presentation" class="">
+                                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab"
+                                    aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i>
+                                    微信支付</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/xiaoheiAh" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://xiaohei.im/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2017  -
+    2019
+    <div class="publishby">
+        Theme by <a href="https://github.com/xiaoheiAh" target="_blank"> xiaoheiAh </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+   window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/rust.min.js"></script>
+<script type="text/javascript"
+   src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script>
+hljs.configure({
+  tabReplace: '    ', 
+  classPrefix: ''     
+                      
+})
+hljs.initHighlightingOnLoad();
+</script>
+<script type="text/javascript" src="https://xiaohei.im/js/application.js"></script>
+<script type="text/javascript" src="https://xiaohei.im/js/plugin.js"></script>
+<script>
+      (function (window) {
+          var INSIGHT_CONFIG = {
+              TRANSLATION: {
+                  POSTS: '文章',
+                  PAGES: '页面',
+                  CATEGORIES: '分类',
+                  TAGS: '标签',
+                  UNTITLED: '(未命名)',
+              },
+              ROOT_URL: 'https:\/\/xiaohei.im\/',
+              CONTENT_URL: 'https:\/\/xiaohei.im\/searchindex.json ',
+          };
+          window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+      })(window);
+      </script>
+<script type="text/javascript" src="https://xiaohei.im/js/insight.js"></script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: 'e38fc798c72a7e4e1386',
+        clientSecret: 'e151aa3b7b98d3cfaa1f096b88fdd7897e2c8007',
+        repo: 'xiaoheiAh.github.io',
+        owner: 'xiaoheiAh',
+        admin: ['xiaoheiAh'],
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('comments');
+</script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98254666-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

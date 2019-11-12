@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        Redis-万物皆「对象」 - 赵小黑的博客
+      </title>
+    <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  
+  <meta name="theme-color" content="#000000" />
+  
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <meta name="description" content="Redis有很多种数据结构,但其并没有直接使用这些数据结构来构建这个 NOSQL, 而是通过 对象系统 完成了对所有数据结构的统一管理, 实现内存回收, 对象共享等特性~
+" />
+  <meta name="generator" content="Hugo 0.58.0 with theme pure" />
+  <title>Redis-万物皆「对象」 - 赵小黑的博客</title>
+  
+
+  <link rel="stylesheet" href="https://xiaohei.im/css/style.css">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css"> 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <meta property="og:title" content="Redis-万物皆「对象」" />
+<meta property="og:description" content="Redis有很多种数据结构,但其并没有直接使用这些数据结构来构建这个 NOSQL, 而是通过 对象系统 完成了对所有数据结构的统一管理, 实现内存回收, 对象共享等特性~" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiaohei.im/2019/11/obj/" />
+<meta property="article:published_time" content="2019-11-04T18:56:15+08:00" />
+<meta property="article:modified_time" content="2019-11-04T18:56:15+08:00" />
+<meta itemprop="name" content="Redis-万物皆「对象」">
+<meta itemprop="description" content="Redis有很多种数据结构,但其并没有直接使用这些数据结构来构建这个 NOSQL, 而是通过 对象系统 完成了对所有数据结构的统一管理, 实现内存回收, 对象共享等特性~">
+
+
+<meta itemprop="datePublished" content="2019-11-04T18:56:15&#43;08:00" />
+<meta itemprop="dateModified" content="2019-11-04T18:56:15&#43;08:00" />
+<meta itemprop="wordCount" content="1617">
+
+
+
+<meta itemprop="keywords" content="redis," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Redis-万物皆「对象」"/>
+<meta name="twitter:description" content="Redis有很多种数据结构,但其并没有直接使用这些数据结构来构建这个 NOSQL, 而是通过 对象系统 完成了对所有数据结构的统一管理, 实现内存回收, 对象共享等特性~"/>
+
+  <!--[if lte IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+    <![endif]-->
+
+  <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+  </head>
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/xiaoheiAh" target="_blank">
+            <img class="img-circle img-rotate" src="https://xiaohei.im/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">赵小黑</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">Java Developer</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shanghai, China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav  menu-highlight">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/about">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>自用科学上网节点推荐(便宜又好用)<a href="https://tianlinzhao.com/aff.php?aff=4969" target="_blank" style="background-color:#FFFF00">点这里跳转</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/corejava/" class="category-list-link">corejava</a><span class="category-list-count">7</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/hystrix/" class="category-list-link">hystrix</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/leetcode/" class="category-list-link">leetcode</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">5</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="category-list-link">消息队列</a><span class="category-list-count">4</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/collections/" class="tag-list-link">collections</a><span
+                    class="tag-list-count">7</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/hugo/" class="tag-list-link">hugo</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/hystrix/" class="tag-list-link">hystrix</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rabbitmq/" class="tag-list-link">rabbitmq</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">5</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rust/" class="tag-list-link">rust</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/rxjava/" class="tag-list-link">rxjava</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="tag-list-link">分布式锁</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="tag-list-link">响应式编程</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="tag-list-link">数据结构</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+  </div>
+</aside>
+
+    
+    
+  <aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+    <div class="slimContent">
+      <nav id="toc" class="article-toc">
+        <h3 class="toc-title">文章目录</h3>
+        <div class="toc-content always-active"><nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#类型及编码">类型及编码</a>
+<ul>
+<li><a href="#type-类型">type 类型</a></li>
+<li><a href="#encoding-编码">encoding 编码</a></li>
+</ul></li>
+<li><a href="#字符串对象">字符串对象</a>
+<ul>
+<li><a href="#embstr-vs-raw">embstr vs raw</a></li>
+<li><a href="#编码转换">编码转换</a></li>
+</ul></li>
+<li><a href="#类型检查">类型检查</a>
+<ul>
+<li><a href="#如何实现">如何实现?</a></li>
+</ul></li>
+<li><a href="#多态命令">多态命令</a></li>
+<li><a href="#内存回收">内存回收</a></li>
+<li><a href="#对象共享">对象共享</a>
+<ul>
+<li><a href="#为什么不共享其他的复杂对象">为什么不共享其他的复杂对象?</a></li>
+</ul></li>
+<li><a href="#键的空转时长">键的空转时长</a></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+      </nav>
+    </div>
+  </aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2019/11/obj/"
+    >Redis-万物皆「对象」</a
+  >
+</h1>
+
+      <div class="article-meta">
+        <span class="article-date">
+  <i class="icon icon-calendar-check"></i>
+<a href="https://xiaohei.im/2019/11/obj/" class="article-date">
+  <time datetime="2019-11-04 18:56:15 &#43;0800 CST" itemprop="datePublished">2019-11-04</time>
+</a>
+</span><span class="article-category">
+  <i class="icon icon-folder"></i>
+  <a class="article-category-link" href="/categories/redis/"> redis </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+    <a class="article-tag-link" href="/tags/redis/"> redis </a>
+  </span>
+
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/11/obj/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计:1617字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长:4分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      <p>Redis有很多种数据结构,但其并没有直接使用这些数据结构来构建这个 <code>NOSQL</code>, 而是通过 <code>对象系统</code> 完成了对所有数据结构的统一管理, 实现内存回收, 对象共享等特性~</p>
+
+<h2 id="类型及编码">类型及编码</h2>
+
+<p>在 <code>Redis</code> 中使用任何命令操作,都是操作的一个对象.有键对象,值对象.</p>
+
+<pre><code class="language-bash">set msg &quot;hello~&quot; # msg 为键对象, &quot;hello~&quot; 为值对象
+</code></pre>
+
+<p>每个对象都会有如下的结构:</p>
+
+<pre><code class="language-c">typedef struct redisObject {
+    unsigned type:4; // 类型
+    unsigned encoding:4; // 编码
+    unsigned lru:LRU_BITS; /* LRU time (relative to global lru_clock) or
+                            * LFU data (least significant 8 bits frequency
+                            * and most significant 16 bits access time). */
+    int refcount; // 引用计数
+    void *ptr; // 指向底层实现数据结构的指针
+} robj;
+</code></pre>
+
+<h3 id="type-类型">type 类型</h3>
+
+<p><code>type</code> 指明了该对象的类型. <code>redis</code> 中类型有如下几种</p>
+
+<pre><code class="language-c">/* The actual Redis Object */
+#define OBJ_STRING 0    /* String object. */
+#define OBJ_LIST 1      /* List object. */
+#define OBJ_SET 2       /* Set object. */
+#define OBJ_ZSET 3      /* Sorted set object. */
+#define OBJ_HASH 4      /* Hash object. */
+#define OBJ_MODULE 5    /* Module object. */
+#define OBJ_STREAM 6    /* Stream object. */
+</code></pre>
+
+<p><code>redis</code> 中键都为字符串对象,利用 <code>type</code> 命令可以查看值对象的类型</p>
+
+<pre><code class="language-bash">reids&gt; type language
+list
+</code></pre>
+
+<h3 id="encoding-编码">encoding 编码</h3>
+
+<p><code>encoding</code> 属性记录了该对象使用的什么数据结构存储底层的实现,即 <code>*ptr</code> 所指向的那个数据结构.以下是目前的编码类型.</p>
+
+<pre><code class="language-c">/* Objects encoding. Some kind of objects like Strings and Hashes can be
+ * internally represented in multiple ways. The 'encoding' field of the object
+ * is set to one of this fields for this object. */
+#define OBJ_ENCODING_RAW 0     /* Raw representation */
+#define OBJ_ENCODING_INT 1     /* Encoded as integer */
+#define OBJ_ENCODING_HT 2      /* Encoded as hash table */
+#define OBJ_ENCODING_ZIPMAP 3  /* Encoded as zipmap */
+#define OBJ_ENCODING_ZIPLIST 5 /* Encoded as ziplist */
+#define OBJ_ENCODING_INTSET 6  /* Encoded as intset */
+#define OBJ_ENCODING_SKIPLIST 7  /* Encoded as skiplist */
+#define OBJ_ENCODING_EMBSTR 8  /* Embedded sds string encoding */
+#define OBJ_ENCODING_QUICKLIST 9 /* Encoded as linked list of ziplists */
+#define OBJ_ENCODING_STREAM 10 /* Encoded as a radix tree of listpacks */
+</code></pre>
+
+<p>基本上每种类型的对象都会对应两种编码类型,可以动态的根据用户输入的值提供最有的数据结构,减少资源消耗.</p>
+
+<h2 id="字符串对象">字符串对象</h2>
+
+<p>字符串对象有三种编码格式. <code>int</code>,<code>embstr</code>,<code>raw</code>,不同长度不同格式有不一样的编码类型.</p>
+
+<pre><code class="language-bash">47.100.254.74:6379&gt; set msg &quot;abcdefg&quot;
+OK
+(0.53s)
+47.100.254.74:6379&gt; object encoding msg
+&quot;embstr&quot;
+47.100.254.74:6379&gt; set msg &quot;abcdefghijklmnopqrstuvwxyz01234567890123456789&quot;
+OK
+47.100.254.74:6379&gt; object encoding msg
+&quot;raw&quot;
+47.100.254.74:6379&gt; set msg 123
+OK
+47.100.254.74:6379&gt; object encoding msg
+&quot;int&quot;
+</code></pre>
+
+<h3 id="embstr-vs-raw">embstr vs raw</h3>
+
+<p>一个字符串对象包括 <code>redisObject</code> 和 <code>sds</code> 两部分组成.正常情况下是需要分配两次内存来创建这两个结构.这也是<code>raw</code> 的格式,但是如果当 <code>value</code> 长度较短时, (由于 <code>redis</code> 使用的是 <a href="https://github.com/jemalloc/jemalloc">jemalloc</a>  分配内存)我们可以将内存分配控制在一次,将 <code>RedisObject</code> 和 <code>sds</code> 分配在连续的内存空间,这也就是 <code>embstr</code> 编码格式了.那多短算短呢?</p>
+
+<p>在此之前先了解下创建一个 <code>redisObject</code> 时所占用的空间.</p>
+
+<p><img src="https://raw.githubusercontent.com/xiaoheiAh/imgs/master/20191105112554.png" alt="redis-obj-malloc" /></p>
+
+<p><code>embstr</code>编码是由 代表着 字符串的数据结构是 <code>SDS</code>.假设为 <code>sdshdr8</code></p>
+
+<pre><code class="language-c">struct sdshdr8 {
+    uint8_t len; /* 1byte used */
+    uint8_t alloc; /* 1byte excluding the header and null terminator */
+    unsigned char flags; /* 1byte 3 lsb of type, 5 unused bits */
+    char buf[];
+};
+</code></pre>
+
+<p><code>jemalloc</code> 可以分配 8/16/32/64 字节大小的内存,从上可以发现最少的内存需要占用 19 字节, Redis 在总体大于 64 字节时,会改为 <code>raw</code> 存储. 所以 <code>embstr</code> 形式时最大长度是 <code>64 - 19 - 结束符\0长度 = 44</code></p>
+
+<p><img src="https://raw.githubusercontent.com/xiaoheiAh/imgs/master/20191105121309.png" alt="embstr" /></p>
+
+<h3 id="编码转换">编码转换</h3>
+
+<p>由于 <code>redis</code> 没有为 <code>embstr</code> 编写修改相关的程序,所以是只读的, 如果对其执行任何修改命令,就会变为 <code>raw</code> 格式.</p>
+
+<h2 id="类型检查">类型检查</h2>
+
+<p><code>redis</code> 中的操作命令一般有两种: 所有类型都能用的(<code>DEL</code>, <code>EXPIRE</code>&hellip;), 特定类型适用的(各种数据类型对应的命令).若操作键的命令不对, <code>redis</code> 会提示报错.</p>
+
+<pre><code class="language-bash">47.100.254.74:6379&gt; set numbers 1
+OK
+47.100.254.74:6379&gt; object encoding numbers
+&quot;int&quot;
+47.100.254.74:6379&gt; rpush numbers a
+(error) WRONGTYPE Operation against a key holding the wrong kind of value
+</code></pre>
+
+<h3 id="如何实现">如何实现?</h3>
+
+<p>利用 <code>RedisObject</code> 的<code>type</code> 来控制.在输入一个命令时, 服务器会先检查输入键所对应的的值对象是否为命令对应的类型,是的话就执行,不是就报错.</p>
+
+<h2 id="多态命令">多态命令</h2>
+
+<p>同一种数据结构可能有多种编码格式.比如字符串对象的编码格式可能有 <code>int</code>, <code>embstr</code>, <code>raw</code>.所以当命令执行前,还需要根据值对象的编码来选择正确的命令来实现.</p>
+
+<p>比如想要执行 <code>llen</code> 获取 list 长度, 如果编码为 <code>ziplist</code>, 那么程序就会使用 <code>ziplist</code> 对应的函数来计算, 编码为 <code>quicklist</code> 时则是使用 <code>quicklist</code> 对应的函数来计算. 此为命令的 <strong>多态</strong> .</p>
+
+<h2 id="内存回收">内存回收</h2>
+
+<p><code>redis</code> 利用引用计数来实现内存回收机制.由 <code>RedisObject</code> 中的 <code>refcount</code> 属性记录.</p>
+
+<p>引用计数是有导致循环引用的弊端的,那么redis为啥还是会用的?找了很久也没有找到答案.</p>
+
+<p>有一个说法是: 引用的复杂度很低,不太容易导致循环引用.就一切从简呗.</p>
+
+<h2 id="对象共享">对象共享</h2>
+
+<p>对象共享指的是创建一次对象后,后面如果还有客户端需要创建同样的值对象则直接把现在这个的引用只给他,引用计数加1,可以节省内存的开销.类似 Java 常量池. 所以<code>refcount</code> 也被用来做对象共享的.</p>
+
+<p><code>redis</code> 在初始化服务器时, 会创建 0 - 9999 一万个整数字符串, 为了节省资源.</p>
+
+<h3 id="为什么不共享其他的复杂对象">为什么不共享其他的复杂对象?</h3>
+
+<ol>
+<li>整数复用几率很大</li>
+<li>整数比较算法时间复杂度是 O(1), 字符串是 O(N), hash/list 复杂度是 O(n2)</li>
+</ol>
+
+<h2 id="键的空转时长">键的空转时长</h2>
+
+<p><code>redisObject</code> 的 <code>lru</code> 属性记录着该对象最后一次被命令程序访问的时间.该属性在内存回收中有很大的作用.</p>
+
+<p>空转时长指的是<code>now() - lru</code></p>
+
+<pre><code class="language-bash">47.100.254.74:6379&gt; object idletime numbers
+(integer) 4023
+</code></pre>
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://xiaohei.im/2019/11/distributed-lock/" title="Redis-分布式锁"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://xiaohei.im/2019/11/db/"
+                    title="Redis-数据库长什么样?"><span>下一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        
+        <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal"
+            data-target="#donateModal"><span>赏</span></button>
+        
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content donate">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <div class="modal-body">
+                <div class="donate-box">
+                    <div class="donate-head">
+                        <p>感谢您的支持,我会继续努力的!</p>
+                    </div>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/donate/alipayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦~</p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/donate/wechatpayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+                        </div>
+                    </div>
+                    <div class="donate-footer">
+                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay"
+                                    aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+                            </li>
+                            <li role="presentation" class="">
+                                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab"
+                                    aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i>
+                                    微信支付</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/xiaoheiAh" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://xiaohei.im/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2017  -
+    2019
+    <div class="publishby">
+        Theme by <a href="https://github.com/xiaoheiAh" target="_blank"> xiaoheiAh </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+   window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/rust.min.js"></script>
+<script type="text/javascript"
+   src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script>
+hljs.configure({
+  tabReplace: '    ', 
+  classPrefix: ''     
+                      
+})
+hljs.initHighlightingOnLoad();
+</script>
+<script type="text/javascript" src="https://xiaohei.im/js/application.js"></script>
+<script type="text/javascript" src="https://xiaohei.im/js/plugin.js"></script>
+<script>
+      (function (window) {
+          var INSIGHT_CONFIG = {
+              TRANSLATION: {
+                  POSTS: '文章',
+                  PAGES: '页面',
+                  CATEGORIES: '分类',
+                  TAGS: '标签',
+                  UNTITLED: '(未命名)',
+              },
+              ROOT_URL: 'https:\/\/xiaohei.im\/',
+              CONTENT_URL: 'https:\/\/xiaohei.im\/searchindex.json ',
+          };
+          window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+      })(window);
+      </script>
+<script type="text/javascript" src="https://xiaohei.im/js/insight.js"></script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: 'e38fc798c72a7e4e1386',
+        clientSecret: 'e151aa3b7b98d3cfaa1f096b88fdd7897e2c8007',
+        repo: 'xiaoheiAh.github.io',
+        owner: 'xiaoheiAh',
+        admin: ['xiaoheiAh'],
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('comments');
+</script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98254666-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>
