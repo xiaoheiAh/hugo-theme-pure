@@ -2,29 +2,29 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>赵小黑的博客</title>
-    <link>https://xiaohei.im/hugo-theme/pure/</link>
+    <link>https://xiaohei.im/hugo-theme-pure/</link>
     <description>Recent content on 赵小黑的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Fri, 08 Nov 2019 15:18:05 +0800</lastBuildDate>
     
-        <atom:link href="https://xiaohei.im/hugo-theme/pure/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://xiaohei.im/hugo-theme-pure/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Posts</title>
-      <link>https://xiaohei.im/hugo-theme/pure/posts/</link>
+      <link>https://xiaohei.im/hugo-theme-pure/posts/</link>
       <pubDate>Fri, 08 Nov 2019 15:18:05 +0800</pubDate>
       
-      <guid>https://xiaohei.im/hugo-theme/pure/posts/</guid>
+      <guid>https://xiaohei.im/hugo-theme-pure/posts/</guid>
       <description></description>
     </item>
     
     <item>
       <title>关于自己</title>
-      <link>https://xiaohei.im/hugo-theme/pure/about/</link>
+      <link>https://xiaohei.im/hugo-theme-pure/about/</link>
       <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
       
-      <guid>https://xiaohei.im/hugo-theme/pure/about/</guid>
+      <guid>https://xiaohei.im/hugo-theme-pure/about/</guid>
       <description>xiaoheiAh~ 联系方式 github: @xiaoheiAh gmail: xiaohei.zyx@gmail.com 节点推荐 -&amp;gt; http://1t.click/aCyT @githubchart</description>
     </item>
     
