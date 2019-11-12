@@ -2,38 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>leetcode on 赵小黑的博客</title>
-    <link>https://xiaohei.im/categories/leetcode/</link>
+    <link>https://xiaohei.im/hugo-theme/pure/categories/leetcode/</link>
     <description>Recent content in leetcode on 赵小黑的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Wed, 21 Aug 2019 15:29:34 +0800</lastBuildDate>
     
-        <atom:link href="https://xiaohei.im/categories/leetcode/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://xiaohei.im/hugo-theme/pure/categories/leetcode/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>[LeetCode In Rust]189-Rotate Array</title>
-      <link>https://xiaohei.im/2019/08/189-rotate-array/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/2019/08/189-rotate-array/</link>
       <pubDate>Wed, 21 Aug 2019 15:29:34 +0800</pubDate>
       
-      <guid>https://xiaohei.im/2019/08/189-rotate-array/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/2019/08/189-rotate-array/</guid>
       <description></description>
     </item>
     
     <item>
       <title>[LeetCode In Rust]026-Remove Duplicates From Sorted Array</title>
-      <link>https://xiaohei.im/2019/08/026-remove-duplicates-from-sorted-array/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/2019/08/026-remove-duplicates-from-sorted-array/</link>
       <pubDate>Tue, 20 Aug 2019 15:54:47 +0800</pubDate>
       
-      <guid>https://xiaohei.im/2019/08/026-remove-duplicates-from-sorted-array/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/2019/08/026-remove-duplicates-from-sorted-array/</guid>
       <description></description>
     </item>
     
     <item>
       <title>[LeetCode In Rust]001-Two Sum</title>
-      <link>https://xiaohei.im/2019/08/001-two-sum/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/2019/08/001-two-sum/</link>
       <pubDate>Fri, 16 Aug 2019 18:22:05 +0800</pubDate>
       
-      <guid>https://xiaohei.im/2019/08/001-two-sum/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/2019/08/001-two-sum/</guid>
       <description></description>
     </item>
     

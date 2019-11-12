@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>数据结构 on 赵小黑的博客</title>
-    <link>https://xiaohei.im/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
+    <link>https://xiaohei.im/hugo-theme/pure/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
     <description>Recent content in 数据结构 on 赵小黑的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Thu, 24 Oct 2019 09:59:11 +0800</lastBuildDate>
     
-        <atom:link href="https://xiaohei.im/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://xiaohei.im/hugo-theme/pure/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Redis - 数据结构</title>
-      <link>https://xiaohei.im/2019/10/data-structure/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/2019/10/data-structure/</link>
       <pubDate>Thu, 24 Oct 2019 09:59:11 +0800</pubDate>
       
-      <guid>https://xiaohei.im/2019/10/data-structure/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/2019/10/data-structure/</guid>
       <description>&lt;p&gt;系统学习 redis 相关的知识，从数据结构开始～&lt;/p&gt;</description>
     </item>
     

@@ -2,74 +2,74 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>collections on 赵小黑的博客</title>
-    <link>https://xiaohei.im/tags/collections/</link>
+    <link>https://xiaohei.im/hugo-theme/pure/tags/collections/</link>
     <description>Recent content in collections on 赵小黑的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Thu, 15 Aug 2019 13:19:18 +0800</lastBuildDate>
     
-        <atom:link href="https://xiaohei.im/tags/collections/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://xiaohei.im/hugo-theme/pure/tags/collections/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Collections-Arraylist</title>
-      <link>https://xiaohei.im/2019/08/arraylist/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/2019/08/arraylist/</link>
       <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
       
-      <guid>https://xiaohei.im/2019/08/arraylist/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/2019/08/arraylist/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Collections-Hashmap</title>
-      <link>https://xiaohei.im/2019/08/hashmap/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/2019/08/hashmap/</link>
       <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
       
-      <guid>https://xiaohei.im/2019/08/hashmap/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/2019/08/hashmap/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Collections-Hashset</title>
-      <link>https://xiaohei.im/2019/08/hashset/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/2019/08/hashset/</link>
       <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
       
-      <guid>https://xiaohei.im/2019/08/hashset/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/2019/08/hashset/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Collections-Linkedhashmap</title>
-      <link>https://xiaohei.im/2019/08/linkedhashmap/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/2019/08/linkedhashmap/</link>
       <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
       
-      <guid>https://xiaohei.im/2019/08/linkedhashmap/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/2019/08/linkedhashmap/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Collections-Linkedlist</title>
-      <link>https://xiaohei.im/2019/08/linkedlist/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/2019/08/linkedlist/</link>
       <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
       
-      <guid>https://xiaohei.im/2019/08/linkedlist/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/2019/08/linkedlist/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Collections-Treemap</title>
-      <link>https://xiaohei.im/2019/08/treemap/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/2019/08/treemap/</link>
       <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
       
-      <guid>https://xiaohei.im/2019/08/treemap/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/2019/08/treemap/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Collections-Treeset</title>
-      <link>https://xiaohei.im/2019/08/treeset/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/2019/08/treeset/</link>
       <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
       
-      <guid>https://xiaohei.im/2019/08/treeset/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/2019/08/treeset/</guid>
       <description></description>
     </item>
     

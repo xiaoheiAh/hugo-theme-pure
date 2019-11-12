@@ -2,56 +2,56 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>redis on 赵小黑的博客</title>
-    <link>https://xiaohei.im/categories/redis/</link>
+    <link>https://xiaohei.im/hugo-theme/pure/categories/redis/</link>
     <description>Recent content in redis on 赵小黑的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Wed, 06 Nov 2019 19:08:56 +0800</lastBuildDate>
     
-        <atom:link href="https://xiaohei.im/categories/redis/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://xiaohei.im/hugo-theme/pure/categories/redis/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Redis-RDB持久化</title>
-      <link>https://xiaohei.im/2019/11/rdb/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/2019/11/rdb/</link>
       <pubDate>Wed, 06 Nov 2019 19:08:56 +0800</pubDate>
       
-      <guid>https://xiaohei.im/2019/11/rdb/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/2019/11/rdb/</guid>
       <description>&lt;p&gt;&lt;code&gt;redis&lt;/code&gt; 为内存数据库,一旦服务器进程退出,服务器中的数据就不见了.所以内存中的数据需要持久化的硬盘中来保证可以在必要的时候进行故障恢复. &lt;code&gt;RDB&lt;/code&gt; 就是 &lt;code&gt;redis&lt;/code&gt; 提供的一种持久化方式.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Redis-数据库长什么样?</title>
-      <link>https://xiaohei.im/2019/11/db/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/2019/11/db/</link>
       <pubDate>Wed, 06 Nov 2019 11:00:32 +0800</pubDate>
       
-      <guid>https://xiaohei.im/2019/11/db/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/2019/11/db/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Redis-万物皆「对象」</title>
-      <link>https://xiaohei.im/2019/11/obj/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/2019/11/obj/</link>
       <pubDate>Mon, 04 Nov 2019 18:56:15 +0800</pubDate>
       
-      <guid>https://xiaohei.im/2019/11/obj/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/2019/11/obj/</guid>
       <description>&lt;p&gt;Redis有很多种数据结构,但其并没有直接使用这些数据结构来构建这个 &lt;code&gt;NOSQL&lt;/code&gt;, 而是通过 &lt;code&gt;对象系统&lt;/code&gt; 完成了对所有数据结构的统一管理, 实现内存回收, 对象共享等特性~&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Redis-分布式锁</title>
-      <link>https://xiaohei.im/2019/11/distributed-lock/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/2019/11/distributed-lock/</link>
       <pubDate>Sun, 03 Nov 2019 14:49:56 +0800</pubDate>
       
-      <guid>https://xiaohei.im/2019/11/distributed-lock/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/2019/11/distributed-lock/</guid>
       <description>&lt;p&gt;分布式锁有很多中实现(纯数据库,zookeeper,redis),纯数据库的受限于数据库性能,zk 可以保证加锁的顺序,是公平锁.Redis中的实现就是接下来要学习的.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Redis - 数据结构</title>
-      <link>https://xiaohei.im/2019/10/data-structure/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/2019/10/data-structure/</link>
       <pubDate>Thu, 24 Oct 2019 09:59:11 +0800</pubDate>
       
-      <guid>https://xiaohei.im/2019/10/data-structure/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/2019/10/data-structure/</guid>
       <description>&lt;p&gt;系统学习 redis 相关的知识，从数据结构开始～&lt;/p&gt;</description>
     </item>
     

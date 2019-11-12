@@ -2,110 +2,110 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on 赵小黑的博客</title>
-    <link>https://xiaohei.im/tags/</link>
+    <link>https://xiaohei.im/hugo-theme/pure/tags/</link>
     <description>Recent content in Tags on 赵小黑的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Wed, 06 Nov 2019 19:08:56 +0800</lastBuildDate>
     
-        <atom:link href="https://xiaohei.im/tags/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://xiaohei.im/hugo-theme/pure/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>redis</title>
-      <link>https://xiaohei.im/tags/redis/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/tags/redis/</link>
       <pubDate>Wed, 06 Nov 2019 19:08:56 +0800</pubDate>
       
-      <guid>https://xiaohei.im/tags/redis/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/tags/redis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>分布式锁</title>
-      <link>https://xiaohei.im/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</link>
       <pubDate>Sun, 03 Nov 2019 14:49:56 +0800</pubDate>
       
-      <guid>https://xiaohei.im/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</guid>
       <description></description>
     </item>
     
     <item>
       <title>数据结构</title>
-      <link>https://xiaohei.im/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
       <pubDate>Thu, 24 Oct 2019 09:59:11 +0800</pubDate>
       
-      <guid>https://xiaohei.im/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
       <description></description>
     </item>
     
     <item>
       <title>rabbitmq</title>
-      <link>https://xiaohei.im/tags/rabbitmq/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/tags/rabbitmq/</link>
       <pubDate>Wed, 23 Oct 2019 11:22:13 +0800</pubDate>
       
-      <guid>https://xiaohei.im/tags/rabbitmq/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/tags/rabbitmq/</guid>
       <description></description>
     </item>
     
     <item>
       <title>hugo</title>
-      <link>https://xiaohei.im/tags/hugo/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/tags/hugo/</link>
       <pubDate>Mon, 23 Sep 2019 19:08:35 +0800</pubDate>
       
-      <guid>https://xiaohei.im/tags/hugo/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/tags/hugo/</guid>
       <description></description>
     </item>
     
     <item>
       <title>hystrix</title>
-      <link>https://xiaohei.im/tags/hystrix/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/tags/hystrix/</link>
       <pubDate>Mon, 26 Aug 2019 15:25:08 +0800</pubDate>
       
-      <guid>https://xiaohei.im/tags/hystrix/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/tags/hystrix/</guid>
       <description></description>
     </item>
     
     <item>
       <title>rxjava</title>
-      <link>https://xiaohei.im/tags/rxjava/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/tags/rxjava/</link>
       <pubDate>Mon, 26 Aug 2019 15:25:08 +0800</pubDate>
       
-      <guid>https://xiaohei.im/tags/rxjava/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/tags/rxjava/</guid>
       <description></description>
     </item>
     
     <item>
       <title>响应式编程</title>
-      <link>https://xiaohei.im/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/</link>
       <pubDate>Wed, 21 Aug 2019 16:09:48 +0800</pubDate>
       
-      <guid>https://xiaohei.im/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/</guid>
       <description></description>
     </item>
     
     <item>
       <title>leetcode</title>
-      <link>https://xiaohei.im/tags/leetcode/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/tags/leetcode/</link>
       <pubDate>Wed, 21 Aug 2019 15:29:34 +0800</pubDate>
       
-      <guid>https://xiaohei.im/tags/leetcode/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/tags/leetcode/</guid>
       <description></description>
     </item>
     
     <item>
       <title>rust</title>
-      <link>https://xiaohei.im/tags/rust/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/tags/rust/</link>
       <pubDate>Wed, 21 Aug 2019 15:29:34 +0800</pubDate>
       
-      <guid>https://xiaohei.im/tags/rust/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/tags/rust/</guid>
       <description></description>
     </item>
     
     <item>
       <title>collections</title>
-      <link>https://xiaohei.im/tags/collections/</link>
+      <link>https://xiaohei.im/hugo-theme/pure/tags/collections/</link>
       <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
       
-      <guid>https://xiaohei.im/tags/collections/</guid>
+      <guid>https://xiaohei.im/hugo-theme/pure/tags/collections/</guid>
       <description></description>
     </item>
     
