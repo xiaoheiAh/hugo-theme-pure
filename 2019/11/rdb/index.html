@@ -44,7 +44,7 @@
 
 <meta itemprop="datePublished" content="2019-11-06T19:08:56&#43;08:00" />
 <meta itemprop="dateModified" content="2019-11-06T19:08:56&#43;08:00" />
-<meta itemprop="wordCount" content="3445">
+<meta itemprop="wordCount" content="3442">
 
 
 
@@ -234,7 +234,7 @@
 <ul>
 <li>
 <ul>
-<li><a href="#介绍">介绍</a>
+<li><a href="#什么是-rdb">什么是 RDB?</a>
 <ul>
 <li><a href="#如何执行">如何执行?</a></li>
 <li><a href="#如何载入">如何载入?</a></li>
@@ -318,7 +318,7 @@
 	</span>
         <span class="post-comment"><i class="icon icon-comment"></i> <a href="/hugo-theme-pure/2019/11/rdb/#comments"
             class="article-comment-link">评论</a></span>
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计:3445字</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计:3442字</span>
 		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长:7分 </span>
       </div>
     </div>
@@ -329,7 +329,7 @@
 <p>官方关于持久化的文章: <a href="https://redis.io/topics/persistence">https://redis.io/topics/persistence</a></p>
 </blockquote>
 
-<h2 id="介绍">介绍</h2>
+<h2 id="什么是-rdb">什么是 RDB?</h2>
 
 <p><code>RDB</code> 是 <code>redis</code> 提供的一种持久化方式,可以手动执行,也可以通过定时任务定期执行,可以将某个时间节点的数据库状态保存到一个 <code>RDB</code> 文件中,叫做 <code>dump.rdb</code>.如果开启了压缩算法( <code>LZF</code> )的支持,则可以利用算法减少文件大小.服务器意外宕机或者断电后重启都可以通过该文件来恢复数据库状态.</p>
 
@@ -715,7 +715,7 @@ int rdbSaveInfoAuxFields(rio *rdb, int flags, rdbSaveInfo *rsi) {
            l   l   o 377 374 016   k   y 376   G 032   6
 </code></pre>
 
-<p>最后一行输出中 <code>0xff</code> , 文件结束符, 剩下的八个字节就是 <code>CRC64</code> 校验码了.</p>
+<p>最后一行输出中 <code>0xff</code> , 文件结束符, 剩下的八个字节就是 <code>CRC64</code></p>
 
 <h2 id="参考">参考</h2>
 
@@ -849,7 +849,7 @@ hljs.initHighlightingOnLoad();
                   UNTITLED: '(未命名)',
               },
               ROOT_URL: 'https:\/\/xiaohei.im\/hugo-theme-pure',
-              CONTENT_URL: 'https:\/\/xiaohei.im\/searchindex.json ',
+              CONTENT_URL: 'https:\/\/xiaohei.im\/hugo-theme-pure\/searchindex.json ',
           };
           window.INSIGHT_CONFIG = INSIGHT_CONFIG;
       })(window);
