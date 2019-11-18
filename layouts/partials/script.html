@@ -4,8 +4,9 @@
 </script>
 <script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
 {{ range .Params.langs }}
-<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/{{.}.min.js"></script>
-{{ end }
+<script type="text/javascript"
+        src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/{{ . }}.min.js"></script>
+{{ end }}
 <script>
 hljs.configure({
   tabReplace: '    ', // 4 spaces
