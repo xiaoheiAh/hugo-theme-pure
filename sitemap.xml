@@ -4,48 +4,69 @@
   
   <url>
     <loc>https://xiaohei.im/hugo-theme-pure/categories/</loc>
-    <lastmod>2019-11-06T19:08:56+08:00</lastmod>
+    <lastmod>2019-11-16T14:24:40+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://xiaohei.im/hugo-theme-pure/posts/</loc>
-    <lastmod>2019-11-06T19:08:56+08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://xiaohei.im/hugo-theme-pure/categories/redis/</loc>
-    <lastmod>2019-11-06T19:08:56+08:00</lastmod>
+    <lastmod>2019-11-16T14:24:40+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://xiaohei.im/hugo-theme-pure/tags/redis/</loc>
-    <lastmod>2019-11-06T19:08:56+08:00</lastmod>
+    <lastmod>2019-11-16T14:24:40+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://xiaohei.im/hugo-theme-pure/2019/11/rdb/</loc>
-    <lastmod>2019-11-06T19:08:56+08:00</lastmod>
+    <loc>https://xiaohei.im/hugo-theme-pure/categories/redis/</loc>
+    <lastmod>2019-11-16T14:24:40+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaohei.im/hugo-theme-pure/2019/11/replication/</loc>
+    <lastmod>2019-11-16T14:24:40+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://xiaohei.im/hugo-theme-pure/tags/</loc>
-    <lastmod>2019-11-06T19:08:56+08:00</lastmod>
+    <lastmod>2019-11-16T14:24:40+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://xiaohei.im/hugo-theme-pure/</loc>
+    <lastmod>2019-11-16T14:24:40+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaohei.im/hugo-theme-pure/2019/11/event/</loc>
+    <lastmod>2019-11-14T15:01:45+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaohei.im/hugo-theme-pure/2019/11/aof/</loc>
+    <lastmod>2019-11-08T15:18:05+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaohei.im/hugo-theme-pure/2019/11/rdb/</loc>
     <lastmod>2019-11-06T19:08:56+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -199,14 +220,14 @@
   </url>
   
   <url>
-    <loc>https://xiaohei.im/hugo-theme-pure/tags/leetcode/</loc>
+    <loc>https://xiaohei.im/hugo-theme-pure/categories/leetcode/</loc>
     <lastmod>2019-08-21T15:29:34+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://xiaohei.im/hugo-theme-pure/categories/leetcode/</loc>
+    <loc>https://xiaohei.im/hugo-theme-pure/tags/leetcode/</loc>
     <lastmod>2019-08-21T15:29:34+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -241,6 +262,13 @@
   </url>
   
   <url>
+    <loc>https://xiaohei.im/hugo-theme-pure/collections/</loc>
+    <lastmod>2019-08-15T13:19:18+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://xiaohei.im/hugo-theme-pure/tags/collections/</loc>
     <lastmod>2019-08-15T13:19:18+08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -248,49 +276,49 @@
   </url>
   
   <url>
-    <loc>https://xiaohei.im/hugo-theme-pure/2019/08/arraylist/</loc>
+    <loc>https://xiaohei.im/hugo-theme-pure/collections/arraylist/</loc>
     <lastmod>2019-08-15T13:19:18+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://xiaohei.im/hugo-theme-pure/2019/08/hashmap/</loc>
+    <loc>https://xiaohei.im/hugo-theme-pure/collections/hashmap/</loc>
     <lastmod>2019-08-15T13:19:18+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://xiaohei.im/hugo-theme-pure/2019/08/hashset/</loc>
+    <loc>https://xiaohei.im/hugo-theme-pure/collections/hashset/</loc>
     <lastmod>2019-08-15T13:19:18+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://xiaohei.im/hugo-theme-pure/2019/08/linkedhashmap/</loc>
+    <loc>https://xiaohei.im/hugo-theme-pure/collections/linkedhashmap/</loc>
     <lastmod>2019-08-15T13:19:18+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://xiaohei.im/hugo-theme-pure/2019/08/linkedlist/</loc>
+    <loc>https://xiaohei.im/hugo-theme-pure/collections/linkedlist/</loc>
     <lastmod>2019-08-15T13:19:18+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://xiaohei.im/hugo-theme-pure/2019/08/treemap/</loc>
+    <loc>https://xiaohei.im/hugo-theme-pure/collections/treemap/</loc>
     <lastmod>2019-08-15T13:19:18+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://xiaohei.im/hugo-theme-pure/2019/08/treeset/</loc>
+    <loc>https://xiaohei.im/hugo-theme-pure/collections/treeset/</loc>
     <lastmod>2019-08-15T13:19:18+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>

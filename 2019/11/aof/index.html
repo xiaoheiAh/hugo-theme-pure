@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>
-         - 赵小黑的博客
+        Redis-AOF持久化 - 赵小黑的博客
       </title>
     <head>
   <meta charset="utf-8">
@@ -23,34 +23,35 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <meta name="description" content="" />
+  <meta name="description" content="RDB 和 AOF 区别在于: 前者保存数据库快照,持久化所有键值对,后者通过保存 写命令 保证数据库的状态.
+" />
   <meta name="generator" content="Hugo 0.58.0 with theme pure" />
-  <title> - 赵小黑的博客</title>
+  <title>Redis-AOF持久化 - 赵小黑的博客</title>
   
 
   <link rel="stylesheet" href="https://xiaohei.im/hugo-theme-pure/css/style.css">
   <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css"> 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-  <meta property="og:title" content="" />
-<meta property="og:description" content="" />
+  <meta property="og:title" content="Redis-AOF持久化" />
+<meta property="og:description" content="RDB 和 AOF 区别在于: 前者保存数据库快照,持久化所有键值对,后者通过保存 写命令 保证数据库的状态." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://xiaohei.im/hugo-theme-pure/2019/11/aof/" />
 <meta property="article:published_time" content="2019-11-08T15:18:05+08:00" />
 <meta property="article:modified_time" content="2019-11-08T15:18:05+08:00" />
-<meta itemprop="name" content="">
-<meta itemprop="description" content="">
+<meta itemprop="name" content="Redis-AOF持久化">
+<meta itemprop="description" content="RDB 和 AOF 区别在于: 前者保存数据库快照,持久化所有键值对,后者通过保存 写命令 保证数据库的状态.">
 
 
 <meta itemprop="datePublished" content="2019-11-08T15:18:05&#43;08:00" />
 <meta itemprop="dateModified" content="2019-11-08T15:18:05&#43;08:00" />
-<meta itemprop="wordCount" content="0">
+<meta itemprop="wordCount" content="1461">
 
 
 
-<meta itemprop="keywords" content="" />
+<meta itemprop="keywords" content="redis," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content=""/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:title" content="Redis-AOF持久化"/>
+<meta name="twitter:description" content="RDB 和 AOF 区别在于: 前者保存数据库快照,持久化所有键值对,后者通过保存 写命令 保证数据库的状态."/>
 
   <!--[if lte IE 9]>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -161,7 +162,7 @@
             <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/corejava/" class="category-list-link">corejava</a><span class="category-list-count">7</span></li>
             <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/hystrix/" class="category-list-link">hystrix</a><span class="category-list-count">2</span></li>
             <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/leetcode/" class="category-list-link">leetcode</a><span class="category-list-count">3</span></li>
-            <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">5</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">8</span></li>
             <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="category-list-link">消息队列</a><span class="category-list-count">4</span></li>
         </ul>
     </div>
@@ -193,7 +194,7 @@
             
             
             <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/redis/" class="tag-list-link">redis</a><span
-                    class="tag-list-count">5</span></li>
+                    class="tag-list-count">8</span></li>
             
             
             <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/rust/" class="tag-list-link">rust</a><span
@@ -220,6 +221,63 @@
     </div>
 </div>
       
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/replication/" class="title">Redis-复制功能探索</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2019-11-16 14:24:40 &#43;0800 CST" itemprop="datePublished">2019-11-16</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/event/" class="title">Redis-事件</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2019-11-14 15:01:45 &#43;0800 CST" itemprop="datePublished">2019-11-14</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/aof/" class="title">Redis-AOF持久化</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2019-11-08 15:18:05 &#43;0800 CST" itemprop="datePublished">2019-11-08</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/rdb/" class="title">Redis-RDB持久化</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2019-11-06 19:08:56 &#43;0800 CST" itemprop="datePublished">2019-11-06</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/db/" class="title">Redis-数据库长什么样?</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2019-11-06 11:00:32 &#43;0800 CST" itemprop="datePublished">2019-11-06</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
   </div>
 </aside>
 
@@ -229,7 +287,33 @@
     <div class="slimContent">
       <nav id="toc" class="article-toc">
         <h3 class="toc-title">文章目录</h3>
-        <div class="toc-content always-active">
+        <div class="toc-content always-active"><nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#什么是-aof">什么是 AOF ?</a>
+<ul>
+<li><a href="#开启-aof">开启 AOF</a></li>
+<li><a href="#aof-文件格式">AOF 文件格式</a></li>
+<li><a href="#aof-持久化过程">AOF 持久化过程</a>
+<ul>
+<li><a href="#命令追加-append">命令追加 append</a></li>
+<li><a href="#aof-写入同步">AOF 写入同步</a>
+<ul>
+<li><a href="#appendfsync">appendfsync</a></li>
+</ul></li>
+<li><a href="#aof-还原数据">AOF 还原数据</a></li>
+</ul></li>
+<li><a href="#aof-重写">AOF 重写</a>
+<ul>
+<li><a href="#触发条件">触发条件</a></li>
+<li><a href="#重写过程">重写过程</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#参考">参考</a></li>
+</ul></li>
+</ul>
+</nav>
         </div>
       </nav>
     </div>
@@ -243,7 +327,7 @@
   <a
     class="article-title"
     href="/hugo-theme-pure/2019/11/aof/"
-    ></a
+    >Redis-AOF持久化</a
   >
 </h1>
 
@@ -253,7 +337,14 @@
 <a href="https://xiaohei.im/hugo-theme-pure/2019/11/aof/" class="article-date">
   <time datetime="2019-11-08 15:18:05 &#43;0800 CST" itemprop="datePublished">2019-11-08</time>
 </a>
-</span>
+</span><span class="article-category">
+  <i class="icon icon-folder"></i>
+  <a class="article-category-link" href="/hugo-theme-pure/categories/redis/"> redis </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+    <a class="article-tag-link" href="/hugo-theme-pure/tags/redis/"> redis </a>
+  </span>
 
 	<span class="article-read hidden-xs">
 	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
@@ -263,12 +354,118 @@
 	</span>
         <span class="post-comment"><i class="icon icon-comment"></i> <a href="/hugo-theme-pure/2019/11/aof/#comments"
             class="article-comment-link">评论</a></span>
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计:0字</span>
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长:0分 </span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计:1461字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长:3分 </span>
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
-      
+      <p><code>RDB</code> 和 <code>AOF</code> 区别在于: 前者保存数据库快照,持久化所有键值对,后者通过保存 <strong>写命令</strong> 保证数据库的状态.</p>
+
+<h2 id="什么是-aof">什么是 AOF ?</h2>
+
+<p><code>AOF</code> 持久化通过保存服务器执行的写命令实现,进行恢复时通过重放 <code>AOF</code> 文件中的写命令,来保证数据安全.就像 <code>mysql</code> 的 <code>binlog</code> 一样.</p>
+
+<h3 id="开启-aof">开启 AOF</h3>
+
+<p>通过在 <code>redis.conf</code> 中将 <code>appendonly</code> 设为 <code>yes</code> 即可</p>
+
+<pre><code class="language-bash"># redis.conf
+appendonly yes
+# 设置 aof 文件名字
+appendfilename &quot;appendonly.aof&quot;
+# Redis支持三种不同的刷写模式：
+# appendfsync always #每次收到写命令就立即强制写入磁盘，是最有保证的完全的持久化，但速度也是最慢的，一般不推荐使用。
+appendfsync everysec #每秒钟强制写入磁盘一次，在性能和持久化方面做了很好的折中，是受推荐的方式。
+# appendfsync no     #完全依赖OS的写入，一般为30秒左右一次，性能最好但是持久化最没有保证，不被推荐。
+</code></pre>
+
+<h3 id="aof-文件格式">AOF 文件格式</h3>
+
+<p><code>AOF</code> 文件格式以 <code>redis</code> 命令请求协议为标准的,<code>*.aof</code> 文件可以直接打开.</p>
+
+<p><img src="https://raw.githubusercontent.com/xiaoheiAh/imgs/master/20191112184639.png" alt="redis设计与实现-aof格式" /></p>
+
+<h3 id="aof-持久化过程">AOF 持久化过程</h3>
+
+<h4 id="命令追加-append">命令追加 append</h4>
+
+<p><code>redis</code> 执行完客户端的写命令后,会将该命令以协议的格式写入到 <code>aof_buf</code> 中.该属性为 <code>redisServer</code> 中的一个.</p>
+
+<pre><code class="language-c">#src/server.h
+struct redisServer {
+ ....
+ sds aof_buf;      /* AOF buffer, written before entering the event loop */
+}
+</code></pre>
+
+<h4 id="aof-写入同步">AOF 写入同步</h4>
+
+<p><code>redis</code> 的服务进程是一个 <strong>事件循环</strong> - <code>event loop</code> , 每次循环大概会做三件事.</p>
+
+<ol>
+<li>文件事件: 接收客户端的命令,返回结果</li>
+<li>时间事件: 执行系统的定时任务(<code>serverCron</code>), 完成渐进 <code>rehash</code> 扩容之类的操作</li>
+
+<li><p>aof flush: 是否将 <code>aof_buf</code> 中的内容写入文件中</p>
+
+<pre><code class="language-bash"># 伪代码
+def eventloop():
+while true:
+	processFileEvents() # 处理命令
+	processTimeEvents() # 处理定时任务
+	flushAppendOnlyFile() # 处理 aof 写入
+ 	
+</code></pre></li>
+</ol>
+
+<p><code>flushAppendOnlyFile</code> 中的动作是否执行是根据一个配置决定的.</p>
+
+<h5 id="appendfsync">appendfsync</h5>
+
+<p>该配置有几个值可选,默认是 <code>everysec</code>.</p>
+
+<ol>
+<li>always: 总是写入.只要程序执行到这一步了,就将 <code>aof_buf</code> 中命令协议写入到文件</li>
+<li>everysec: 每秒写入. 每次执行前会先判断是否与上次写入间隔一秒,再次同步时通过 <strong>一个线程</strong> 专门执行</li>
+<li>no: 不写入. 命令写入 <code>aof_buf</code> 后由操作系统决定何时同步到文件</li>
+</ol>
+
+<blockquote>
+<p>fsync: 现代操作系统为了提高文件读写的效率,通常会将 <code>write</code> 函数写入的数据缓存在内存中,等到缓存空间填满或者超过一定时限,再将其写入磁盘.这样的问题在于宕机时缓存中的数据就无法恢复.所以操作系统提供了 <strong>fsync/fdatasync</strong> 两个函数,强制操作系统将数据立即写入磁盘,保证数据安全.两函数区别在于: 前者会更新文件的属性,后者只更新数据.</p>
+</blockquote>
+
+<p>三种模式在性能和数据上都有相对的优缺点. <code>always</code> 模式数据安全性更强,毕竟每次都是直接写入,但是就会影响性能.磁盘读写是比较慢的. <code>everysec</code> 模式性能较好,但会丢失一秒内的缓存数据. <code>no</code> 模式就完全取决于操作系统了.</p>
+
+<h4 id="aof-还原数据">AOF 还原数据</h4>
+
+<p><img src="https://raw.githubusercontent.com/xiaoheiAh/imgs/master/20191113182005.png" alt="redis设计与实现-aof还原数据" /></p>
+
+<h3 id="aof-重写">AOF 重写</h3>
+
+<p><code>AOF</code> 重写的意思其实就是对单个命令的多个操作进行整理,留下最终态的执行命令来减少 <code>aof</code> 文件的大小.你可以想象一下执行 1w 次 <code>incr</code> 操作,写入 <code>aof</code> 1w 次的场景.</p>
+
+<h4 id="触发条件">触发条件</h4>
+
+<p><code>AOF</code> 重写可以自动触发.通过配置 <code>auto-aof-rewrite-min-size</code> 和<code>auto-aof-rewrite-percentage</code>,满足条件就会自动重写.具体可以查看官方的 <code>redis.conf</code></p>
+
+<h4 id="重写过程">重写过程</h4>
+
+<ol>
+<li>创建子进程，根据内存里的数据重写<code>aof</code>，保存到<code>temp</code>文件</li>
+<li>此时主进程还会接收命令，会将写操作追加到旧的<code>aof</code>文件中，并保存在<code>server.aof_rewrite_buf_blocks</code>中，通过管道发送给子进程存在<code>server.aof_child_diff</code>中，最后追加到<code>temp</code>文件结尾</li>
+<li>子进程重写完成后退出，主进程根据子进程退出状态，判断成功与否。成功就将剩余的<code>server.aof_rewrite_buf_blocks</code>追加到<code>temp file</code>中，然后<code>rename()</code>覆盖原<code>aof</code>文件</li>
+</ol>
+
+<p>重写的过程中主进程还是会一直接受客户端的命令,所以重写子进程与主进程肯定会存在数据不一致的情况.<code>redis</code>针对这种情况作出了解决方案: 新增一个 <code>aof_rewrite_buf_blocks</code>, <code>aof</code> 写入命令时,不仅写入到 <code>aof_buf</code>, 如果正在重写,那么也写入到 <code>aof_rewrite_buf_blocks</code> 中,这样在子进程重写完毕后,可以将 <code>aof_rewrite_buf_blocks</code> 的命令追加到新文件中,保证数据不丢失.</p>
+
+<p><code>rename</code> 操作是原子的,也是唯一会造成主进程阻塞的操作.</p>
+
+<h2 id="参考">参考</h2>
+
+<ol>
+<li><a href="https://redis.io/topics/persistence">https://redis.io/topics/persistence</a></li>
+<li><a href="https://youjiali1995.github.io/redis/persistence/">https://youjiali1995.github.io/redis/persistence/</a></li>
+</ol>
     </div>
   </article>
 <section id="comments">
@@ -281,6 +478,11 @@
                 <a href="https://xiaohei.im/hugo-theme-pure/2019/11/rdb/" title="Redis-RDB持久化"><i
                         class="icon icon-angle-left"
                         aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://xiaohei.im/hugo-theme-pure/2019/11/event/"
+                    title="Redis-事件"><span>下一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
             </li>
             
             <li class="toggle-toc">
@@ -394,7 +596,7 @@ hljs.initHighlightingOnLoad();
                   UNTITLED: '(未命名)',
               },
               ROOT_URL: 'https:\/\/xiaohei.im\/hugo-theme-pure',
-              CONTENT_URL: 'https:\/\/xiaohei.im\/searchindex.json ',
+              CONTENT_URL: 'https:\/\/xiaohei.im\/hugo-theme-pure\/searchindex.json ',
           };
           window.INSIGHT_CONFIG = INSIGHT_CONFIG;
       })(window);

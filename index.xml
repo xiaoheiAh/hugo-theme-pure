@@ -5,7 +5,7 @@
     <link>https://xiaohei.im/hugo-theme-pure/</link>
     <description>Recent content on 赵小黑的博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 06 Nov 2019 19:08:56 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 16 Nov 2019 14:24:40 +0800</lastBuildDate>
     
         <atom:link href="https://xiaohei.im/hugo-theme-pure/index.xml" rel="self" type="application/rss+xml" />
     
@@ -13,9 +13,18 @@
     <item>
       <title>Posts</title>
       <link>https://xiaohei.im/hugo-theme-pure/posts/</link>
-      <pubDate>Wed, 06 Nov 2019 19:08:56 +0800</pubDate>
+      <pubDate>Sat, 16 Nov 2019 14:24:40 +0800</pubDate>
       
       <guid>https://xiaohei.im/hugo-theme-pure/posts/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections</title>
+      <link>https://xiaohei.im/hugo-theme-pure/collections/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/collections/</guid>
       <description></description>
     </item>
     
@@ -25,7 +34,7 @@
       <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
       
       <guid>https://xiaohei.im/hugo-theme-pure/about/</guid>
-      <description>xiaoheiAh~ 联系方式 github: @xiaoheiAh gmail: xiaohei.zyx@gmail.com 节点推荐 -&amp;gt; http://1t.click/aCyT @githubchart</description>
+      <description>xiaoheiAh~ 联系方式 github: @xiaoheiAh gmail: xiaohei.zyx@gmail.com 节点推荐 -&amp;gt; http://1t.click/aCyT 关注的大佬博客 面向信仰编程 真·面向信仰,硬核,主 go ,其他技术也很在行, kubernetes 贡献者 @githubchart</description>
     </item>
     
     <item>

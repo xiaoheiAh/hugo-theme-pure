@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        Collections-Linkedlist - 赵小黑的博客
+      </title>
+    <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  
+  <meta name="theme-color" content="#000000" />
+  
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <meta name="description" content="" />
+  <meta name="generator" content="Hugo 0.58.0 with theme pure" />
+  <title>Collections-Linkedlist - 赵小黑的博客</title>
+  
+
+  <link rel="stylesheet" href="https://xiaohei.im/hugo-theme-pure/css/style.css">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css"> 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <meta property="og:title" content="Collections-Linkedlist" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiaohei.im/hugo-theme-pure/collections/linkedlist/" />
+<meta property="article:published_time" content="2019-08-15T13:19:18+08:00" />
+<meta property="article:modified_time" content="2019-08-15T13:19:18+08:00" />
+<meta itemprop="name" content="Collections-Linkedlist">
+<meta itemprop="description" content="">
+
+
+<meta itemprop="datePublished" content="2019-08-15T13:19:18&#43;08:00" />
+<meta itemprop="dateModified" content="2019-08-15T13:19:18&#43;08:00" />
+<meta itemprop="wordCount" content="2904">
+
+
+
+<meta itemprop="keywords" content="collections," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Collections-Linkedlist"/>
+<meta name="twitter:description" content=""/>
+
+  <!--[if lte IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+    <![endif]-->
+
+  <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+  </head>
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/xiaoheiAh" target="_blank">
+            <img class="img-circle img-rotate" src="https://xiaohei.im/hugo-theme-pure/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">赵小黑</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">Java Developer</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shanghai, China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav  menu-highlight">
+            <li class="menu-item menu-item-home">
+                <a href="/hugo-theme-pure/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/hugo-theme-pure/posts">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/hugo-theme-pure/categories">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/hugo-theme-pure/tags">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/hugo-theme-pure/about">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>自用科学上网节点推荐(便宜又好用)<a href="https://tianlinzhao.com/aff.php?aff=4969" target="_blank" style="background-color:#FFFF00">点这里跳转</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/corejava/" class="category-list-link">corejava</a><span class="category-list-count">7</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/hystrix/" class="category-list-link">hystrix</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/leetcode/" class="category-list-link">leetcode</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">8</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="category-list-link">消息队列</a><span class="category-list-count">4</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/collections/" class="tag-list-link">collections</a><span
+                    class="tag-list-count">7</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/hugo/" class="tag-list-link">hugo</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/hystrix/" class="tag-list-link">hystrix</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/rabbitmq/" class="tag-list-link">rabbitmq</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">8</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/rust/" class="tag-list-link">rust</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/rxjava/" class="tag-list-link">rxjava</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="tag-list-link">分布式锁</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="tag-list-link">响应式编程</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="tag-list-link">数据结构</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/replication/" class="title">Redis-复制功能探索</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2019-11-16 14:24:40 &#43;0800 CST" itemprop="datePublished">2019-11-16</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/event/" class="title">Redis-事件</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2019-11-14 15:01:45 &#43;0800 CST" itemprop="datePublished">2019-11-14</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/aof/" class="title">Redis-AOF持久化</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2019-11-08 15:18:05 &#43;0800 CST" itemprop="datePublished">2019-11-08</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/rdb/" class="title">Redis-RDB持久化</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2019-11-06 19:08:56 &#43;0800 CST" itemprop="datePublished">2019-11-06</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/db/" class="title">Redis-数据库长什么样?</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2019-11-06 11:00:32 &#43;0800 CST" itemprop="datePublished">2019-11-06</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+  <aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+    <div class="slimContent">
+      <nav id="toc" class="article-toc">
+        <h3 class="toc-title">文章目录</h3>
+        <div class="toc-content always-active"><nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#主要属性">主要属性</a></li>
+<li><a href="#构造函数">构造函数</a></li>
+</ul></li>
+<li><a href="#主要方法">主要方法</a></li>
+<li><a href="#查询操作">查询操作</a></li>
+<li><a href="#队列类的操作">队列类的操作</a></li>
+<li><a href="#linkedlist中的迭代器">LinkedList中的迭代器</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+      </nav>
+    </div>
+  </aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/hugo-theme-pure/collections/linkedlist/"
+    >Collections-Linkedlist</a
+  >
+</h1>
+
+      <div class="article-meta">
+        <span class="article-date">
+  <i class="icon icon-calendar-check"></i>
+<a href="https://xiaohei.im/hugo-theme-pure/collections/linkedlist/" class="article-date">
+  <time datetime="2019-08-15 13:19:18 &#43;0800 CST" itemprop="datePublished">2019-08-15</time>
+</a>
+</span><span class="article-category">
+  <i class="icon icon-folder"></i>
+  <a class="article-category-link" href="/hugo-theme-pure/categories/corejava/"> CoreJava </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+    <a class="article-tag-link" href="/hugo-theme-pure/tags/collections/"> collections </a>
+  </span>
+
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/hugo-theme-pure/collections/linkedlist/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计:2904字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长:6分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      <p>实现了<code>List</code>和<code>Deque</code>接口的双向队列,允许插入<code>null</code>值</p>
+
+<h4 id="主要属性">主要属性</h4>
+
+<pre><code class="language-java">    transient int size = 0;//大小
+
+    /**
+     * Pointer to first node.
+     * Invariant: (first == null &amp;&amp; last == null) ||
+     *            (first.prev == null &amp;&amp; first.item != null)
+     */
+    transient Node&lt;E&gt; first; //头结点
+
+    /**
+     * Pointer to last node.
+     * Invariant: (first == null &amp;&amp; last == null) ||
+     *            (last.next == null &amp;&amp; last.item != null)
+     */
+    transient Node&lt;E&gt; last; //尾节点
+    //Node节点长这样:item实体对象,prev/next指向前一个后一个节点
+    private static class Node&lt;E&gt; {
+        E item;
+        Node&lt;E&gt; next;
+        Node&lt;E&gt; prev;
+
+        Node(Node&lt;E&gt; prev, E element, Node&lt;E&gt; next) {
+            this.item = element;
+            this.next = next;
+            this.prev = prev;
+        }
+    }
+</code></pre>
+
+<h4 id="构造函数">构造函数</h4>
+
+<p>主要介绍带参数的构造函数</p>
+
+<pre><code class="language-java">    //c == null 时会抛空指针异常
+    public LinkedList(Collection&lt;? extends E&gt; c) {
+        this();
+        addAll(c);
+    }
+    //最终会走到 addAll方法
+    public boolean addAll(int index, Collection&lt;? extends E&gt; c) {
+        checkPositionIndex(index);//判断index是否非法 index&lt;0 || index&gt;size
+        //集合转数组
+        Object[] a = c.toArray();
+        int numNew = a.length;
+        if (numNew == 0)
+            return false;
+
+        Node&lt;E&gt; pred, succ;
+        if (index == size) { //默认会从最后一个节点追加
+            succ = null;
+            pred = last;
+        } else { //自定义index后 会先取到该index对应的对象
+            succ = node(index);//调用node方法取得index位置下的node
+            pred = succ.prev;
+        }
+        
+        //遍历需要赋值的数组
+        for (Object o : a) {
+            @SuppressWarnings(&quot;unchecked&quot;) E e = (E) o;
+            Node&lt;E&gt; newNode = new Node&lt;&gt;(pred, e, null);//不要next节点是因为迭代时可以自行设置
+            if (pred == null)//说明是从头开始
+                first = newNode;
+            else
+                pred.next = newNode;
+            pred = newNode;
+        }
+        
+        //尾部node双向绑定
+        if (succ == null) {//不是指定index地方插入时,即从尾部插入,没有succ节点
+            last = pred;
+        } else {//从指定index插入时,需要与尾部节点连接
+            pred.next = succ;
+            succ.prev = pred;
+        }
+
+        size += numNew;
+        modCount++;
+        return true;
+    }
+
+    Node&lt;E&gt; node(int index) {
+        // assert isElementIndex(index);
+        //掰成两半儿查找
+        if (index &lt; (size &gt;&gt; 1)) {//小于size的一半时从头开始查
+            Node&lt;E&gt; x = first;
+            for (int i = 0; i &lt; index; i++)
+                x = x.next;
+            return x;
+        } else {//index大于size的一半时,从后往前找
+            Node&lt;E&gt; x = last;
+            for (int i = size - 1; i &gt; index; i--)
+                x = x.prev;
+            return x;
+        }
+    }
+</code></pre>
+
+<h3 id="主要方法">主要方法</h3>
+
+<p>1.get</p>
+
+<pre><code class="language-java">    public E get(int index) {
+        checkElementIndex(index);//检查index界限,会抛下标越界异常
+        return node(index).item;//遍历取得指定index下的node
+    }
+</code></pre>
+
+<p>2.set</p>
+
+<pre><code class="language-java">    public E set(int index, E element) {
+        //检查下标
+        checkElementIndex(index);
+        Node&lt;E&gt; x = node(index);//获取对应的node
+        E oldVal = x.item;//取出旧item
+        x.item = element;//赋值新item
+        return oldVal;
+    }
+</code></pre>
+
+<ol>
+<li><p>add</p>
+
+<pre><code class="language-java">public void add(int index, E element) {
+    checkPositionIndex(index);
+
+    if (index == size)//index等于size大小时在最后追加
+        linkLast(element);
+    else
+        linkBefore(element, node(index));//在该index直接添加
+}
+    
+//在尾部连接一个对象
+void linkLast(E e) {
+    final Node&lt;E&gt; l = last;//获得当前的最后一个节点
+    final Node&lt;E&gt; newNode = new Node&lt;&gt;(l, e, null);//新建一个节点,当前最后一个节点作为prev节点
+    last = newNode;
+    if (l == null)//若前一个节点为null list还没有值 则头尾都用该节点
+        first = newNode;
+    else
+        l.next = newNode;//将上一个节点与新节点连接起来
+    size++;//链表长度+1
+    modCount++;//操作链表次数+1
+}
+
+//官方文档上这么说:在一个非空节点前插入新节点 
+//但是其实没有做非空校验了
+void linkBefore(E e, Node&lt;E&gt; succ) {
+    // assert succ != null; 非空校验注释掉了
+    final Node&lt;E&gt; pred = succ.prev;//中间插入 那就是succ的prev节点要重新与新节点的prev连接,新节点的next节点为succ节点
+    final Node&lt;E&gt; newNode = new Node&lt;&gt;(pred, e, succ);
+    succ.prev = newNode;//succ节点与新节点连接
+    if (pred == null)//上一个节点为空时则首尾节点都是该节点
+        first = newNode;
+    else
+        pred.next = newNode;
+    size++;//链表长度+1
+    modCount++;//操作次数+1
+}
+</code></pre></li>
+</ol>
+
+<p>4.remove
+除了各种逻辑最后都会用到unlink方法:大致是将需要删除的对象的prev和next节点重新连接起来,在将该对象置空让gc回收</p>
+
+<pre><code class="language-java">    E unlink(Node&lt;E&gt; x) {
+        // assert x != null;
+        final E element = x.item;
+        final Node&lt;E&gt; next = x.next;//获取该节点下一个节点
+        final Node&lt;E&gt; prev = x.prev;//获取该节点上一个节点
+
+        if (prev == null) {//上一个节点为null时则删除的是头结点 将下一个节点变为头结点
+            first = next;
+        } else {
+            prev.next = next;//prev不为null时 将prev的next改为x的next
+            x.prev = null;//将x的prev置空 让gc回收
+        }
+
+        if (next == null) {//x的next为null时说明该节点是尾节点
+            last = prev;
+        } else {
+            next.prev = prev;//next的prev挂靠到x的prev
+            x.next = null;//x的next置空回收
+        }
+
+        x.item = null;//item置空回收
+        size--;//长度减1
+        modCount++;//操作次数+1
+        return element;
+    }
+</code></pre>
+
+<ol>
+<li><p>clear操作</p>
+
+<pre><code class="language-java">//清空所有的节点
+public void clear() {
+    // Clearing all of the links between nodes is &quot;unnecessary&quot;, but:
+    // - helps a generational GC if the discarded nodes inhabit
+    //   more than one generation
+    // - is sure to free memory even if there is a reachable Iterator
+    for (Node&lt;E&gt; x = first; x != null; ) {
+        Node&lt;E&gt; next = x.next;
+        x.item = null;
+        x.next = null;
+        x.prev = null;
+        x = next;
+    }
+    first = last = null;
+    size = 0;
+    modCount++;
+}
+
+</code></pre></li>
+</ol>
+
+<h3 id="查询操作">查询操作</h3>
+
+<p>1.indexOf
+容易看懂就不解释了,查不到时返回-1,可以查null</p>
+
+<pre><code class="language-java">    public int indexOf(Object o) {
+        int index = 0;
+        if (o == null) {
+            for (Node&lt;E&gt; x = first; x != null; x = x.next) {
+                if (x.item == null)
+                    return index;
+                index++;
+            }
+        } else {
+            for (Node&lt;E&gt; x = first; x != null; x = x.next) {
+                if (o.equals(x.item))
+                    return index;
+                index++;
+            }
+        }
+        return -1;
+    }
+</code></pre>
+
+<h3 id="队列类的操作">队列类的操作</h3>
+
+<ol>
+<li><p>peek</p>
+
+<pre><code class="language-java">//获取头节点 但不删除 可以为null
+public E peek() {
+    final Node&lt;E&gt; f = first;
+    return (f == null) ? null : f.item;
+}
+</code></pre></li>
+
+<li><p>element 和peek一样也是获取头结点 但是若为null会抛空指针异常</p></li>
+
+<li><p>poll 就是队列里的pop操作,即出队</p>
+
+<pre><code class="language-java">public E poll() {
+    final Node&lt;E&gt; f = first;
+    return (f == null) ? null : unlinkFirst(f);
+}
+</code></pre>
+
+<p>4.offer入队
+队尾插入元素</p>
+
+<pre><code class="language-java">public boolean offer(E e) {
+    return add(e);
+}
+</code></pre></li>
+</ol>
+
+<h3 id="linkedlist中的迭代器">LinkedList中的迭代器</h3>
+
+<pre><code class="language-java">    //该迭代器是快速失败的,如果在创建迭代器后操作了链表(add/remove),不是迭代器中的操作(add/remove),就会抛ConcurrentModificationException异常.
+    //原因是迭代器中维护了expectedModCount每次操作前都会比较该值与modCount是否一致,不一致就抛,所以在迭代中增删节点时还是要通过迭代器的操作比较好
+    private class ListItr implements ListIterator&lt;E&gt; {
+        private Node&lt;E&gt; lastReturned;//用作返回节点
+        private Node&lt;E&gt; next;//记录下一个节点
+        private int nextIndex;//下一个index
+        private int expectedModCount = modCount;//初始化期望操作值
+
+        ListItr(int index) {
+            // assert isPositionIndex(index);
+            next = (index == size) ? null : node(index);//若index==size则是尾节点
+            nextIndex = index;
+        }
+
+        public boolean hasNext() {
+            return nextIndex &lt; size;//通过坐标值判断是否有下一个
+        }
+
+        public E next() {
+            checkForComodification();//校验操作避免使用list的add/remove操作
+            if (!hasNext())
+                throw new NoSuchElementException();
+
+            lastReturned = next;
+            next = next.next;
+            nextIndex++;
+            return lastReturned.item;
+        }
+
+        public boolean hasPrevious() {
+            return nextIndex &gt; 0;
+        }
+
+        public E previous() {
+            checkForComodification();
+            if (!hasPrevious())
+                throw new NoSuchElementException();
+
+            lastReturned = next = (next == null) ? last : next.prev;
+            nextIndex--;
+            return lastReturned.item;
+        }
+
+        public int nextIndex() {
+            return nextIndex;
+        }
+
+        public int previousIndex() {
+            return nextIndex - 1;
+        }
+        //迭代器的删除节点操作
+        public void remove() {
+            checkForComodification();//校验操作次数
+            if (lastReturned == null)//状态校验
+                throw new IllegalStateException();
+
+            Node&lt;E&gt; lastNext = lastReturned.next;//获得当前节点的下一个节点
+            unlink(lastReturned);//断开当前节点,将当前节点的前后节点相连接 size会减1 modCount会+1
+            if (next == lastReturned)
+                next = lastNext;
+            else
+                nextIndex--;//坐标值减1
+            lastReturned = null;
+            expectedModCount++;//保持与modCount一致
+        }
+        //设置当前的节点的item
+        public void set(E e) {
+            if (lastReturned == null)
+                throw new IllegalStateException();
+            checkForComodification();
+            lastReturned.item = e;
+        }
+        //和普通add操作一样 主要是需要将nextIndex和expectedModCount都+1
+        public void add(E e) {
+            checkForComodification();
+            lastReturned = null;
+            if (next == null)
+                linkLast(e);
+            else
+                linkBefore(e, next);
+            nextIndex++;
+            expectedModCount++;
+        }
+        //挺方便的迭代 重写下accept方法 可以用lambda表达式
+        public void forEachRemaining(Consumer&lt;? super E&gt; action) {
+            Objects.requireNonNull(action);
+            while (modCount == expectedModCount &amp;&amp; nextIndex &lt; size) {
+                action.accept(next.item);
+                lastReturned = next;
+                next = next.next;
+                nextIndex++;
+            }
+            checkForComodification();
+        }
+        //操作校验
+        final void checkForComodification() {
+            if (modCount != expectedModCount)
+                throw new ConcurrentModificationException();
+        }
+    }
+</code></pre>
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://xiaohei.im/hugo-theme-pure/collections/treemap/" title="Collections-Treemap"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://xiaohei.im/hugo-theme-pure/collections/linkedhashmap/"
+                    title="Collections-Linkedhashmap"><span>下一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        
+        <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal"
+            data-target="#donateModal"><span>赏</span></button>
+        
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content donate">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <div class="modal-body">
+                <div class="donate-box">
+                    <div class="donate-head">
+                        <p>感谢您的支持,我会继续努力的!</p>
+                    </div>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/hugo-theme-pure/donate/alipayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦~</p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/hugo-theme-pure/donate/wechatpayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+                        </div>
+                    </div>
+                    <div class="donate-footer">
+                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay"
+                                    aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+                            </li>
+                            <li role="presentation" class="">
+                                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab"
+                                    aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i>
+                                    微信支付</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/xiaoheiAh" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://xiaohei.im/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2017  -
+    2019
+    <div class="publishby">
+        Theme by <a href="https://github.com/xiaoheiAh" target="_blank"> xiaoheiAh </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+   window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/rust.min.js"></script>
+<script type="text/javascript"
+   src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script>
+hljs.configure({
+  tabReplace: '    ', 
+  classPrefix: ''     
+                      
+})
+hljs.initHighlightingOnLoad();
+</script>
+<script type="text/javascript" src="https://xiaohei.im/hugo-theme-pure/js/application.js"></script>
+<script type="text/javascript" src="https://xiaohei.im/hugo-theme-pure/js/plugin.js"></script>
+<script>
+      (function (window) {
+          var INSIGHT_CONFIG = {
+              TRANSLATION: {
+                  POSTS: '文章',
+                  PAGES: '页面',
+                  CATEGORIES: '分类',
+                  TAGS: '标签',
+                  UNTITLED: '(未命名)',
+              },
+              ROOT_URL: 'https:\/\/xiaohei.im\/hugo-theme-pure',
+              CONTENT_URL: 'https:\/\/xiaohei.im\/hugo-theme-pure\/searchindex.json ',
+          };
+          window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+      })(window);
+      </script>
+<script type="text/javascript" src="https://xiaohei.im/hugo-theme-pure/js/insight.js"></script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98254666-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

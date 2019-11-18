@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        Redis-事件 - 赵小黑的博客
+      </title>
+    <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  
+  <meta name="theme-color" content="#000000" />
+  
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <meta name="description" content=" 事件驱动程序设计（英语：Event-driven programming）是一种电脑程序设计模型。这种模型的程序运行流程是由用户的动作（如鼠标的按键，键盘的按键动作）或者是由其他程序的消息来决定的。相对于批处理程序设计（batch programming）而言，程序运行的流程是由程序员来决定。批量的程序设计在初级程序设计教学课程上是一种方式。然而，事件驱动程序设计这种设计模型是在交互程序（Interactive program）的情况下孕育而生的。 &amp;ndash;wikipedia
+" />
+  <meta name="generator" content="Hugo 0.58.0 with theme pure" />
+  <title>Redis-事件 - 赵小黑的博客</title>
+  
+
+  <link rel="stylesheet" href="https://xiaohei.im/hugo-theme-pure/css/style.css">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css"> 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <meta property="og:title" content="Redis-事件" />
+<meta property="og:description" content="
+事件驱动程序设计（英语：Event-driven programming）是一种电脑程序设计模型。这种模型的程序运行流程是由用户的动作（如鼠标的按键，键盘的按键动作）或者是由其他程序的消息来决定的。相对于批处理程序设计（batch programming）而言，程序运行的流程是由程序员来决定。批量的程序设计在初级程序设计教学课程上是一种方式。然而，事件驱动程序设计这种设计模型是在交互程序（Interactive program）的情况下孕育而生的。  &ndash;wikipedia
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiaohei.im/hugo-theme-pure/2019/11/event/" />
+<meta property="article:published_time" content="2019-11-14T15:01:45+08:00" />
+<meta property="article:modified_time" content="2019-11-14T15:01:45+08:00" />
+<meta itemprop="name" content="Redis-事件">
+<meta itemprop="description" content="
+事件驱动程序设计（英语：Event-driven programming）是一种电脑程序设计模型。这种模型的程序运行流程是由用户的动作（如鼠标的按键，键盘的按键动作）或者是由其他程序的消息来决定的。相对于批处理程序设计（batch programming）而言，程序运行的流程是由程序员来决定。批量的程序设计在初级程序设计教学课程上是一种方式。然而，事件驱动程序设计这种设计模型是在交互程序（Interactive program）的情况下孕育而生的。  &ndash;wikipedia
+">
+
+
+<meta itemprop="datePublished" content="2019-11-14T15:01:45&#43;08:00" />
+<meta itemprop="dateModified" content="2019-11-14T15:01:45&#43;08:00" />
+<meta itemprop="wordCount" content="2358">
+
+
+
+<meta itemprop="keywords" content="redis," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Redis-事件"/>
+<meta name="twitter:description" content="
+事件驱动程序设计（英语：Event-driven programming）是一种电脑程序设计模型。这种模型的程序运行流程是由用户的动作（如鼠标的按键，键盘的按键动作）或者是由其他程序的消息来决定的。相对于批处理程序设计（batch programming）而言，程序运行的流程是由程序员来决定。批量的程序设计在初级程序设计教学课程上是一种方式。然而，事件驱动程序设计这种设计模型是在交互程序（Interactive program）的情况下孕育而生的。  &ndash;wikipedia
+"/>
+
+  <!--[if lte IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+    <![endif]-->
+
+  <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+  </head>
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/xiaoheiAh" target="_blank">
+            <img class="img-circle img-rotate" src="https://xiaohei.im/hugo-theme-pure/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">赵小黑</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">Java Developer</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shanghai, China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav  menu-highlight">
+            <li class="menu-item menu-item-home">
+                <a href="/hugo-theme-pure/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/hugo-theme-pure/posts">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/hugo-theme-pure/categories">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/hugo-theme-pure/tags">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/hugo-theme-pure/about">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>自用科学上网节点推荐(便宜又好用)<a href="https://tianlinzhao.com/aff.php?aff=4969" target="_blank" style="background-color:#FFFF00">点这里跳转</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/corejava/" class="category-list-link">corejava</a><span class="category-list-count">7</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/hystrix/" class="category-list-link">hystrix</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/leetcode/" class="category-list-link">leetcode</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">8</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="category-list-link">消息队列</a><span class="category-list-count">4</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/collections/" class="tag-list-link">collections</a><span
+                    class="tag-list-count">7</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/hugo/" class="tag-list-link">hugo</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/hystrix/" class="tag-list-link">hystrix</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/rabbitmq/" class="tag-list-link">rabbitmq</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">8</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/rust/" class="tag-list-link">rust</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/rxjava/" class="tag-list-link">rxjava</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="tag-list-link">分布式锁</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="tag-list-link">响应式编程</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="tag-list-link">数据结构</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/replication/" class="title">Redis-复制功能探索</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2019-11-16 14:24:40 &#43;0800 CST" itemprop="datePublished">2019-11-16</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/event/" class="title">Redis-事件</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2019-11-14 15:01:45 &#43;0800 CST" itemprop="datePublished">2019-11-14</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/aof/" class="title">Redis-AOF持久化</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2019-11-08 15:18:05 &#43;0800 CST" itemprop="datePublished">2019-11-08</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/rdb/" class="title">Redis-RDB持久化</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2019-11-06 19:08:56 &#43;0800 CST" itemprop="datePublished">2019-11-06</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/db/" class="title">Redis-数据库长什么样?</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2019-11-06 11:00:32 &#43;0800 CST" itemprop="datePublished">2019-11-06</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+  <aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+    <div class="slimContent">
+      <nav id="toc" class="article-toc">
+        <h3 class="toc-title">文章目录</h3>
+        <div class="toc-content always-active"><nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#文件事件">文件事件</a>
+<ul>
+<li><a href="#文件事件处理器">文件事件处理器</a>
+<ul>
+<li><a href="#什么是-i-o-multiplexing">什么是 I/O Multiplexing?</a></li>
+<li><a href="#文件事件处理器结构">文件事件处理器结构</a></li>
+<li><a href="#文件事件类型">文件事件类型</a>
+<ul>
+<li><a href="#事件处理的先后顺序">事件处理的先后顺序</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#事件处理器">事件处理器</a>
+<ul>
+<li><a href="#常用时间处理器">常用时间处理器</a></li>
+</ul></li>
+<li><a href="#文件事件处理流程">文件事件处理流程</a></li>
+</ul></li>
+<li><a href="#时间事件">时间事件</a>
+<ul>
+<li><a href="#属性">属性</a></li>
+<li><a href="#时钟问题">时钟问题</a>
+<ul>
+<li><a href="#时间事件执行流程">时间事件执行流程</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#事件循环-event-loop">事件循环 Event Loop</a>
+<ul>
+<li><a href="#aeeventloop">aeEventLoop</a></li>
+<li><a href="#aeprocessevent">aeProcessEvent</a></li>
+</ul></li>
+<li><a href="#参考">参考</a></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+      </nav>
+    </div>
+  </aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/hugo-theme-pure/2019/11/event/"
+    >Redis-事件</a
+  >
+</h1>
+
+      <div class="article-meta">
+        <span class="article-date">
+  <i class="icon icon-calendar-check"></i>
+<a href="https://xiaohei.im/hugo-theme-pure/2019/11/event/" class="article-date">
+  <time datetime="2019-11-14 15:01:45 &#43;0800 CST" itemprop="datePublished">2019-11-14</time>
+</a>
+</span><span class="article-category">
+  <i class="icon icon-folder"></i>
+  <a class="article-category-link" href="/hugo-theme-pure/categories/redis/"> redis </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+    <a class="article-tag-link" href="/hugo-theme-pure/tags/redis/"> redis </a>
+  </span>
+
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/hugo-theme-pure/2019/11/event/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计:2358字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长:5分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      <blockquote>
+<p><strong>事件驱动程序设计</strong>（英语：<strong>Event-driven programming</strong>）是一种电脑<a href="https://zh.wikipedia.org/wiki/程式設計">程序设计</a><a href="https://zh.wikipedia.org/wiki/模型">模型</a>。这种模型的程序运行流程是由用户的动作（如<a href="https://zh.wikipedia.org/wiki/滑鼠">鼠标</a>的按键，键盘的按键动作）或者是由其他程序的<a href="https://zh.wikipedia.org/wiki/訊息">消息</a>来决定的。相对于批处理程序设计（batch programming）而言，程序运行的流程是由<a href="https://zh.wikipedia.org/wiki/程式設計師">程序员</a>来决定。批量的程序设计在初级程序设计教学课程上是一种方式。然而，事件驱动程序设计这种设计模型是在<a href="https://zh.wikipedia.org/w/index.php?title=互動程序&amp;action=edit&amp;redlink=1">交互程序</a>（Interactive program）的情况下孕育而生的。  <a href="https://zh.wikipedia.org/wiki/事件驅動程式設計">&ndash;wikipedia</a></p>
+</blockquote>
+
+<h2 id="文件事件">文件事件</h2>
+
+<p>服务端通过套接字与客户端进行连接,文件事件就是服务端对套接字操作的抽象.服务端与客户端的通信会产生多种文件事件(连接 <code>accept</code> ,读取 <code>read</code>, 写入 <code>write</code> ,关闭 <code>close</code>),服务器监听并处理相应的事件.</p>
+
+<h3 id="文件事件处理器">文件事件处理器</h3>
+
+<p><code>redis</code> 基于 <code>Reactor</code> 模式实现了网络事件处理 &ndash;&gt; <strong>文件时间处理器</strong>.通过 <code>I/O 多路复用</code> 保证了单进程下的高性能网络模型.</p>
+
+<h4 id="什么是-i-o-multiplexing">什么是 I/O Multiplexing?</h4>
+
+<p>参考: <a href="https://draveness.me/redis-io-multiplexing">https://draveness.me/redis-io-multiplexing</a></p>
+
+<p>首先需要知道什么是文件描述符(<code>File Descriptor</code> ,简称 <code>FD</code>)? 文件描述符就是操作系统中操作文件时内核返回的一个 <strong>非负整数</strong>,可以通过文件描述符来指定待读写的文件.而套接字 <code>socket</code> 本质上也是一种文件描述符.</p>
+
+<p>简单来说就是通常我们使用的 <code>I/O</code> 模型是阻塞型的,服务器在处理一个客户端请求(即处理一个<code>FD</code>)时无法再处理其它的了. <code>I/O多路复用</code> 是通过利用操作系统的多路复用函数(<code>select()</code>)来监听多个 <code>FD</code> 的可读可写情况,一旦有可读或可写的 <code>FD</code>,<code>select()</code> 就返回对应的个数.</p>
+
+<p><img src="https://img.draveness.me/2016-11-26-redis-choose-io-function.jpg-1000width" alt="盗用draveness大佬的图-侵删" style="zoom:50%;" /></p>
+
+<p>由于不同操作系统的有不同的多路复用函数,<code>select</code>是性能最差的.而 <code>redis</code> 也会根据操作系统的不同选择性能最好的函数来使用.并且由于不同平台的差异, <code>redis</code> 提供了一套相同的结构并针对不同平台进行了实现,以此屏蔽了对上层应用的影响.</p>
+
+<pre><code class="language-c">#ifdef HAVE_EVPORT
+#include &quot;ae_evport.c&quot;
+#else
+    #ifdef HAVE_EPOLL
+    #include &quot;ae_epoll.c&quot;
+    #else
+        #ifdef HAVE_KQUEUE
+        #include &quot;ae_kqueue.c&quot;
+        #else
+        #include &quot;ae_select.c&quot;
+        #endif
+    #endif
+#endif
+</code></pre>
+
+<h4 id="文件事件处理器结构">文件事件处理器结构</h4>
+
+<p><img src="https://raw.githubusercontent.com/xiaoheiAh/imgs/master/20191115142151.png" alt="文件事件处理器结构" style="zoom:50%;" /></p>
+
+<p>每一个套接字 <code>socket</code> 可以执行连接,读写,关闭操作时,会产生一个 <strong>文件事件</strong>.,<code>I/O 多路复用</code> 监听这些 <code>FD</code> 的操作请求,并向 <strong>文件事件派发器</strong> 传递产生文件事件的 <code>FD</code>. 虽然会并发的产生 N 个文件事件,但 <code>I/O多路复用</code> 会将其都放入一个队列中,<strong>顺序且同步地</strong>向 <strong>文件事件分派器</strong> 传送.处理完一个再传下一个.</p>
+
+<p><strong>文件事件派发器</strong> 接收到 <code>FD</code> 后,就会根据<code>FD</code> 所绑定的文件事件类型选择相应的事件处理器进行处理.</p>
+
+<h4 id="文件事件类型">文件事件类型</h4>
+
+<ul>
+<li><strong>AE_READABLE</strong> 可读事件</li>
+</ul>
+
+<p>客户端对套接字 <code>write</code> 操作, <code>close</code> 操作或者客户端与服务端进行连接(出现 <code>acceptable</code> 套接字)时产生可读事件</p>
+
+<ul>
+<li><strong>AE_WRITABLE</strong> 可写事件</li>
+</ul>
+
+<p>客户端对套接字执行 <code>read</code> 操作,套接字产生可写事件</p>
+
+<ul>
+<li><strong>AE_NONE</strong> 无任何事件</li>
+</ul>
+
+<h5 id="事件处理的先后顺序">事件处理的先后顺序</h5>
+
+<p><strong>AE_READABLE</strong> &gt; <strong>AE_WRITABLE</strong></p>
+
+<h3 id="事件处理器">事件处理器</h3>
+
+<p>事件处理器是针对不同的文件事件实现的逻辑.客户端连接时,服务器需要进行应答,此时服务器就会将套接字关联到应答处理器.接收客户端的命令请求,服务器会将套接字关联到命令请求处理器.</p>
+
+<h4 id="常用时间处理器">常用时间处理器</h4>
+
+<ol>
+<li>连接应答处理器 <code>networking.c/acceptTcpHandler</code></li>
+</ol>
+
+<p>客户端连接时会对其进应答.<code>redis</code> 在初始化时会将服务器的监听套接字的可读事件与该处理器关联起来,客户端只要连接监听套接字就会产生可读事件,执行对应的逻辑.</p>
+
+<ol>
+<li>命令请求处理器 <code>networking.c/readQueryFromClient</code></li>
+</ol>
+
+<p>客户端连接服务器后,服务器会将客户端套接字的可读事件与命令请求处理器关联起来,当客户端向服务器发送命令请求时,产生可读事件,执行对应逻辑.</p>
+
+<ol>
+<li>命令回复处理器 <code>networking.c/sendReplyToClient</code></li>
+</ol>
+
+<p>服务器有命令回复需要传送给客户端时,服务器会将客户端套接字的可写事件与命令回复处理器关联起来,客户端准备好接收服务器回复时,会产生可写事件,触发命令回复器执行.服务器发送完毕时,会解除关联.</p>
+
+<h3 id="文件事件处理流程">文件事件处理流程</h3>
+
+<p><img src="https://img.draveness.me/2016-12-09-eventloop-file-event-in-redis.png-1000width" alt="draveness.me-侵删" style="zoom:50%;" /></p>
+
+<p><code>aeCreateFileEvent</code> 可以将一个给定<code>FD</code> 的给定事件加入到多路复用的监听范围中,并将事件与时间处理器关联</p>
+
+<p><code>aeDeleteFileEvent</code> 取消给定<code>FD</code> 的给定事件的监听</p>
+
+<p><code>aeApiPoll</code> 该方法会在每个平台的多路复用中进行实现,阻塞等待所有监听的<code>FD</code> 所产生的事件并返回可用时间的数量.会有超时处理.</p>
+
+<h2 id="时间事件">时间事件</h2>
+
+<p><code>Redis</code> 中有两种时间事件 &mdash;- 定时事件(隔一段时间执行一次),非定时事件(某个时间点执行一次)</p>
+
+<h3 id="属性">属性</h3>
+
+<ol>
+<li><strong>id</strong> 全局唯一ID,顺序递增</li>
+<li><strong>when</strong> 毫秒精度 UNIX 时间戳,记录时间事件到达时间</li>
+<li><strong>timeProc</strong> 时间事件处理器,需要执行时间事件时,根据该处理器执行</li>
+</ol>
+
+<p>时间事件是定时还是非定时,取决去 <code>timeProc</code> 返回值是否等于 <code>AE_NOMORE</code>. 等于则给事件ID标记为待删除,不等于则更新执行时间到下一次.</p>
+
+<pre><code class="language-c">retval = te-&gt;timeProc(eventLoop, id, te-&gt;clientData);
+if (retval != AE_NOMORE) {
+  aeAddMillisecondsToNow(retval,&amp;te-&gt;when_sec,&amp;te-&gt;when_ms);
+} else {
+  te-&gt;id = AE_DELETED_EVENT_ID;
+}
+</code></pre>
+
+<p><code>Redis</code> 处理时间事件时，不会在当前循环中直接移除不再需要执行的事件，而是会在当前循环中将时间事件的 <code>id</code> 设置为 <code>AE_DELETED_EVENT_ID</code>，然后再下一个循环中删除，并执行绑定的 <code>finalizerProc</code>。</p>
+
+<pre><code class="language-c">/* Remove events scheduled for deletion. */
+if (te-&gt;id == AE_DELETED_EVENT_ID) {
+  aeTimeEvent *next = te-&gt;next;
+  if (te-&gt;prev)
+    te-&gt;prev-&gt;next = te-&gt;next;
+  else
+    eventLoop-&gt;timeEventHead = te-&gt;next;
+  if (te-&gt;next)
+    te-&gt;next-&gt;prev = te-&gt;prev;
+  if (te-&gt;finalizerProc)
+    te-&gt;finalizerProc(eventLoop, te-&gt;clientData);
+  zfree(te);
+  te = next;
+  continue;
+}	
+</code></pre>
+
+<h3 id="时钟问题">时钟问题</h3>
+
+<p>时间事件的执行影响最大的因素就是 <strong>系统时间</strong>. 系统时间的调整会影响时间事件的执行,所以在<code>eventLoop</code> 中有个 <code>lastTime</code> 属性来检测系统时间.如果发现系统时间改变了,比上次执行时间事件的时间小,就会强制尽早执行.</p>
+
+<h4 id="时间事件执行流程">时间事件执行流程</h4>
+
+<p><img src="https://img.draveness.me/2016-12-09-process-time-event.png-1000width" alt="draveness.me-侵删" style="zoom:50%;" /></p>
+
+<h2 id="事件循环-event-loop">事件循环 Event Loop</h2>
+
+<p>上述的 <code>文件事件</code>, <code>时间事件</code> 是从何时开始? 在 <code>事件循环</code> 中开始. <code>事件循环</code> 是 <code>redis</code> 在启动后初始化完服务配置,就会陷入一个巨大的循环 <code>aeEventLoop</code> 中. 这个巨大的循环从 <code>aeMain()</code> 开始.</p>
+
+<pre><code class="language-c">void aeMain(aeEventLoop *eventLoop) {
+    eventLoop-&gt;stop = 0;
+    while (!eventLoop-&gt;stop) {
+        if (eventLoop-&gt;beforesleep != NULL)
+            eventLoop-&gt;beforesleep(eventLoop);
+        aeProcessEvents(eventLoop, AE_ALL_EVENTS|AE_CALL_AFTER_SLEEP);
+    }
+}
+</code></pre>
+
+<p>源码中可以看出来,除非给 <code>eventLoop-&gt;stop</code> 设置为 <code>true</code> ,程序会一直跑,一直执行 <code>aeProcessEvents</code>.</p>
+
+<h3 id="aeeventloop">aeEventLoop</h3>
+
+<p><img src="https://img.draveness.me/2016-12-09-reids-eventloop.png-1000width" alt="draveness.me-aeEventLoop 结构" /></p>
+
+<p><code>aeEventLoop</code> 保存着事件循环的上下文信息,并有三个重要的数组:保存监听的文件事件 <code>aeFileEvent</code> , 时间事件 <code>aeTimeEvent</code>, 待处理文件事件 <code>aeFiredEvent</code>.</p>
+
+<h3 id="aeprocessevent">aeProcessEvent</h3>
+
+<p>在一般情况下，<code>aeProcessEvents</code> 都会先<strong>计算最近的时间事件发生所需要等待的时间</strong>，然后调用 <code>aeApiPoll</code> 方法在这段时间中等待事件的发生，在这段时间中如果发生了文件事件，就会优先处理文件事件，否则就会一直等待，直到最近的时间事件需要触发.</p>
+
+<pre><code class="language-c">int aeProcessEvents(aeEventLoop *eventLoop, int flags) {
+    int processed = 0, numevents;
+
+    if (!(flags &amp; AE_TIME_EVENTS) &amp;&amp; !(flags &amp; AE_FILE_EVENTS)) return 0;
+
+    if (eventLoop-&gt;maxfd != -1 ||
+        ((flags &amp; AE_TIME_EVENTS) &amp;&amp; !(flags &amp; AE_DONT_WAIT))) {
+        struct timeval *tvp;
+
+        #1：计算 I/O 多路复用的等待时间 tvp
+
+        numevents = aeApiPoll(eventLoop, tvp);
+        for (int j = 0; j &lt; numevents; j++) {
+            aeFileEvent *fe = &amp;eventLoop-&gt;events[eventLoop-&gt;fired[j].fd];
+            int mask = eventLoop-&gt;fired[j].mask;
+            int fd = eventLoop-&gt;fired[j].fd;
+            int rfired = 0;
+
+            if (fe-&gt;mask &amp; mask &amp; AE_READABLE) {
+                rfired = 1;
+                fe-&gt;rfileProc(eventLoop,fd,fe-&gt;clientData,mask);
+            }
+            if (fe-&gt;mask &amp; mask &amp; AE_WRITABLE) {
+                if (!rfired || fe-&gt;wfileProc != fe-&gt;rfileProc)
+                    fe-&gt;wfileProc(eventLoop,fd,fe-&gt;clientData,mask);
+            }
+            processed++;
+        }
+    }
+    if (flags &amp; AE_TIME_EVENTS) processed += processTimeEvents(eventLoop);
+    return processed;
+}
+</code></pre>
+
+<h2 id="参考">参考</h2>
+
+<ol>
+<li><a href="https://draveness.me/redis-eventloop">https://draveness.me/redis-eventloop</a></li>
+<li><a href="https://draveness.me/redis-io-multiplexing">https://draveness.me/redis-io-multiplexing</a></li>
+<li><a href="https://book.douban.com/subject/25900156/">Redis设计与实现</a></li>
+</ol>
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://xiaohei.im/hugo-theme-pure/2019/11/aof/" title="Redis-AOF持久化"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://xiaohei.im/hugo-theme-pure/2019/11/replication/"
+                    title="Redis-复制功能探索"><span>下一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        
+        <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal"
+            data-target="#donateModal"><span>赏</span></button>
+        
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content donate">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <div class="modal-body">
+                <div class="donate-box">
+                    <div class="donate-head">
+                        <p>感谢您的支持,我会继续努力的!</p>
+                    </div>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/hugo-theme-pure/donate/alipayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦~</p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/hugo-theme-pure/donate/wechatpayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+                        </div>
+                    </div>
+                    <div class="donate-footer">
+                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay"
+                                    aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+                            </li>
+                            <li role="presentation" class="">
+                                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab"
+                                    aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i>
+                                    微信支付</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/xiaoheiAh" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://xiaohei.im/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2017  -
+    2019
+    <div class="publishby">
+        Theme by <a href="https://github.com/xiaoheiAh" target="_blank"> xiaoheiAh </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+   window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/rust.min.js"></script>
+<script type="text/javascript"
+   src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script>
+hljs.configure({
+  tabReplace: '    ', 
+  classPrefix: ''     
+                      
+})
+hljs.initHighlightingOnLoad();
+</script>
+<script type="text/javascript" src="https://xiaohei.im/hugo-theme-pure/js/application.js"></script>
+<script type="text/javascript" src="https://xiaohei.im/hugo-theme-pure/js/plugin.js"></script>
+<script>
+      (function (window) {
+          var INSIGHT_CONFIG = {
+              TRANSLATION: {
+                  POSTS: '文章',
+                  PAGES: '页面',
+                  CATEGORIES: '分类',
+                  TAGS: '标签',
+                  UNTITLED: '(未命名)',
+              },
+              ROOT_URL: 'https:\/\/xiaohei.im\/hugo-theme-pure',
+              CONTENT_URL: 'https:\/\/xiaohei.im\/hugo-theme-pure\/searchindex.json ',
+          };
+          window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+      })(window);
+      </script>
+<script type="text/javascript" src="https://xiaohei.im/hugo-theme-pure/js/insight.js"></script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: 'e38fc798c72a7e4e1386',
+        clientSecret: 'e151aa3b7b98d3cfaa1f096b88fdd7897e2c8007',
+        repo: 'xiaoheiAh.github.io',
+        owner: 'xiaoheiAh',
+        admin: ['xiaoheiAh'],
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('comments');
+</script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98254666-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>
