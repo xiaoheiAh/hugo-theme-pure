@@ -3,7 +3,8 @@
 <main class="main" role="main">
   {{/* partial "archive-list.html" . - */}} 
   <div class="content article-list">
-    {{- range where .Site.RegularPages "Type" "posts" -}}
+    <!-- {{- print ($.Scratch.Get "pages") }} -->
+    {{- range $.Scratch.Get "pages" }}
     <article
       class="article article-type-page"
       itemscope
