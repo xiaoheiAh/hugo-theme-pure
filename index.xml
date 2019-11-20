@@ -11,20 +11,235 @@
     
     
     <item>
-      <title>Posts</title>
-      <link>https://xiaohei.im/hugo-theme-pure/posts/</link>
+      <title>Redis-复制功能探索</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/11/replication/</link>
       <pubDate>Sat, 16 Nov 2019 14:24:40 +0800</pubDate>
       
-      <guid>https://xiaohei.im/hugo-theme-pure/posts/</guid>
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/11/replication/</guid>
+      <description>&lt;p&gt;之前对&lt;code&gt;redis&lt;/code&gt; 的复制只有一点点了解,这次想要搞明白的是:如何实现的复制? 复制会遇到哪些问题(时延/一致性保证/网络故障时的处理)? 如何解决?高可用实现方案?&lt;/p&gt;
+
+&lt;p&gt;文章有部分是直接翻译的 &lt;a href=&#34;https://redis.io/topics/replication&#34;&gt;https://redis.io/topics/replication&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Redis-事件</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/11/event/</link>
+      <pubDate>Thu, 14 Nov 2019 15:01:45 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/11/event/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;事件驱动程序设计&lt;/strong&gt;（英语：&lt;strong&gt;Event-driven programming&lt;/strong&gt;）是一种电脑&lt;a href=&#34;https://zh.wikipedia.org/wiki/程式設計&#34;&gt;程序设计&lt;/a&gt;&lt;a href=&#34;https://zh.wikipedia.org/wiki/模型&#34;&gt;模型&lt;/a&gt;。这种模型的程序运行流程是由用户的动作（如&lt;a href=&#34;https://zh.wikipedia.org/wiki/滑鼠&#34;&gt;鼠标&lt;/a&gt;的按键，键盘的按键动作）或者是由其他程序的&lt;a href=&#34;https://zh.wikipedia.org/wiki/訊息&#34;&gt;消息&lt;/a&gt;来决定的。相对于批处理程序设计（batch programming）而言，程序运行的流程是由&lt;a href=&#34;https://zh.wikipedia.org/wiki/程式設計師&#34;&gt;程序员&lt;/a&gt;来决定。批量的程序设计在初级程序设计教学课程上是一种方式。然而，事件驱动程序设计这种设计模型是在&lt;a href=&#34;https://zh.wikipedia.org/w/index.php?title=互動程序&amp;amp;action=edit&amp;amp;redlink=1&#34;&gt;交互程序&lt;/a&gt;（Interactive program）的情况下孕育而生的。  &lt;a href=&#34;https://zh.wikipedia.org/wiki/事件驅動程式設計&#34;&gt;&amp;ndash;wikipedia&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>Redis-AOF持久化</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/11/aof/</link>
+      <pubDate>Fri, 08 Nov 2019 15:18:05 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/11/aof/</guid>
+      <description>&lt;p&gt;&lt;code&gt;RDB&lt;/code&gt; 和 &lt;code&gt;AOF&lt;/code&gt; 区别在于: 前者保存数据库快照,持久化所有键值对,后者通过保存 &lt;strong&gt;写命令&lt;/strong&gt; 保证数据库的状态.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Redis-RDB持久化</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/11/rdb/</link>
+      <pubDate>Wed, 06 Nov 2019 19:08:56 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/11/rdb/</guid>
+      <description>&lt;p&gt;&lt;code&gt;redis&lt;/code&gt; 为内存数据库,一旦服务器进程退出,服务器中的数据就不见了.所以内存中的数据需要持久化的硬盘中来保证可以在必要的时候进行故障恢复. &lt;code&gt;RDB&lt;/code&gt; 就是 &lt;code&gt;redis&lt;/code&gt; 提供的一种持久化方式.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Redis-数据库长什么样?</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/11/db/</link>
+      <pubDate>Wed, 06 Nov 2019 11:00:32 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/11/db/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Collections</title>
-      <link>https://xiaohei.im/hugo-theme-pure/collections/</link>
+      <title>Redis-万物皆「对象」</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/11/obj/</link>
+      <pubDate>Mon, 04 Nov 2019 18:56:15 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/11/obj/</guid>
+      <description>&lt;p&gt;Redis有很多种数据结构,但其并没有直接使用这些数据结构来构建这个 &lt;code&gt;NOSQL&lt;/code&gt;, 而是通过 &lt;code&gt;对象系统&lt;/code&gt; 完成了对所有数据结构的统一管理, 实现内存回收, 对象共享等特性~&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Redis-分布式锁</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/11/distributed-lock/</link>
+      <pubDate>Sun, 03 Nov 2019 14:49:56 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/11/distributed-lock/</guid>
+      <description>&lt;p&gt;分布式锁有很多中实现(纯数据库,zookeeper,redis),纯数据库的受限于数据库性能,zk 可以保证加锁的顺序,是公平锁.Redis中的实现就是接下来要学习的.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Redis-数据结构</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/10/data-structure/</link>
+      <pubDate>Thu, 24 Oct 2019 09:59:11 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/10/data-structure/</guid>
+      <description>&lt;p&gt;系统学习 redis 相关的知识，从数据结构开始～&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>RabbitMQ-消息确认机制</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/10/rabbitmq-ack-confirm/</link>
+      <pubDate>Wed, 23 Oct 2019 11:22:13 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/10/rabbitmq-ack-confirm/</guid>
+      <description>&lt;p&gt;RabbitMQ在保证生产端与消费端的数据安全上,提供了消息确认的机制来保证. 消费端到 &lt;code&gt;broker&lt;/code&gt; 端的确认常叫做&lt;code&gt;ack机制&lt;/code&gt;,  &lt;code&gt;broker&lt;/code&gt; 到生产端常叫做&lt;code&gt;confirm&lt;/code&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hexo =&gt; Hugo主题移植记录</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/09/hugo-theme-dev-note/</link>
+      <pubDate>Mon, 23 Sep 2019 19:08:35 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/09/hugo-theme-dev-note/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;最近使用&lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt;作为博客引擎后,闲不下来总想去找一些简单好看的主题.在&lt;a href=&#34;https://themes.gohugo.io/&#34;&gt;官方的主题列表&lt;/a&gt;搜罗了一圈后,选择了&lt;a href=&#34;https://github.com/joway/hugo-theme-yinyang&#34;&gt;yinyang&lt;/a&gt;,非常简单,但是用了一段时间还是想找个功能全点的,无意中瞄到了一个博主的博客,主题特别吸引我,但是是 &lt;code&gt;hexo&lt;/code&gt; 平台的,搜了半天也没有人移植,就自己来吧~ 移植的过程中,遇到了挺多问题,也是这些问题慢慢的熟悉了hugo的模板结构.下面就来写一写自己遇到的问题~&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>RabbitMQ-消息分发机制</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/09/rabbitmq-msg-distribution/</link>
+      <pubDate>Sat, 21 Sep 2019 18:42:13 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/09/rabbitmq-msg-distribution/</guid>
+      <description>&lt;p&gt;rabbitmq有多种使用模式,在这里记录下不同模式的消息路由规则&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>RabbitMQ-入门及高可用集群部署</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/09/rabbitmq-guide-and-ha-cluster/</link>
+      <pubDate>Wed, 04 Sep 2019 14:42:13 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/09/rabbitmq-guide-and-ha-cluster/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>AMQP消息模型</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/09/amqp-0-9-1-model-explained/</link>
+      <pubDate>Tue, 03 Sep 2019 10:04:49 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/09/amqp-0-9-1-model-explained/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hystrix命令执行流程</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/08/rxjava-in-hystrix/</link>
+      <pubDate>Mon, 26 Aug 2019 15:25:08 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/08/rxjava-in-hystrix/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>RxJava入门</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/08/rxjava-guide/</link>
+      <pubDate>Wed, 21 Aug 2019 16:09:48 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/08/rxjava-guide/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文基于 rxjava 1.x 版本&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>[LeetCode In Rust]189-Rotate Array</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/08/189-rotate-array/</link>
+      <pubDate>Wed, 21 Aug 2019 15:29:34 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/08/189-rotate-array/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>[LeetCode In Rust]026-Remove Duplicates From Sorted Array</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/08/026-remove-duplicates-from-sorted-array/</link>
+      <pubDate>Tue, 20 Aug 2019 15:54:47 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/08/026-remove-duplicates-from-sorted-array/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>[LeetCode In Rust]001-Two Sum</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/08/001-two-sum/</link>
+      <pubDate>Fri, 16 Aug 2019 18:22:05 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/08/001-two-sum/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Arraylist</title>
+      <link>https://xiaohei.im/hugo-theme-pure/collections/arraylist/</link>
       <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
       
-      <guid>https://xiaohei.im/hugo-theme-pure/collections/</guid>
+      <guid>https://xiaohei.im/hugo-theme-pure/collections/arraylist/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Hashmap</title>
+      <link>https://xiaohei.im/hugo-theme-pure/collections/hashmap/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/collections/hashmap/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Hashset</title>
+      <link>https://xiaohei.im/hugo-theme-pure/collections/hashset/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/collections/hashset/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Linkedhashmap</title>
+      <link>https://xiaohei.im/hugo-theme-pure/collections/linkedhashmap/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/collections/linkedhashmap/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Linkedlist</title>
+      <link>https://xiaohei.im/hugo-theme-pure/collections/linkedlist/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/collections/linkedlist/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Treemap</title>
+      <link>https://xiaohei.im/hugo-theme-pure/collections/treemap/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/collections/treemap/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Treeset</title>
+      <link>https://xiaohei.im/hugo-theme-pure/collections/treeset/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/collections/treeset/</guid>
       <description></description>
     </item>
     
@@ -35,33 +250,6 @@
       
       <guid>https://xiaohei.im/hugo-theme-pure/about/</guid>
       <description>xiaoheiAh~ 联系方式 github: @xiaoheiAh gmail: xiaohei.zyx@gmail.com 节点推荐 -&amp;gt; http://1t.click/aCyT 关注的大佬博客 面向信仰编程 真·面向信仰,硬核,主 go ,其他技术也很在行, kubernetes 贡献者.翻了翻他博客,就比我大一届,跪</description>
-    </item>
-    
-    <item>
-      <title>Concurrencies</title>
-      <link></link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid></guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Langs</title>
-      <link></link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid></guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Springboots</title>
-      <link></link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid></guid>
-      <description></description>
     </item>
     
   </channel>

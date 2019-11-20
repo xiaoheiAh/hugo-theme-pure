@@ -86,5 +86,171 @@
       <description>&lt;p&gt;系统学习 redis 相关的知识，从数据结构开始～&lt;/p&gt;</description>
     </item>
     
+    <item>
+      <title>RabbitMQ-消息确认机制</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/10/rabbitmq-ack-confirm/</link>
+      <pubDate>Wed, 23 Oct 2019 11:22:13 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/10/rabbitmq-ack-confirm/</guid>
+      <description>&lt;p&gt;RabbitMQ在保证生产端与消费端的数据安全上,提供了消息确认的机制来保证. 消费端到 &lt;code&gt;broker&lt;/code&gt; 端的确认常叫做&lt;code&gt;ack机制&lt;/code&gt;,  &lt;code&gt;broker&lt;/code&gt; 到生产端常叫做&lt;code&gt;confirm&lt;/code&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hexo =&gt; Hugo主题移植记录</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/09/hugo-theme-dev-note/</link>
+      <pubDate>Mon, 23 Sep 2019 19:08:35 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/09/hugo-theme-dev-note/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;最近使用&lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt;作为博客引擎后,闲不下来总想去找一些简单好看的主题.在&lt;a href=&#34;https://themes.gohugo.io/&#34;&gt;官方的主题列表&lt;/a&gt;搜罗了一圈后,选择了&lt;a href=&#34;https://github.com/joway/hugo-theme-yinyang&#34;&gt;yinyang&lt;/a&gt;,非常简单,但是用了一段时间还是想找个功能全点的,无意中瞄到了一个博主的博客,主题特别吸引我,但是是 &lt;code&gt;hexo&lt;/code&gt; 平台的,搜了半天也没有人移植,就自己来吧~ 移植的过程中,遇到了挺多问题,也是这些问题慢慢的熟悉了hugo的模板结构.下面就来写一写自己遇到的问题~&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>RabbitMQ-消息分发机制</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/09/rabbitmq-msg-distribution/</link>
+      <pubDate>Sat, 21 Sep 2019 18:42:13 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/09/rabbitmq-msg-distribution/</guid>
+      <description>&lt;p&gt;rabbitmq有多种使用模式,在这里记录下不同模式的消息路由规则&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>RabbitMQ-入门及高可用集群部署</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/09/rabbitmq-guide-and-ha-cluster/</link>
+      <pubDate>Wed, 04 Sep 2019 14:42:13 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/09/rabbitmq-guide-and-ha-cluster/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>AMQP消息模型</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/09/amqp-0-9-1-model-explained/</link>
+      <pubDate>Tue, 03 Sep 2019 10:04:49 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/09/amqp-0-9-1-model-explained/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hystrix命令执行流程</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/08/rxjava-in-hystrix/</link>
+      <pubDate>Mon, 26 Aug 2019 15:25:08 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/08/rxjava-in-hystrix/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>RxJava入门</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/08/rxjava-guide/</link>
+      <pubDate>Wed, 21 Aug 2019 16:09:48 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/08/rxjava-guide/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文基于 rxjava 1.x 版本&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>[LeetCode In Rust]189-Rotate Array</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/08/189-rotate-array/</link>
+      <pubDate>Wed, 21 Aug 2019 15:29:34 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/08/189-rotate-array/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>[LeetCode In Rust]026-Remove Duplicates From Sorted Array</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/08/026-remove-duplicates-from-sorted-array/</link>
+      <pubDate>Tue, 20 Aug 2019 15:54:47 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/08/026-remove-duplicates-from-sorted-array/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>[LeetCode In Rust]001-Two Sum</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/08/001-two-sum/</link>
+      <pubDate>Fri, 16 Aug 2019 18:22:05 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/08/001-two-sum/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Arraylist</title>
+      <link>https://xiaohei.im/hugo-theme-pure/collections/arraylist/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/collections/arraylist/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Hashmap</title>
+      <link>https://xiaohei.im/hugo-theme-pure/collections/hashmap/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/collections/hashmap/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Hashset</title>
+      <link>https://xiaohei.im/hugo-theme-pure/collections/hashset/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/collections/hashset/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Linkedhashmap</title>
+      <link>https://xiaohei.im/hugo-theme-pure/collections/linkedhashmap/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/collections/linkedhashmap/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Linkedlist</title>
+      <link>https://xiaohei.im/hugo-theme-pure/collections/linkedlist/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/collections/linkedlist/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Treemap</title>
+      <link>https://xiaohei.im/hugo-theme-pure/collections/treemap/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/collections/treemap/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Treeset</title>
+      <link>https://xiaohei.im/hugo-theme-pure/collections/treeset/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/collections/treeset/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>关于自己</title>
+      <link>https://xiaohei.im/hugo-theme-pure/about/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/about/</guid>
+      <description>xiaoheiAh~ 联系方式 github: @xiaoheiAh gmail: xiaohei.zyx@gmail.com 节点推荐 -&amp;gt; http://1t.click/aCyT 关注的大佬博客 面向信仰编程 真·面向信仰,硬核,主 go ,其他技术也很在行, kubernetes 贡献者.翻了翻他博客,就比我大一届,跪</description>
+    </item>
+    
   </channel>
 </rss>
