@@ -41,7 +41,7 @@ hljs.initHighlightingOnLoad();
 {{- if .IsPage }}
 {{- partial "_script/pv.html" . }}
 {{- end }}
-{{- if eq .Type "posts"   }}
+{{- if in $.Site.Params.mainSections .Type }}
 {{- partial "_script/comment.html" . }}
 {{- end }}
 {{- partial "_script/fancybox.html" . }}

@@ -7,7 +7,8 @@
     {{- $.Scratch.Add "tags" (dict "title" .Page.Title "uri" .Page.Permalink) -}}
 {{- end -}}
 {{- $.Scratch.Add "posts" slice -}}
-{{- range $index, $element := (where .Site.RegularPages "Type" "posts") -}}
+
+{{- range $index, $element := $.Scratch.Get "pages" -}}
     {{- $.Scratch.Add "posts" (dict "id" $index "title" $element.Title "uri" $element.Permalink "tags" $element.Params.tags "section" $element.Section "content" $element.Plain "summary" $element.Summary "year" ($element.Date.Format "2006")) -}}
 {{- end -}}
 {{- $.Scratch.SetInMap "searchindex" "posts" ($.Scratch.Get "posts") }}

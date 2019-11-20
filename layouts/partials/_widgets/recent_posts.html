@@ -3,7 +3,7 @@
     <h3 class="widget-title">{{T "widget_recent_posts" }}</h3>
     <div class="widget-body">
         <ul class="recent-post-list list-unstyled no-thumbnail">
-            {{- range first 5 (where $.Site.RegularPages "Type" "posts") }}
+            {{- range first 5 ($.Scratch.Get "pages") }}
             <li>
                 <div class="item-inner">
                     <p class="item-title">
