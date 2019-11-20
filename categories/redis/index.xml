@@ -16,7 +16,9 @@
       <pubDate>Sat, 16 Nov 2019 14:24:40 +0800</pubDate>
       
       <guid>https://xiaohei.im/hugo-theme-pure/2019/11/replication/</guid>
-      <description>&lt;p&gt;之前多&lt;code&gt;redis&lt;/code&gt; 的复制只有一点点了解,这次想要搞明白的是: 如何实现的复制? 复制会遇到哪些问题(时延/一致性保证/网络故障时的处理)? 如何解决?高可用实现方案? 文章有部分是直接翻译的 &lt;a href=&#34;https://redis.io/topics/replication&#34;&gt;https://redis.io/topics/replication&lt;/a&gt;&lt;/p&gt;</description>
+      <description>&lt;p&gt;之前对&lt;code&gt;redis&lt;/code&gt; 的复制只有一点点了解,这次想要搞明白的是:如何实现的复制? 复制会遇到哪些问题(时延/一致性保证/网络故障时的处理)? 如何解决?高可用实现方案?&lt;/p&gt;
+
+&lt;p&gt;文章有部分是直接翻译的 &lt;a href=&#34;https://redis.io/topics/replication&#34;&gt;https://redis.io/topics/replication&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     
     <item>

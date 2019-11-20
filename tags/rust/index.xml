@@ -29,15 +29,6 @@
     </item>
     
     <item>
-      <title>rust踩坑笔记</title>
-      <link>https://xiaohei.im/hugo-theme-pure/2019/08/rust/</link>
-      <pubDate>Tue, 20 Aug 2019 13:19:18 +0800</pubDate>
-      
-      <guid>https://xiaohei.im/hugo-theme-pure/2019/08/rust/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>[LeetCode In Rust]001-Two Sum</title>
       <link>https://xiaohei.im/hugo-theme-pure/2019/08/001-two-sum/</link>
       <pubDate>Fri, 16 Aug 2019 18:22:05 +0800</pubDate>

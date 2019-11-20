@@ -23,7 +23,8 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <meta name="description" content="之前多redis 的复制只有一点点了解,这次想要搞明白的是: 如何实现的复制? 复制会遇到哪些问题(时延/一致性保证/网络故障时的处理)? 如何解决?高可用实现方案? 文章有部分是直接翻译的 https://redis.io/topics/replication
+  <meta name="description" content="之前对redis 的复制只有一点点了解,这次想要搞明白的是:如何实现的复制? 复制会遇到哪些问题(时延/一致性保证/网络故障时的处理)? 如何解决?高可用实现方案?
+文章有部分是直接翻译的 https://redis.io/topics/replication
 " />
   <meta name="generator" content="Hugo 0.58.0 with theme pure" />
   <title>Redis-复制功能探索 - 赵小黑的博客</title>
@@ -33,13 +34,17 @@
   <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css"> 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
   <meta property="og:title" content="Redis-复制功能探索" />
-<meta property="og:description" content="之前多redis 的复制只有一点点了解,这次想要搞明白的是: 如何实现的复制? 复制会遇到哪些问题(时延/一致性保证/网络故障时的处理)? 如何解决?高可用实现方案? 文章有部分是直接翻译的 https://redis.io/topics/replication" />
+<meta property="og:description" content="之前对redis 的复制只有一点点了解,这次想要搞明白的是:如何实现的复制? 复制会遇到哪些问题(时延/一致性保证/网络故障时的处理)? 如何解决?高可用实现方案?
+
+文章有部分是直接翻译的 https://redis.io/topics/replication" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://xiaohei.im/hugo-theme-pure/2019/11/replication/" />
 <meta property="article:published_time" content="2019-11-16T14:24:40+08:00" />
 <meta property="article:modified_time" content="2019-11-16T14:24:40+08:00" />
 <meta itemprop="name" content="Redis-复制功能探索">
-<meta itemprop="description" content="之前多redis 的复制只有一点点了解,这次想要搞明白的是: 如何实现的复制? 复制会遇到哪些问题(时延/一致性保证/网络故障时的处理)? 如何解决?高可用实现方案? 文章有部分是直接翻译的 https://redis.io/topics/replication">
+<meta itemprop="description" content="之前对redis 的复制只有一点点了解,这次想要搞明白的是:如何实现的复制? 复制会遇到哪些问题(时延/一致性保证/网络故障时的处理)? 如何解决?高可用实现方案?
+
+文章有部分是直接翻译的 https://redis.io/topics/replication">
 
 
 <meta itemprop="datePublished" content="2019-11-16T14:24:40&#43;08:00" />
@@ -51,7 +56,9 @@
 <meta itemprop="keywords" content="redis," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Redis-复制功能探索"/>
-<meta name="twitter:description" content="之前多redis 的复制只有一点点了解,这次想要搞明白的是: 如何实现的复制? 复制会遇到哪些问题(时延/一致性保证/网络故障时的处理)? 如何解决?高可用实现方案? 文章有部分是直接翻译的 https://redis.io/topics/replication"/>
+<meta name="twitter:description" content="之前对redis 的复制只有一点点了解,这次想要搞明白的是:如何实现的复制? 复制会遇到哪些问题(时延/一致性保证/网络故障时的处理)? 如何解决?高可用实现方案?
+
+文章有部分是直接翻译的 https://redis.io/topics/replication"/>
 
   <!--[if lte IE 9]>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -64,6 +71,8 @@
 
 </head>
   </head>
+  
+
   <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
     <div class="slimContent">
       <div class="navbar-header">
@@ -198,7 +207,7 @@
             
             
             <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/rust/" class="tag-list-link">rust</a><span
-                    class="tag-list-count">4</span></li>
+                    class="tag-list-count">3</span></li>
             
             
             <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/rxjava/" class="tag-list-link">rxjava</a><span
@@ -379,7 +388,9 @@
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
-      <p>之前多<code>redis</code> 的复制只有一点点了解,这次想要搞明白的是: 如何实现的复制? 复制会遇到哪些问题(时延/一致性保证/网络故障时的处理)? 如何解决?高可用实现方案? 文章有部分是直接翻译的 <a href="https://redis.io/topics/replication">https://redis.io/topics/replication</a></p>
+      <p>之前对<code>redis</code> 的复制只有一点点了解,这次想要搞明白的是:如何实现的复制? 复制会遇到哪些问题(时延/一致性保证/网络故障时的处理)? 如何解决?高可用实现方案?</p>
+
+<p>文章有部分是直接翻译的 <a href="https://redis.io/topics/replication">https://redis.io/topics/replication</a></p>
 
 <h2 id="复制是什么">复制是什么?</h2>
 
@@ -645,7 +656,7 @@ struct redisServer {
     </div>
   </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
 <script>
    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 </script>
@@ -681,7 +692,7 @@ hljs.initHighlightingOnLoad();
       </script>
 <script type="text/javascript" src="https://xiaohei.im/hugo-theme-pure/js/insight.js"></script>
 
-<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>sdf
 
 <script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
@@ -707,6 +718,7 @@ if (!doNotTrack) {
 }
 </script>
 <script async src='https://www.google-analytics.com/analytics.js'></script>
+
 
   </body>
 </html>
