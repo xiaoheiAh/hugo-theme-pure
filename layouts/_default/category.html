@@ -30,9 +30,8 @@
                     aria-labelledby="heading{{ .Name | md5}}">
                     <div class="panel-body">
                         <div class="collection">
-                                {{- range .Pages }}
-                                {{- .Page.Scratch.Set "type" "link"}}
-                                {{- partial "item-post.html" . }}
+                            {{- range .Pages }}
+                            {{- partial "item-post.html" . }}
                             {{- end }}
                         </div>
                     </div>
