@@ -16,6 +16,20 @@ The file structure of `repo` is roughly referred to [hexo-theme-pure](https://gi
 
 2. [2019-11-19] Support MathJax([PR](https://github.com/xiaoheiAh/hugo-theme-pure/pull/20)) & Upgrade jQuery version([PR](https://github.com/xiaoheiAh/hugo-theme-pure/pull/19)).
 
+   e.g. 
+
+   ```latex
+   $$\begin{cases}
+   a_1x+b_1y+c_1z=d_1\\
+   a_2x+b_2y+c_2z=d_2\\
+   a_3x+b_3y+c_3z=d_3\\
+   \end{cases}
+   $$
+   ```
+
+     <img src="https://raw.githubusercontent.com/xiaoheiAh/imgs/master/20191121103534.png" alt="not-set-mmark" style="zoom:50%;" />
+   <img src="https://raw.githubusercontent.com/xiaoheiAh/imgs/master/20191121104118.png" alt="set-mmark" style="zoom:50%;" />
+
 ## Screenshots
 
 ![](https://raw.githubusercontent.com/xiaoheiAh/hugo-theme-pure/master/images/grey.png)
