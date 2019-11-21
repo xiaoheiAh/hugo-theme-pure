@@ -1,0 +1,21 @@
+<article class="panel panel-default hover-shadow hover-grow" itemscope itemtype="http://schema.org/BlogPosting">
+    <div class="panel-body">
+        <div class="article-meta">
+            <time datetime="{{ .Date }}"
+                itemprop="datePublished">{{- .Date.Format (.Site.Params.dateFormatToUse | default "2006-01-02") }}</time>
+        </div>
+        <h3 class="article-title" itemprop="name">
+            <a class="article-link" href="{{- .Permalink }}">{{- .Title }}</a>
+        </h3>
+    </div>
+    {{- with .Params.tags }}
+    <div class="panel-footer">
+        {{- range first 3 .  }}
+        <a href="{{ "tags/" | absURL }}{{ . | urlize }}" class="label label-default mb">{{ . }}</a>
+        {{- end }}
+        {{- if gt (len .) 3 }}
+        <span class="label label-default mb">···</span>
+        {{- end }}
+    </div>
+    {{- end }}
+</article>
