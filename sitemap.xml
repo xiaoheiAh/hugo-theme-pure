@@ -17,14 +17,14 @@
   </url>
   
   <url>
-    <loc>https://xiaohei.im/hugo-theme-pure/categories/redis/</loc>
+    <loc>https://xiaohei.im/hugo-theme-pure/tags/redis/</loc>
     <lastmod>2019-11-16T14:24:40+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://xiaohei.im/hugo-theme-pure/tags/redis/</loc>
+    <loc>https://xiaohei.im/hugo-theme-pure/categories/redis/</loc>
     <lastmod>2019-11-16T14:24:40+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
