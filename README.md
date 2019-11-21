@@ -14,7 +14,7 @@ The file structure of `repo` is roughly referred to [hexo-theme-pure](https://gi
 
 1. [2019-11-19] Add `mainSections` param to avoid hard code.You can set this param to choose which directory under your content folder you want to render. `posts` by default. You can also unset it,but there seems have some problem.
 
-2. [2019-11-19] Support MathJax([PR](https://github.com/xiaoheiAh/hugo-theme-pure/pull/20)) & Upgrade jQuery version([PR](https://github.com/xiaoheiAh/hugo-theme-pure/pull/19)).
+2. [2019-11-19] Support MathJax([PR](https://github.com/xiaoheiAh/hugo-theme-pure/pull/20)) Reference:[MathJax-With-Hugo](https://gohugo.io/content-management/formats/#mathjax-with-hugo)& Upgrade jQuery version([PR](https://github.com/xiaoheiAh/hugo-theme-pure/pull/19)).
 
    e.g. 
 
