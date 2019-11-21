@@ -167,3 +167,10 @@ insight_tags:
   other: 标签
 insight_untitled:
   other: (未命名)
+
+page_not_found_heading:
+  other: 404 Not Found
+page_not_found_body:
+  other: 找不到页面啦~请换个姿势(￣.￣)
+page_not_found_back:
+  other: 返回首页
