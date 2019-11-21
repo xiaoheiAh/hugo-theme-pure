@@ -24,8 +24,7 @@
             <div class="row">
                 {{- range $taxonomy }}
                 <div class="col-md-6">
-                    {{ .Page.Scratch.Set "type" "card"}}
-                    {{- partial "item-post.html" . }}
+                    {{- partial "card-post.html" . }}
                 </div>
                 {{- end }}
             </div>
