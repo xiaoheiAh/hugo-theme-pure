@@ -149,6 +149,11 @@ copyright_base_on:
 copyright_powered_by:
   other: Powered by
 
+copyright_post:
+  other: 本文链接
+copyright_license:
+  other: License
+
 
 insight_hint: 
   other: 想要查找什么...
