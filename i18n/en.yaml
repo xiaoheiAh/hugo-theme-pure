@@ -144,6 +144,10 @@ copyright_base_on:
   other: base on
 copyright_powered_by:
   other: Powered by
+copyright_post:
+  other: Permalink
+copyright_license:
+  other: License
 
 insight_hint: 
   other: Type something...
