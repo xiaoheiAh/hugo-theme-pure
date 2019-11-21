@@ -1,0 +1,34 @@
+{{- define "content" }}
+    <main class="main" role="main">
+        <div class="content">
+            <article class="article">
+                <div class="article-header">
+                    <h1 class="article-title" itemprop="name">
+                        <a href="#">{{ T "page_not_found_heading" }}</a>
+                    </h1>
+                </div>
+                <div class="article-meta">
+                    {{ .Scratch.Set "class_name" "article-date" }}
+                    {{- partial "post/date.html" . }}
+                    {{- partial "post/category.html" . }}
+                    {{- partial "post/tag.html" . }}
+                    {{- partial "post/pv.html" . }}
+                    <span class="post-comment"><i class="icon icon-comment"></i> <a href="{{ .RelPermalink }}#comments" class="article-comment-link">{{T "article_comments" }}</a></span>
+                  {{- partial "post/wc.html" . }} 
+                </div>
+               <div class="article-entry marked-body" itemprop="articleBody">
+               <br>
+               <p>{{ T "page_not_found_body" }}</p>
+               <a href="/">{{ T "page_not_found_back" }}</a>
+               </div>
+                {{- with .Site.Params.enablePostCopyright }}
+                <div class="article-footer">
+                    {{- partial "post/copyright.html" . }}
+                </div>
+                {{- end }}
+            </article>
+            {{- partial "post/comment.html" . }}
+        </div>
+        {{- partial "post/donate.html" . }}
+    </main>
+{{- end -}}
