@@ -71,6 +71,9 @@ params:
   # Enable/Disable menu icons
   # Icon Reference: http://blog.cofess.com/hexo-theme-pure/iconfont/demo_fontclass.html
   enableMathJax: true #Enable mathjax support, to use mathematical notations
+  highlightjs:
+    langs: ["python", "javascript"] #specify languages for which you want to add syntax highlight support
+    
   menuIcons:
     enable: true  # 是否启用导航菜单图标
     home: icon-home-fill
