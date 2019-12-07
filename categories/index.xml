@@ -5,10 +5,37 @@
     <link>https://xiaohei.im/hugo-theme-pure/categories/</link>
     <description>Recent content in Categories on 赵小黑的博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 16 Nov 2019 14:24:40 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 29 Nov 2019 18:40:27 +0800</lastBuildDate>
     
         <atom:link href="https://xiaohei.im/hugo-theme-pure/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>[学习笔记] Netty</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/11/netty/</link>
+      <pubDate>Fri, 29 Nov 2019 18:40:27 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/11/netty/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Redis HA - Cluster</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/11/cluster/</link>
+      <pubDate>Sun, 24 Nov 2019 11:48:17 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/11/cluster/</guid>
+      <description>&lt;p&gt;Redis 官方高可用(HA)方案之一: &lt;strong&gt;Cluster&lt;/strong&gt;.可以解决 &lt;code&gt;sentinel&lt;/code&gt; 模式单点写入的问题.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Redis HA - 哨兵模式</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/11/sentinel/</link>
+      <pubDate>Sat, 23 Nov 2019 17:56:15 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/11/sentinel/</guid>
+      <description>&lt;p&gt;Redis 官方高可用(HA)方案之一: &lt;strong&gt;哨兵模式&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Redis-复制功能探索</title>

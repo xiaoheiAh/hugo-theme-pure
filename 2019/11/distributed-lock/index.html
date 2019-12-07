@@ -32,6 +32,7 @@
   <link rel="stylesheet" href="https://xiaohei.im/hugo-theme-pure/css/style.css">
   <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css"> 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
   <meta property="og:title" content="Redis-分布式锁" />
 <meta property="og:description" content="分布式锁有很多中实现(纯数据库,zookeeper,redis),纯数据库的受限于数据库性能,zk 可以保证加锁的顺序,是公平锁.Redis中的实现就是接下来要学习的." />
 <meta property="og:type" content="article" />
@@ -164,7 +165,8 @@
             <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/corejava/" class="category-list-link">corejava</a><span class="category-list-count">7</span></li>
             <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/hystrix/" class="category-list-link">hystrix</a><span class="category-list-count">2</span></li>
             <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/leetcode/" class="category-list-link">leetcode</a><span class="category-list-count">3</span></li>
-            <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">8</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">10</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="category-list-link">学习笔记</a><span class="category-list-count">1</span></li>
             <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="category-list-link">消息队列</a><span class="category-list-count">4</span></li>
         </ul>
     </div>
@@ -191,12 +193,16 @@
                     class="tag-list-count">3</span></li>
             
             
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
             <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/rabbitmq/" class="tag-list-link">rabbitmq</a><span
                     class="tag-list-count">4</span></li>
             
             
             <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/redis/" class="tag-list-link">redis</a><span
-                    class="tag-list-count">8</span></li>
+                    class="tag-list-count">10</span></li>
             
             
             <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/rust/" class="tag-list-link">rust</a><span
@@ -230,6 +236,36 @@
             <li>
                 <div class="item-inner">
                     <p class="item-title">
+                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/netty/" class="title">[学习笔记] Netty</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2019-11-29 18:40:27 &#43;0800 CST" itemprop="datePublished">2019-11-29</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/cluster/" class="title">Redis HA - Cluster</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2019-11-24 11:48:17 &#43;0800 CST" itemprop="datePublished">2019-11-24</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/sentinel/" class="title">Redis HA - 哨兵模式</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2019-11-23 17:56:15 &#43;0800 CST" itemprop="datePublished">2019-11-23</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
                         <a href="https://xiaohei.im/hugo-theme-pure/2019/11/replication/" class="title">Redis-复制功能探索</a>
                     </p>
                     <p class="item-date">
@@ -247,36 +283,6 @@
                     </p>
                 </div>
             </li>
-            <li>
-                <div class="item-inner">
-                    <p class="item-title">
-                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/aof/" class="title">Redis-AOF持久化</a>
-                    </p>
-                    <p class="item-date">
-                        <time datetime="2019-11-08 15:18:05 &#43;0800 CST" itemprop="datePublished">2019-11-08</time>
-                    </p>
-                </div>
-            </li>
-            <li>
-                <div class="item-inner">
-                    <p class="item-title">
-                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/rdb/" class="title">Redis-RDB持久化</a>
-                    </p>
-                    <p class="item-date">
-                        <time datetime="2019-11-06 19:08:56 &#43;0800 CST" itemprop="datePublished">2019-11-06</time>
-                    </p>
-                </div>
-            </li>
-            <li>
-                <div class="item-inner">
-                    <p class="item-title">
-                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/db/" class="title">Redis-数据库长什么样?</a>
-                    </p>
-                    <p class="item-date">
-                        <time datetime="2019-11-06 11:00:32 &#43;0800 CST" itemprop="datePublished">2019-11-06</time>
-                    </p>
-                </div>
-            </li>
         </ul>
     </div>
 </div>
@@ -285,51 +291,14 @@
 
     
     
-  <aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
-    <div class="slimContent">
-      <nav id="toc" class="article-toc">
-        <h3 class="toc-title">文章目录</h3>
-        <div class="toc-content always-active"><nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#为什么使用分布式锁">为什么使用分布式锁?</a>
-<ul>
-<li><a href="#分布式锁的特点">分布式锁的特点?</a></li>
-</ul></li>
-<li><a href="#如何使用分布式锁">如何使用分布式锁?</a>
-<ul>
-<li><a href="#简单粗暴版">简单粗暴版</a></li>
-<li><a href="#redission版">Redission版</a></li>
-<li><a href="#redlock">RedLock</a>
-<ul>
-<li><a href="#加锁过程">加锁过程</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#分布式锁的一些问题">分布式锁的一些问题</a>
-<ul>
-<li><a href="#锁被其他客户端释放">锁被其他客户端释放</a>
-<ul>
-<li><a href="#如何解决">如何解决?</a></li>
-</ul></li>
-<li><a href="#超时问题">超时问题</a>
-<ul>
-<li><a href="#如何解决-1">如何解决?</a></li>
-</ul></li>
-<li><a href="#时钟不一致">时钟不一致</a>
-<ul>
-<li><a href="#如何解决-2">如何解决?</a></li>
-</ul></li>
-<li><a href="#性能-故障恢复和-fsync">性能、故障恢复和 fsync</a></li>
-</ul></li>
-<li><a href="#参考">参考</a></li>
-</ul></li>
-</ul>
-</nav>
-        </div>
-      </nav>
-    </div>
-  </aside>
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
 <main class="main" role="main"><div class="content">
   <article id="-" class="article article-type-" itemscope
     itemtype="http://schema.org/BlogPosting">
@@ -371,7 +340,7 @@
 		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长:4分 </span>
       </div>
     </div>
-    <div class="article-entry marked-body" itemprop="articleBody">
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
       <p>分布式锁有很多中实现(纯数据库,zookeeper,redis),纯数据库的受限于数据库性能,zk 可以保证加锁的顺序,是公平锁.Redis中的实现就是接下来要学习的.</p>
 
 <h2 id="为什么使用分布式锁">为什么使用分布式锁?</h2>
@@ -656,39 +625,52 @@ end
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
 <script>
-   window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 </script>
 <script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
 <script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/rust.min.js"></script>
 <script type="text/javascript"
-   src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+    src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
 <script>
-hljs.configure({
-  tabReplace: '    ', 
-  classPrefix: ''     
-                      
-})
-hljs.initHighlightingOnLoad();
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
 </script>
 <script type="text/javascript" src="https://xiaohei.im/hugo-theme-pure/js/application.js"></script>
 <script type="text/javascript" src="https://xiaohei.im/hugo-theme-pure/js/plugin.js"></script>
 <script>
-      (function (window) {
-          var INSIGHT_CONFIG = {
-              TRANSLATION: {
-                  POSTS: '文章',
-                  PAGES: '页面',
-                  CATEGORIES: '分类',
-                  TAGS: '标签',
-                  UNTITLED: '(未命名)',
-              },
-              ROOT_URL: 'https:\/\/xiaohei.im\/hugo-theme-pure',
-              CONTENT_URL: 'https:\/\/xiaohei.im\/hugo-theme-pure\/searchindex.json ',
-          };
-          window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-      })(window);
-      </script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/xiaohei.im\/hugo-theme-pure',
+            CONTENT_URL: 'https:\/\/xiaohei.im\/hugo-theme-pure\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
 <script type="text/javascript" src="https://xiaohei.im/hugo-theme-pure/js/insight.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
 
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
@@ -716,7 +698,6 @@ if (!doNotTrack) {
 }
 </script>
 <script async src='https://www.google-analytics.com/analytics.js'></script>
-
 
   </body>
 </html>

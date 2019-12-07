@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>
-        Collections-Hashset - 赵小黑的博客
+        Redis HA - Cluster - 赵小黑的博客
       </title>
     <head>
   <meta charset="utf-8">
@@ -23,35 +23,36 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <meta name="description" content="" />
+  <meta name="description" content="Redis 官方高可用(HA)方案之一: Cluster.可以解决 sentinel 模式单点写入的问题.
+" />
   <meta name="generator" content="Hugo 0.58.0 with theme pure" />
-  <title>Collections-Hashset - 赵小黑的博客</title>
+  <title>Redis HA - Cluster - 赵小黑的博客</title>
   
 
   <link rel="stylesheet" href="https://xiaohei.im/hugo-theme-pure/css/style.css">
   <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css"> 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
-  <meta property="og:title" content="Collections-Hashset" />
-<meta property="og:description" content="" />
+  <meta property="og:title" content="Redis HA - Cluster" />
+<meta property="og:description" content="Redis 官方高可用(HA)方案之一: Cluster.可以解决 sentinel 模式单点写入的问题." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://xiaohei.im/hugo-theme-pure/collections/hashset/" />
-<meta property="article:published_time" content="2019-08-15T13:19:18+08:00" />
-<meta property="article:modified_time" content="2019-08-15T13:19:18+08:00" />
-<meta itemprop="name" content="Collections-Hashset">
-<meta itemprop="description" content="">
+<meta property="og:url" content="https://xiaohei.im/hugo-theme-pure/2019/11/cluster/" />
+<meta property="article:published_time" content="2019-11-24T11:48:17+08:00" />
+<meta property="article:modified_time" content="2019-11-24T11:48:17+08:00" />
+<meta itemprop="name" content="Redis HA - Cluster">
+<meta itemprop="description" content="Redis 官方高可用(HA)方案之一: Cluster.可以解决 sentinel 模式单点写入的问题.">
 
 
-<meta itemprop="datePublished" content="2019-08-15T13:19:18&#43;08:00" />
-<meta itemprop="dateModified" content="2019-08-15T13:19:18&#43;08:00" />
-<meta itemprop="wordCount" content="272">
+<meta itemprop="datePublished" content="2019-11-24T11:48:17&#43;08:00" />
+<meta itemprop="dateModified" content="2019-11-24T11:48:17&#43;08:00" />
+<meta itemprop="wordCount" content="3358">
 
 
 
-<meta itemprop="keywords" content="collections," />
+<meta itemprop="keywords" content="redis," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Collections-Hashset"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:title" content="Redis HA - Cluster"/>
+<meta name="twitter:description" content="Redis 官方高可用(HA)方案之一: Cluster.可以解决 sentinel 模式单点写入的问题."/>
 
   <!--[if lte IE 9]>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -306,24 +307,24 @@
       <h1 itemprop="name">
   <a
     class="article-title"
-    href="/hugo-theme-pure/collections/hashset/"
-    >Collections-Hashset</a
+    href="/hugo-theme-pure/2019/11/cluster/"
+    >Redis HA - Cluster</a
   >
 </h1>
 
       <div class="article-meta">
         <span class="article-date">
   <i class="icon icon-calendar-check"></i>
-<a href="https://xiaohei.im/hugo-theme-pure/collections/hashset/" class="article-date">
-  <time datetime="2019-08-15 13:19:18 &#43;0800 CST" itemprop="datePublished">2019-08-15</time>
+<a href="https://xiaohei.im/hugo-theme-pure/2019/11/cluster/" class="article-date">
+  <time datetime="2019-11-24 11:48:17 &#43;0800 CST" itemprop="datePublished">2019-11-24</time>
 </a>
 </span><span class="article-category">
   <i class="icon icon-folder"></i>
-  <a class="article-category-link" href="/hugo-theme-pure/categories/corejava/"> CoreJava </a>
+  <a class="article-category-link" href="/hugo-theme-pure/categories/redis/"> redis </a>
 </span>  
   <span class="article-tag">
     <i class="icon icon-tags"></i>
-    <a class="article-tag-link" href="/hugo-theme-pure/tags/collections/"> collections </a>
+    <a class="article-tag-link" href="/hugo-theme-pure/tags/redis/"> redis </a>
   </span>
 
 	<span class="article-read hidden-xs">
@@ -332,86 +333,240 @@
 			<span id="busuanzi_value_page_pv">0</span>
 		</span>
 	</span>
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/hugo-theme-pure/collections/hashset/#comments"
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/hugo-theme-pure/2019/11/cluster/#comments"
             class="article-comment-link">评论</a></span>
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计:272字</span>
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长:1分 </span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计:3358字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长:7分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
-      <blockquote>
-<p><a href="http://cmsblogs.com/?p=599">HashSet详解</a></p>
-</blockquote>
+      <p>Redis 官方高可用(HA)方案之一: <strong>Cluster</strong>.可以解决 <code>sentinel</code> 模式单点写入的问题.</p>
 
-<h2 id="介绍">介绍</h2>
+<h2 id="参考">参考</h2>
 
 <ol>
-<li><p>基于<code>HashMap</code>保存元素不保证有序,不包含<code>重复</code>元素,允许<code>null</code>值.主要继承关系如图:</p>
-
-<pre><code class="language-mermaid">graph BT
-HashSet--&gt;AbstractSet
-HashSet-.-&gt;Set
-AbstractSet-.-&gt;Set
-AbstractSet--&gt;AbstractCollection
-AbstractCollection-.-&gt;Collection	
-</code></pre></li>
+<li><a href="https://juejin.im/post/5b8fc5536fb9a05d2d01fb11">https://juejin.im/post/5b8fc5536fb9a05d2d01fb11</a></li>
+<li><a href="http://www.redis.cn/topics/cluster-spec.html">http://www.redis.cn/topics/cluster-spec.html</a></li>
+<li><a href="https://redis.io/topics/cluster-spec">https://redis.io/topics/cluster-spec</a></li>
 </ol>
 
-<h2 id="参数">参数</h2>
+<h3 id="玩玩集群">玩玩集群</h3>
 
-<pre><code class="language-java">static final long serialVersionUID = -5024744406713321676L;
+<p><a href="https://redis.io/topics/cluster-tutorial">https://redis.io/topics/cluster-tutorial</a></p>
 
-//底层存储用的hashMap
-private transient HashMap&lt;E,Object&gt; map;
+<p>如果使用源码构建的,<code>utils</code> 目录下有一个脚本可以创建集群试玩.</p>
 
-//定义一个Object对象作为HashMap的value
-private static final Object PRESENT = new Object();
+<p><figure><img src="https://cdn.jsdelivr.net/gh/xiaoheiAh/imgs@master/20191128201309.png" alt="create-cluster"></figure></p>
 
+<h2 id="redis-cluster-实现原理">Redis Cluster 实现原理</h2>
+
+<h3 id="一致性hash算法">一致性Hash算法</h3>
+
+<blockquote>
+<p><strong>一致哈希</strong> 是一种特殊的<a href="https://zh.wikipedia.org/wiki/哈希">哈希</a>算法。在使用一致哈希算法后，哈希表槽位数（大小）的改变平均只需要对 <span  class="math">\(K/n\)</span> 个关键字重新映射，其中<span  class="math">\(K\)</span>是关键字的数量，<span  class="math">\(n\)</span>是槽位数量。然而在传统的<a href="https://zh.wikipedia.org/wiki/哈希表">哈希表</a>中，添加或删除一个槽位的几乎需要对所有关键字进行重新映射。</p>
+
+<p>-- <a href="https://zh.wikipedia.org/wiki/一致哈希">来自自由的百科全书</a></p>
+</blockquote>
+
+<p>一致性 Hash 算法在很多领域都有实践,分布式缓存 Redis, 负载均衡 Nginx,一些 RPC 框架.一句话解释这个算法就是将请求均匀的分配给各个节点的算法.在 Redis 中就是对 key 的离散化,将其存到不同的节点上,在 Nginx 中就是讲请求离散化,均匀地达到不同的机器上,相同的请求始终可以打到同一台上.毕竟取模以后值又不会变,总是会到相同的一台嘛.</p>
+
+<p><strong>一致性哈希</strong> 可以很好的解决 <strong>稳定性问题</strong>，可以将所有的 <strong>存储节点</strong> 排列在 <strong>收尾相接</strong> 的 <code>Hash</code> 环上，每个 <code>key</code> 在计算 <code>Hash</code> 后会 <strong>顺时针</strong> 找到 <strong>临接</strong> 的 <strong>存储节点</strong> 存放。而当有节点 <strong>加入</strong> 或 <strong>退出</strong> 时，仅影响该节点在 <code>Hash</code> 环上 <strong>顺时针相邻</strong> 的 <strong>后续节点</strong>。</p>
+
+<h4 id="普通模式">普通模式</h4>
+
+<p><figure><img src="https://cdn.jsdelivr.net/gh/xiaoheiAh/imgs@master/20191128173619.png" alt="normal-consistent-hash"></figure></p>
+
+<ul>
+<li><strong>优点</strong></li>
+</ul>
+
+<p><strong>加入</strong> 和 <strong>删除</strong> 节点只影响 <strong>哈希环</strong> 中 <strong>顺时针方向</strong> 的 <strong>相邻的节点</strong>，对其他节点无影响。</p>
+
+<ul>
+<li><strong>缺点</strong></li>
+</ul>
+
+<p><strong>加减节点</strong> 会造成 <strong>哈希环</strong> 中部分数据 <strong>无法命中</strong>。当使用 <strong>少量节点</strong> 时，<strong>节点变化</strong> 将大范围影响 <strong>哈希环</strong> 中 <strong>数据映射</strong>，不适合 <strong>少量数据节点</strong> 的分布式方案。<strong>普通</strong> 的 <strong>一致性哈希分区</strong> 在增减节点时需要 <strong>增加一倍</strong> 或 <strong>减去一半</strong> 节点才能保证 <strong>数据</strong> 和 <strong>负载的均衡</strong>。</p>
+
+<h4 id="虚拟槽">虚拟槽</h4>
+
+<p><strong>虚拟槽分区</strong> 巧妙地使用了 <strong>哈希空间</strong>，使用 <strong>分散度良好</strong> 的 <strong>哈希函数</strong> 把所有数据 <strong>映射</strong> 到一个 <strong>固定范围</strong> 的 <strong>整数集合</strong> 中，整数定义为 <strong>槽</strong>（<code>slot</code>）。这个范围一般 <strong>远远大于</strong> 节点数，比如 <code>Redis Cluster</code> 槽范围是 <code>0 ~ 16383</code>。<strong>槽</strong> 是集群内 <strong>数据管理</strong> 和 <strong>迁移</strong> 的 <strong>基本单位</strong>。采用 <strong>大范围槽</strong> 的主要目的是为了方便 <strong>数据拆分</strong> 和 <strong>集群扩展</strong>。每个节点会负责 <strong>一定数量的槽</strong>，如图所示：</p>
+
+<p><figure><img src="https://cdn.jsdelivr.net/gh/xiaoheiAh/imgs@master/20191128173930.png" alt="vslot-consistent-hash"></figure></p>
+
+<h4 id="为什么是-16384-个槽">为什么是 16384 个槽?</h4>
+
+<p>redis github 上有个对应的 <a href="https://github.com/antirez/redis/issues/2576">issue</a>, antirez 给了对应的回答.回答如下:</p>
+
+<p><figure><img src="https://cdn.jsdelivr.net/gh/xiaoheiAh/imgs@master/20191128175820.png" alt="why-redis-cluster-use-16384-slots"></figure></p>
+
+<p>总结下来就是避免节点之间交换消息时消息包过大.每个消息包都会通过 bitmap 存储当前节点的 slots 分配信息,slots = 16384 时占用 16384/8/1024 = 2KB. 65K slots就太大了,而且官方建议最好不要超过 1000 个节点,16k slots也就足够分配了.<strong>够用就行</strong>.</p>
+
+<h5 id="为什么要提到-65k">为什么要提到 65K?</h5>
+
+<p><figure><img src="https://cdn.jsdelivr.net/gh/xiaoheiAh/imgs@master/20191128180222.png" alt="why-mentioned-65k"></figure></p>
+
+<p>Redis 实现的 CRC16 算法是 16 位的,最大值就是 65535,以这个值来计算 bitmap 就是 8K 左右.</p>
+
+<p>中文参考:<a href="https://www.cnblogs.com/rjzheng/p/11430592.html">https://www.cnblogs.com/rjzheng/p/11430592.html</a></p>
+
+<h2 id="官方集群文档httpsredisiotopicsclusterspec"><a href="https://redis.io/topics/cluster-spec">官方集群文档</a></h2>
+
+<p><strong>Redis Cluster Bus:</strong>  节点的 TCP 通信及二进制协议的总称.所有节点通过 <code>cluster bus</code> 进行连接.还可以在集群中 传递 <code>Pub/Sub</code> 消息,处理手动的故障转移请求(用户执行).</p>
+
+<p><strong>Gossip:</strong> 通过 <code>Gossip</code> 协议传递集群消息保证集群每个节点最终都能获得所有节点的完整信息.</p>
+
+<p>客户端不需要在意请求到哪个节点,随机请求一个后,如果没有查到对应的key,会通过返回重定向的结果 <code>-MOVED</code>,<code>-ASK</code> 来重定向到真正含有请求key数据的节点上.</p>
+
+<h4 id="可用性-availability">可用性 Availability</h4>
+
+<p>出现网络分区时, cluster 在少数节点侧分区是不可用的.在多数节点的分区侧(假设至少有半数的节点且存在每个不可用的主节点的 <code>slave</code> ),集群会在 <code>NODE_TIMEOUT</code> + 选举及故障转移所需一定时间 后恢复.</p>
+
+<h3 id="redis-cluster-核心组件">Redis Cluster 核心组件</h3>
+
+<h4 id="键的分布式模型-keys-distribution-model">键的分布式模型 Keys distribution model</h4>
+
+<p>键空间分割为 <code>16384</code> 个 slot, 也就是集群可以最多有 <code>16384</code> 个节点.(官方建议上线 1000 节点为佳)</p>
+
+<p>每个 <code>master</code> 节点维护一段 slot.每一个主节点可以有多个 <strong>slave</strong> 来应对网络分区或者故障转移时的问题,以及分担读的压力.</p>
+
+<p>核心算法: 将key进行hash取模映射到一个 slot 上. <span  class="math">\( HASH\_SLOT = CRC16(key)\ mod\ 16384 \)</span></p>
+
+<p><strong>CRC16</strong> 在测试中针对不同的key能很好的离散化.效果显著.</p>
+
+<h4 id="集群拓补">集群拓补</h4>
+
+<p><code>Redis Cluster</code> 的节点连接是网状的,假设有 N 个节点,那么每个节点都会与 N-1 个节点建立 TCP 连接, 且每个节点需要接受 N-1 个外来的 TCP 连接.所有连接都是 <code>keep alive</code>.如果等待足够长时间没有得到对方的 PING 回复,就会尝试重连.由于连接呈网状的原因,节点使用的是 <code>Gossip</code> 协议来传递消息,更新节点信息,可以避免节点之间同时交换巨量的消息,防止消息的指数型增长.</p>
+
+<h3 id="重定向重新分片">重定向&amp;重新分片</h3>
+
+<h4 id="moved-redirection">MOVED Redirection</h4>
+
+<p>客户端可以向任意一个节点发送查询请求,包括 <code>slave</code> 节点.节点会对查询请求进行分析,如果该 <code>key</code> 就在当前节点,就直接查出来返回,如果不在,节点会去寻找该 <code>key</code> 对应的 slot 所属的节点是哪一个,然后返回给客户端一个 <code>MOVED</code> error.</p>
+
+<pre><code class="language-bash">GET x
+-MOVED 3999 127.0.0.1:6381
 </code></pre>
 
-<h2 id="常用方法">常用方法</h2>
+<p>该 error 包括了 <code>key</code> 所在的 slot,以及对应节点的 ip:port.客户端就可以重新对真正持有该 <code>key</code> 的节点发起查询请求.如果在发起请求前经过了很长的时间导致集群产生了重新配置(<code>reconfiguration</code>),客户端再发起请求后可能仍然没有拿到值,还是会收到一个 <code>MOVED</code> 响应,如此循环下去.</p>
 
-<p>由于底层是<code>hashmap</code>存储的,所以基本是一样的.没什么区别.实现不重复插入是通过比较put操作的返回值是不是null</p>
+<h4 id="cluster-live-reconfiguration">Cluster live reconfiguration</h4>
 
-<pre><code class="language-java">
-public Iterator&lt;E&gt; iterator() {
-    return map.keySet().iterator();
-}
+<p><code>Redis</code> 集群是允许运行时增删节点的.增删节点的影响就是对 hash slot 的调整.增加一个节点就需要把现有的节点匀出来一部分给新节点,删除一个节点就要把该节点的 slot 合并给其他节点.</p>
 
-public int size() {
-    return map.size();
-}
+<p>核心的逻辑其实就是对 hash slots 的移动.从一个特殊的角度来看,移动 slot 就是移动一组 key,所以集群在 <code>resharding</code> 时真正做的其实是对 key 的移动.移动一个 hash slot 就是对该 slot 下的所有 keys 移动到另一个 slot 下.</p>
 
-public boolean isEmpty() {
-    return map.isEmpty();
-}
+<h5 id="cluster-slot-相关命令">Cluster Slot 相关命令</h5>
 
-public boolean contains(Object o) {
-    return map.containsKey(o);
-}
+<ul>
+<li><a href="https://redis.io/commands/cluster-addslots">CLUSTER ADDSLOTS</a> slot1 [slot2] ... [slotN]</li>
+<li><a href="https://redis.io/commands/cluster-delslots">CLUSTER DELSLOTS</a> slot1 [slot2] ... [slotN]</li>
+<li><a href="https://redis.io/commands/cluster-setslot">CLUSTER SETSLOT</a> slot NODE node</li>
+<li><a href="https://redis.io/commands/cluster-setslot">CLUSTER SETSLOT</a> slot MIGRATING node</li>
+<li><a href="https://redis.io/commands/cluster-setslot">CLUSTER SETSLOT</a> slot IMPORTING node</li>
+</ul>
 
-public boolean add(E e) {
-    return map.put(e, PRESENT)==null;
-}
+<p><code>ADDSLOTS</code>, <code>DELSLOTS</code> 用于给节点分配/删除指定的 slots.分配后会通过 <code>Gossip</code> 广播该信息.<code>ADDSLOTS</code> 通常用在集群新建时为每一个 master 节点分配一部分 slot. <code>DELSLOTS</code> 主要用于手动设置集群配置或者用于 debug 时的操作.<strong>通常很少用</strong>.</p>
 
-public boolean remove(Object o) {
-    return map.remove(o)==PRESENT;
-}
+<p><code>SETSLOT &lt;slot&gt; NODE</code> 使用该命令就是给一个节点分配指定的 slot.</p>
 
-public void clear() {
-    map.clear();
-}
+<p>否则就是需要设置 <strong>MIGRATING</strong> 和 <strong>IMPORTING</strong> 的命令了.这两个特殊的状态是为了将一个 slot 从一个节点迁移到另一个时使用的.</p>
 
-@SuppressWarnings(&quot;unchecked&quot;)
-public Object clone() {
-    try {
-        HashSet&lt;E&gt; newSet = (HashSet&lt;E&gt;) super.clone();
-        newSet.map = (HashMap&lt;E, Object&gt;) map.clone();
-        return newSet;
-    } catch (CloneNotSupportedException e) {
-        throw new InternalError(e);
-    }
-}
+<ul>
+<li>设置为 <strong>MIGRATING</strong> 时,节点会接受所有关于该 slot 的查询,但仅当 key 存在时,否则会返回一个 <strong>-ASK</strong> 的重定向转发到需要迁移到的目标节点.</li>
+<li>设置为 <strong>IMPORTING</strong> 时,节点只接受带有 <strong>ASKING</strong> 的请求,如果客户端没有携带该命令,就会重定向到原来的节点去.</li>
+</ul>
+
+<p>假设我们需要将节点A的 slot 8 迁移到节点B.那我们需要发送两条命令:</p>
+
+<ul>
+<li>给B发送 : CLUSTER SETSLOT 8 IMPORTING A</li>
+<li>给A发送:  CLUSTER SETSLOT 8 MIGRATING B</li>
+</ul>
+
+<p>如此操作后,客户端还是会对key存在于 SLOT 8 的请求给到 A 节点,当该 key 在节点A存在时返回,不存在时会让客户端 <code>ASKING</code> Node B 处理.</p>
+
+<p><img src="https://cdn.jsdelivr.net/gh/xiaoheiAh/imgs@master/20191127195127.png" alt="key-slot-migrate" style="zoom:50%;" /></p>
+
+<p>此时不会再在节点 A 中创建新 key 了.同时, <code>redis-trib</code> 会执行对应的迁移操作.</p>
+
+<pre><code class="language-bash">CLUSTER GETKEYSINSLOT slot count
+</code></pre>
+
+<p>上述命令会查询出指定 slot 下 count 个需要迁移的key.并对每一个key 执行 <code>migrate</code> 命令,将 key 从 A 迁移到 B.该操作为原子操作.</p>
+
+<pre><code class="language-bash">MIGRATE target_host target_port key target_database id timeout
+</code></pre>
+
+<p><code>migrate</code> 对复杂键也进行了优化,迁移延迟较低,但是在集群中 big key 并不是一个明智的选择.</p>
+
+<h4 id="ask-redirection">ASK redirection</h4>
+
+<p><strong>ASK</strong> 与 <strong>MOVED</strong> 的区别在于, <strong>MOVED</strong> 可以确定 slot 的确在其他的节点上,下一次查询就直接查重定向后的节点.而 <strong>ASK</strong> 只是将本次查询重定向到指定的节点,接下来的其他查询仍然要请求当前的节点.</p>
+
+<p><strong>语义</strong>:</p>
+
+<ul>
+<li>如果收到一个 <strong>ASK</strong> 重定向,仅将当前查询重定向到指定节点,后续查询仍指向当前节点.</li>
+<li>使用 <strong>ASKING</strong> 进行重定向查询</li>
+<li>还不能更新本地客户端的 slot -&gt; node 缓存映射关系</li>
+</ul>
+
+<p>当 slot 迁移完成后,节点 A 会发送 <strong>MOVED</strong> 消息,客户端就可以永久的将 slot 8 的请求指定到新的 ip:port.</p>
+
+<h3 id="容错-fault-tolerance">容错 Fault Tolerance</h3>
+
+<h4 id="心跳--gossip">心跳 &amp; Gossip</h4>
+
+<p>Redis Cluster 节点会持续的交换 ping/pong 信息,两种信息没有本质区别,就是 <code>message type</code> 不同.下文我们统称 ping/pong 为 <strong>心跳包</strong> (<code>heartbeat packets</code>)</p>
+
+<p>通常来说,PING一下就要触发一次 PONG 回复.但也并不全对,节点也可能就把 PONG 信息(包含了自己的配置)发给其他节点就不管了,这样的好处是可以尽快广播新的配置.</p>
+
+<p>通常,一个节点每秒会随机的 PING 几个节点,所以每个节点发出PING 包的数量是恒定的(收到 PONG 包的数量也是恒定的) ,而不去理会节点的数量了. <strong>去中心化</strong></p>
+
+<p>每个节点会确保给没有 PING 过的节点和超过一半 <code>NODE_TIMEOT</code> 没有收到 PONG 的节点发送 PING 消息.<code>NODE_TIMEOUT</code> 过后,节点还会尝试重连没响应的节点,确保是因为网络问题才不可达的.</p>
+
+<p>如果将 <code>NODE_TIMEOUT</code> 设置为较小的数字,并且节点数非常大,则全局交换的消息数会相当大,因为每个节点都将尝试对超过一半 <code>NODE_TIMEOUT</code> 还未刷新信息的其他节点发送 PING.</p>
+
+<h4 id="心跳包结构">心跳包结构</h4>
+
+<p>结构如下,源码注释就很详细了:</p>
+
+<pre><code class="language-c">typedef struct {
+    char sig[4];        /* Signature &quot;RCmb&quot; (Redis Cluster message bus). */
+    uint32_t totlen;    /* Total length of this message */
+    uint16_t ver;       /* Protocol version, currently set to 1. */
+    uint16_t port;      /* TCP base port number. */
+    uint16_t type;      /* Message type */
+    uint16_t count;     /* Only used for some kind of messages. */
+    uint64_t currentEpoch;  /* The epoch accordingly to the sending node. */
+    uint64_t configEpoch;   /* The config epoch if it's a master, or the last
+                               epoch advertised by its master if it is a
+                               slave. */
+    uint64_t offset;    /* Master replication offset if node is a master or
+                           processed replication offset if node is a slave. */
+    char sender[CLUSTER_NAMELEN]; /* Name of the sender node */
+    unsigned char myslots[CLUSTER_SLOTS/8];
+    char slaveof[CLUSTER_NAMELEN];
+    char myip[NET_IP_STR_LEN];    /* Sender IP, if not all zeroed. */
+    char notused1[34];  /* 34 bytes reserved for future usage. */
+    uint16_t cport;      /* Sender TCP cluster bus port */
+    uint16_t flags;      /* Sender node flags */
+    unsigned char state; /* Cluster state from the POV of the sender */
+    unsigned char mflags[3]; /* Message flags: CLUSTERMSG_FLAG[012]_... */
+    union clusterMsgData data;
+} clusterMsg;
+
+typedef struct {
+    char nodename[CLUSTER_NAMELEN];
+    uint32_t ping_sent;
+    uint32_t pong_received;
+    char ip[NET_IP_STR_LEN];  /* IP address last time it was seen */
+    uint16_t port;              /* base port last time it was seen */
+    uint16_t cport;             /* cluster port last time it was seen */
+    uint16_t flags;             /* node-&gt;flags copy */
+    uint32_t notused1;
+} clusterMsgDataGossip;
 </code></pre>
     </div>
     <div class="article-footer">
@@ -419,7 +574,7 @@ public Object clone() {
   <ul class="post-copyright list-unstyled">
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接: </strong>
-      <a href="https://xiaohei.im/hugo-theme-pure/collections/hashset/" title="Collections-Hashset" target="_blank" rel="external">https://xiaohei.im/hugo-theme-pure/collections/hashset/</a>
+      <a href="https://xiaohei.im/hugo-theme-pure/2019/11/cluster/" title="Redis HA - Cluster" target="_blank" rel="external">https://xiaohei.im/hugo-theme-pure/2019/11/cluster/</a>
     </li>
     <li class="post-copyright-license">
       <strong>License：</strong><a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN</a>
@@ -451,13 +606,13 @@ public Object clone() {
     <div class="bar-inner">
         <ul class="pager pull-left">
             <li class="prev">
-                <a href="https://xiaohei.im/hugo-theme-pure/collections/linkedhashmap/" title="Collections-Linkedhashmap"><i
+                <a href="https://xiaohei.im/hugo-theme-pure/2019/11/sentinel/" title="Redis HA - 哨兵模式"><i
                         class="icon icon-angle-left"
                         aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
             </li>
             <li class="next">
-                <a href="https://xiaohei.im/hugo-theme-pure/collections/hashmap/"
-                    title="Collections-Hashmap"><span>上一篇&nbsp;&nbsp;</span><i
+                <a href="https://xiaohei.im/hugo-theme-pure/2019/11/netty/"
+                    title="[学习笔记] Netty"><span>上一篇&nbsp;&nbsp;</span><i
                         class="icon icon-angle-right" aria-hidden="true"></i></a>
             </li>
             
@@ -595,6 +750,21 @@ public Object clone() {
 </script>
 
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: 'e38fc798c72a7e4e1386',
+        clientSecret: 'e151aa3b7b98d3cfaa1f096b88fdd7897e2c8007',
+        repo: 'xiaoheiAh.github.io',
+        owner: 'xiaoheiAh',
+        admin: ['xiaoheiAh'],
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('comments');
+</script>
 <script type="application/javascript">
 var doNotTrack = false;
 if (!doNotTrack) {

@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>
-        Collections-Hashset - 赵小黑的博客
+        Redis HA - 哨兵模式 - 赵小黑的博客
       </title>
     <head>
   <meta charset="utf-8">
@@ -23,35 +23,36 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <meta name="description" content="" />
+  <meta name="description" content="Redis 官方高可用(HA)方案之一: 哨兵模式
+" />
   <meta name="generator" content="Hugo 0.58.0 with theme pure" />
-  <title>Collections-Hashset - 赵小黑的博客</title>
+  <title>Redis HA - 哨兵模式 - 赵小黑的博客</title>
   
 
   <link rel="stylesheet" href="https://xiaohei.im/hugo-theme-pure/css/style.css">
   <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css"> 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
-  <meta property="og:title" content="Collections-Hashset" />
-<meta property="og:description" content="" />
+  <meta property="og:title" content="Redis HA - 哨兵模式" />
+<meta property="og:description" content="Redis 官方高可用(HA)方案之一: 哨兵模式" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://xiaohei.im/hugo-theme-pure/collections/hashset/" />
-<meta property="article:published_time" content="2019-08-15T13:19:18+08:00" />
-<meta property="article:modified_time" content="2019-08-15T13:19:18+08:00" />
-<meta itemprop="name" content="Collections-Hashset">
-<meta itemprop="description" content="">
+<meta property="og:url" content="https://xiaohei.im/hugo-theme-pure/2019/11/sentinel/" />
+<meta property="article:published_time" content="2019-11-23T17:56:15+08:00" />
+<meta property="article:modified_time" content="2019-11-23T17:56:15+08:00" />
+<meta itemprop="name" content="Redis HA - 哨兵模式">
+<meta itemprop="description" content="Redis 官方高可用(HA)方案之一: 哨兵模式">
 
 
-<meta itemprop="datePublished" content="2019-08-15T13:19:18&#43;08:00" />
-<meta itemprop="dateModified" content="2019-08-15T13:19:18&#43;08:00" />
-<meta itemprop="wordCount" content="272">
+<meta itemprop="datePublished" content="2019-11-23T17:56:15&#43;08:00" />
+<meta itemprop="dateModified" content="2019-11-23T17:56:15&#43;08:00" />
+<meta itemprop="wordCount" content="3828">
 
 
 
-<meta itemprop="keywords" content="collections," />
+<meta itemprop="keywords" content="redis," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Collections-Hashset"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:title" content="Redis HA - 哨兵模式"/>
+<meta name="twitter:description" content="Redis 官方高可用(HA)方案之一: 哨兵模式"/>
 
   <!--[if lte IE 9]>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -306,24 +307,24 @@
       <h1 itemprop="name">
   <a
     class="article-title"
-    href="/hugo-theme-pure/collections/hashset/"
-    >Collections-Hashset</a
+    href="/hugo-theme-pure/2019/11/sentinel/"
+    >Redis HA - 哨兵模式</a
   >
 </h1>
 
       <div class="article-meta">
         <span class="article-date">
   <i class="icon icon-calendar-check"></i>
-<a href="https://xiaohei.im/hugo-theme-pure/collections/hashset/" class="article-date">
-  <time datetime="2019-08-15 13:19:18 &#43;0800 CST" itemprop="datePublished">2019-08-15</time>
+<a href="https://xiaohei.im/hugo-theme-pure/2019/11/sentinel/" class="article-date">
+  <time datetime="2019-11-23 17:56:15 &#43;0800 CST" itemprop="datePublished">2019-11-23</time>
 </a>
 </span><span class="article-category">
   <i class="icon icon-folder"></i>
-  <a class="article-category-link" href="/hugo-theme-pure/categories/corejava/"> CoreJava </a>
+  <a class="article-category-link" href="/hugo-theme-pure/categories/redis/"> redis </a>
 </span>  
   <span class="article-tag">
     <i class="icon icon-tags"></i>
-    <a class="article-tag-link" href="/hugo-theme-pure/tags/collections/"> collections </a>
+    <a class="article-tag-link" href="/hugo-theme-pure/tags/redis/"> redis </a>
   </span>
 
 	<span class="article-read hidden-xs">
@@ -332,94 +333,271 @@
 			<span id="busuanzi_value_page_pv">0</span>
 		</span>
 	</span>
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/hugo-theme-pure/collections/hashset/#comments"
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/hugo-theme-pure/2019/11/sentinel/#comments"
             class="article-comment-link">评论</a></span>
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计:272字</span>
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长:1分 </span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计:3828字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长:8分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
-      <blockquote>
-<p><a href="http://cmsblogs.com/?p=599">HashSet详解</a></p>
-</blockquote>
+      <p>Redis 官方高可用(HA)方案之一: <strong>哨兵模式</strong></p>
 
-<h2 id="介绍">介绍</h2>
+<p>这篇文章已经介绍的很全面了:<a href="https://juejin.im/post/5b7d226a6fb9a01a1e01ff64">https://juejin.im/post/5b7d226a6fb9a01a1e01ff64</a> 自己就总结一些问题:</p>
+
+<h2 id="sentinel-如何保证集群高可用">sentinel 如何保证集群高可用?</h2>
 
 <ol>
-<li><p>基于<code>HashMap</code>保存元素不保证有序,不包含<code>重复</code>元素,允许<code>null</code>值.主要继承关系如图:</p>
-
-<pre><code class="language-mermaid">graph BT
-HashSet--&gt;AbstractSet
-HashSet-.-&gt;Set
-AbstractSet-.-&gt;Set
-AbstractSet--&gt;AbstractCollection
-AbstractCollection-.-&gt;Collection	
-</code></pre></li>
+<li>时刻与监控的节点保持心跳(PING),订阅 <code>__sentinel__:hello</code> 频道实时更新配置并持久化到磁盘</li>
+<li>自动发现监听节点的其他 <code>sentinel</code> 保持通信</li>
+<li>节点不可达时询问其他节点确认是否不可达,是否需要执行故障转移(半数投票)</li>
+<li>故障转移后广播配置,帮助其他从节点切换到新的主节点,以 <code>epoch</code> 最大的配置为准</li>
 </ol>
 
-<h2 id="参数">参数</h2>
+<h2 id="sentinel-如何判定节点下线">sentinel 如何判定节点下线?</h2>
 
-<pre><code class="language-java">static final long serialVersionUID = -5024744406713321676L;
+<p><a href="#主观下线/客观下线">主观下线/客观下线</a></p>
 
-//底层存储用的hashMap
-private transient HashMap&lt;E,Object&gt; map;
+<h2 id="sentinel-的局限性">sentinel 的局限性?</h2>
 
-//定义一个Object对象作为HashMap的value
-private static final Object PRESENT = new Object();
+<p><code>Redis Sentinel</code> 仅仅解决了 <strong>高可用</strong> 的问题，对于 <strong>主节点</strong> 单点写入和单节点无法扩容等问题，还需要引入 <code>Redis Cluster</code> <strong>集群模式</strong> 予以解决。</p>
 
+<h2 id="官方文档介绍">官方文档介绍</h2>
+
+<blockquote>
+<p><a href="https://redis.io/topics/sentinel">https://redis.io/topics/sentinel</a></p>
+
+<p>使用 <code>sentinel</code> 的原因: 做到无人工介入的自动容错 <code>redis</code> 集群.</p>
+</blockquote>
+
+<p><code>sentinel</code> 宏观概览:</p>
+
+<ul>
+<li><strong>监控 Monitoring:</strong> 持续监控主从节点的运行状态</li>
+<li><strong>通知 Notification:</strong> 节点异常时,通过暴露的 <code>API</code> 可以及时报警</li>
+<li><strong>自动故障转移 Automatic Failover:</strong> 主节点宕机后,可以自动晋升从节点为新主节点,其他节点会重新连接到新主节点,应用也会被通知相应的节点变化</li>
+<li><strong>提供配置 Configuration Provider:</strong> <code>sentinel</code> 维护着主从的节点信息,客户端会连接<code>sentinel</code> 获取主节点信息.</li>
+</ul>
+
+<p><code>sentinel</code> <strong>天生分布式,</strong>多节点协同的好处在于:</p>
+
+<ul>
+<li>多数节点都同意主节点不可用时才执行故障检测.有效避免错判.</li>
+<li>多节点可以提升系统鲁棒性(<code>system robust</code>),避免单点故障</li>
+</ul>
+
+<h3 id="使用须知">使用须知</h3>
+
+<ol>
+<li>至少 3 个 <code>sentinel</code> 保证系统鲁棒性</li>
+<li>节点最好放在不同的主机或虚拟机,降低级联故障(一下全GG)</li>
+<li>由于 <code>redis</code> 采用的是异步复制,<code>sentinel</code> + <code>redis</code> 不能保证故障期间确认的写入(主从可能无法通信,确认复制进度).<code>sentinel</code> 可以在发布时控制一定时间内数据不丢失,但也不是万全之策.</li>
+<li>客户端需要支持 <code>sentinel</code> (常用 <code>Java</code> 客户端基本都支持)</li>
+<li>高可用并不是百分之百有效,即时你时时刻刻都在测试,产线环境也在跑,保不准凌晨就 GG,也没办法不是.</li>
+<li><code>Sentinel</code>,<code>Docker</code>，或者其他形式的网络地址交换或端口映射需要加倍小心：Docker执行端口重新映射，破坏<code>Sentinel</code>自动发现其他的哨兵进程和主节点的 <code>replicas</code> 列表。</li>
+</ol>
+
+<h3 id="sentinel-设置">Sentinel 设置</h3>
+
+<p><code>redis</code> 安装目录下有一个 <code>sentinel.conf</code> 模板配置可以参考.最小化配置如下:</p>
+
+<pre><code class="language-plain">sentinel monitor mymaster 127.0.0.1 6379 2
+sentinel down-after-milliseconds mymaster 60000
+sentinel failover-timeout mymaster 180000
+sentinel parallel-syncs mymaster 1
+
+sentinel monitor resque 192.168.1.3 6380 4
+sentinel down-after-milliseconds resque 10000
+sentinel failover-timeout resque 180000
+sentinel parallel-syncs resque 5
 </code></pre>
 
-<h2 id="常用方法">常用方法</h2>
+<p>不需要配置 <code>replicas</code> , <code>sentinel</code> 可以自动从主节点中获取 <code>INFO</code> 信息.同时该配置也会实时重写的: 新的 <code>sentinel</code> 节点加入或者故障转移 <code>replica</code> 晋升时.</p>
 
-<p>由于底层是<code>hashmap</code>存储的,所以基本是一样的.没什么区别.实现不重复插入是通过比较put操作的返回值是不是null</p>
+<h4 id="sentinel-monitor-master-group-name-ip-port-quorum"><code>sentinel monitor &lt;master-group-name&gt; &lt;ip&gt; &lt;port&gt; &lt;quorum&gt;</code></h4>
 
-<pre><code class="language-java">
-public Iterator&lt;E&gt; iterator() {
-    return map.keySet().iterator();
-}
+<p>从命令就可以看出来一些名堂: 监控地址为 <code>ip:port,name</code> 为 <code>master-group-name</code> 的主节点.</p>
 
-public int size() {
-    return map.size();
-}
+<p><strong>quorum:</strong> 判断节点确实已经下线的支持票数(由 <code>Sentinel</code> 节点进行投票),票数超过一定范围后就可以让节点下线并作故障转移.但 <code>quorum</code> 只是针对于下线判断,执行故障转移需要在 <code>sentinel</code> 集群选举(投票)出一个 <code>leader</code> 来执行故障转移.</p>
 
-public boolean isEmpty() {
-    return map.isEmpty();
-}
+<p>e.g. <code>quorum</code> = 2, <code>sentinel</code> 节点数 = 5</p>
 
-public boolean contains(Object o) {
-    return map.containsKey(o);
-}
+<ul>
+<li>如果有两个 <code>sentinel</code> 节点认为主节点下线了,那么这两个节点中的一个会尝试开始执行故障转移.</li>
+<li>如果有超过半数 <code>sentinel</code> 节点存在(当前情况下即活着 3 个 <code>sentinel</code> 节点),故障转移就会被授权真正开始执行.</li>
+</ul>
 
-public boolean add(E e) {
-    return map.put(e, PRESENT)==null;
-}
+<p><strong>核心概念:</strong> <code>sentinel</code> 节点半数不可达就不允许执行 <strong>故障转移</strong>.</p>
 
-public boolean remove(Object o) {
-    return map.remove(o)==PRESENT;
-}
+<h4 id="sentinel-option-name-master-name-option-value"><code>sentinel &lt;option_name&gt; &lt;master_name&gt; &lt;option_value&gt;</code></h4>
 
-public void clear() {
-    map.clear();
-}
+<p><code>sentinel</code> 其它的配置基本都是这个格式.</p>
 
-@SuppressWarnings(&quot;unchecked&quot;)
-public Object clone() {
-    try {
-        HashSet&lt;E&gt; newSet = (HashSet&lt;E&gt;) super.clone();
-        newSet.map = (HashMap&lt;E, Object&gt;) map.clone();
-        return newSet;
-    } catch (CloneNotSupportedException e) {
-        throw new InternalError(e);
-    }
-}
+<ul>
+<li><code>down-after-milliseconds</code> 节点宕机超过该毫秒时间后 <code>sentinel</code> 节点才能认为其不可达.</li>
+<li><code>parallel-syncs</code> 在发生failover主从切换时，这个选项指定了最多可以有多少个 <code>replica</code> 同时对新的<code>master</code> 进行同步，这个数字越小，完成主从故障转移所需的时间就越长，但是如果这个数字越大，就意味着越多的slave因为主从同步而不可用。可以通过将这个值设为1来保证每次只有一个 <code>replica</code> 处于不能处理命令请求的状态。</li>
+</ul>
+
+<p><strong>所有配置都可以通过 <code>SENTINEL SET</code> 热更新.</strong></p>
+
+<h4 id="添加-删除-sentinel-节点">添加/删除 sentinel 节点</h4>
+
+<p><strong>添加</strong>: 启动一个新的 <code>sentinel</code> 即可.10s就可以获得其他 <code>sentinel</code> 节点以及主节点的 <code>replicas</code> 信息了.</p>
+
+<p><strong>多节点添加</strong>:建议 <code>one by one</code>,等到当前节点添加进集群后,再添加下一个.添加节点过程中可能会出故障.</p>
+
+<p><strong>删除节点:</strong> <code>sentinel</code> 节点不会丢失见过 <code>sentinel</code> 节点信息,即使这些节点已经挂了.所以需要在没有网络分区的情况下做以下几步:</p>
+
+<ol>
+<li>终止你想要关掉的 <code>sentinel</code> 节点进程</li>
+<li>发送一条命令 <code>SENTINEL RESET *</code> 给所有 <code>sentinel</code> 节点.如果只想对单一 <code>master</code> 处理,把 <code>*</code> 换成主节点名称.等一会儿~</li>
+<li>通过 <code>SENTINEL MASTER</code> 命令查看节点是否已删除</li>
+</ol>
+
+<h4 id="主观下线-客观下线">主观下线/客观下线</h4>
+
+<p><code>sentinel</code> 中有两种下线状态.</p>
+
+<ul>
+<li><strong>主观下线(Subjectively Down)</strong> aka. SDOWN</li>
+</ul>
+
+<p>当前 <code>sentinel</code> 认为自己监控的节点下线了,即主观下线.<code>SDOWN</code> 判定的条件为: <code>sentinel</code> 节点向监控节点发送 <code>PING</code> 命令在设置的 <code>is-master-down-after-milliseconds</code> 毫秒后没有收到有效回复则判定为 <code>SDOWN</code></p>
+
+<ul>
+<li><strong>客观下线(Objectively Down)</strong> aka. ODOWN</li>
+</ul>
+
+<p>有 <code>quorum</code> 数量的 <code>sentinel</code> 节点认为监控的节点 <code>SDOWN</code>.当一个 <code>sentinel</code> 节点认为监控的节点 <code>SDOWN</code> 后,会向其它节点发送 <code>SENTINEL is-master-down-by-addr</code> 命令来判断其它节点对该节点的监控状态.如果回执为 <strong>已下线</strong> 的节点数+自身大于 <code>quorum</code> 数量,则判定为 <strong>客观下线</strong></p>
+
+<p><code>PING</code> 命令的有效回复有什么?</p>
+
+<ul>
+<li>+PONG</li>
+<li>-LOADING error</li>
+<li>-MASTERDOWN error</li>
+</ul>
+
+<p>其它回复都是无效的.需要注意的是: 只要收到有效回复就不会认为其 <code>SDOWN</code> 了.</p>
+
+<p><code>SDOWN</code> 并不能触发故障转移,只能判定节点不可用.要触发故障转移,<strong>必须</strong>达到 <code>ODOWN</code> 状态.</p>
+
+<h4 id="sdown-odwn">SDOWN -&gt; ODWN?</h4>
+
+<p><code>sentinel</code> 没有使用强一致性的算法来保证 <code>SDOWN</code> -&gt; <code>ODOWN</code> 的转换,而是使用的<a href="https://zhuanlan.zhihu.com/p/41228196">Gossip协议</a>来保证最终一致性.在给定的时间范围内,给定的 <code>sentinel</code> 节点收到了足够多(<code>quorum</code>)的其它 <code>sentinel</code> 节点的 <code>SDOWN</code> 确认,就会从 <code>SDOWN</code> 切换到 <code>ODOWN</code> 了.</p>
+
+<p>真正执行故障转移时会有比较严格的授权,但是前提也得是 <code>ODOWN</code> 状态才行.<code>ODOWN</code> 只针对 <code>master</code> 节点,<code>replicas</code> 和 <code>sentinels</code> 只会有 <code>SDOWN</code> 状态.如果 <code>replica</code> 变为 <code>SDOWN</code> 了,在故障转移的时候就不会被晋升.</p>
+
+<h4 id="自动发现-auto-discovery">自动发现 auto discovery</h4>
+
+<p><code>sentinel</code> 节点之间会保持连接来互相检查是否可用,交换信息,但是并不需要在启动的时候配置一长串其他 <code>sentinel</code> 节点的地址. <code>sentinel</code> 会利用 <code>redis</code> 的 <code>Pub/Sub</code> 能力来发现监控了相同 <code>master/replicas</code> 的 <code>sentinel</code> 节点.<code>replicas</code> 自动发现是一样的原理.</p>
+
+<h5 id="如何实现的">如何实现的?</h5>
+
+<p>向一个叫 <code>__sentinel__:hello</code> 的 <code>channel</code> 发送 hello 消息.</p>
+
+<ul>
+<li>每个 <code>sentinel</code> 节点都会向每一个它监控的 <code>master</code> 和 <code>replica</code> 的叫做 <code>__sentinel__:hello</code> 的Pub/Sub channel 广播自己的 <code>ip</code>,<code>port</code>,<code>runid</code>.2s 一次.</li>
+<li>每个订阅了 <code>master</code> 和 <code>replica</code> 的 <code>sentinel</code> 都会收到消息,并会去判断有新的 <code>sentinel</code> 节点就会被添加进来.</li>
+<li>这个 <code>hello</code> 消息同样包含着最新的 <code>master</code> 全量配置,每个收到消息的 <code>sentinel</code> 会进行比对更新.</li>
+<li>添加新的 <code>sentinel</code> 节点时会提前判断该节点信息是否已经存在.</li>
+</ul>
+
+<h4 id="sentinel-强制更新配置">sentinel 强制更新配置</h4>
+
+<p><strong>sentinel 是一个总会尝试将当前最新的配置强制更新到所有监控节点的系统</strong>.</p>
+
+<blockquote>
+<p>这可能也是一种 tradeoff 吧.比如 replica 如果连错 master 了,那 sentinel 就必须把它矫正过来,重连正确的master.</p>
+</blockquote>
+
+<h4 id="副本选举">副本选举</h4>
+
+<p><code>sentinel</code> 可以执行故障转移时,需要选择一个合适的 <code>replica</code> 晋升.</p>
+
+<h5 id="评估条件">评估条件</h5>
+
+<ul>
+<li>与 <code>master</code> 的断连时间</li>
+<li><code>replica</code> 优先级-&gt;可以设置</li>
+<li>复制进度 <code>offset</code></li>
+<li>Run ID</li>
+</ul>
+
+<h5 id="判定需要跳过的节点">判定需要跳过的节点</h5>
+
+<pre><code class="language-bash">(down-after-milliseconds * 10) + milliseconds_since_master_is_in_SDOWN_state
 </code></pre>
+
+<p>如果一个 <code>replica</code> 的断连时间超过上面这个表达式,那就认为该节点不可靠,不考虑. <code>down-after-milliseconds</code> 是通过设置的,<code>milliseconds_since_master_is_in_SDOWN_state</code> 指在执行故障转移时 <code>master</code> 仍不可用的时间.</p>
+
+<h5 id="选举过程">选举过程</h5>
+
+<p>符合上述条件后才会对其按照条件进行排序.顺序如下:</p>
+
+<ul>
+<li>首先根据 <code>replica-priority</code> 排序(<code>redis.conf</code> 进行设置),值越小越优先</li>
+<li><code>priority</code> 相同时,比较 <code>offset</code>,值越大越优先(同步最完整)</li>
+<li>如果 <code>priority</code>,<code>offset</code> 都相同,就会判断 <code>run ID</code> 的字典序.越小的 <code>run ID</code> 并不是说有什么优势,但是比起重排序随机选一个 <code>replica</code>,字典序选举方式更有确定性更有用(大白话).</li>
+</ul>
+
+<p>建议所有节点都设置 <code>replica-priority</code>.如果  <code>replica-priority</code> 设置为 0, 表示永远不会被选为 <code>master</code> .但是在故障转移后 <code>sentinel</code> 会重置通过这种方式设置的配置,以便可以与新的 <code>master</code> 连接,唯一的区别就是该节点不会是主节点.</p>
+
+<h3 id="深入算法内部">深入算法内部</h3>
+
+<h4 id="quorum">Quorum</h4>
+
+<p><code>quorum</code> 参数会被 <code>sentinel</code> 集群用来判断是否有这个数量的 <code>sentinel</code> 节点认为 <code>master</code> 已经 <code>SDOWN</code> 了,需不需要转为 <code>ODOWN</code> 触发故障转移 <code>failover</code>.</p>
+
+<p>但是,触发故障转移后,至少需要有<strong>半数</strong>的 <code>sentinel</code> 节点(如果 <code>quorum</code> 值比半数还多,那其实需要有<code>quorum</code>个节点)授权给一个 <code>sentinel</code> 节点才能真正执行.小于半数节点不允许执行.</p>
+
+<blockquote>
+<p>e.g. 5 instances <code>quorum</code> = 2</p>
+
+<p>当有2个节点认为 <code>master</code> 不可达时,就会触发 failover.但是需要有至少3个节点授权给这2个节点之一才能真正执行failover.</p>
+
+<p>如果 <code>quorum</code> = 5,那就需要所有节点都认为 <code>master</code> 不可达,才能触发failover,并且所有节点都要授权.</p>
+</blockquote>
+
+<h4 id="纪元-configuration-epochs">纪元 Configuration Epochs</h4>
+
+<p>为什么需要获取半数以上的授权执行 <code>failover</code>?</p>
+
+<p>当一个 <code>sentinel</code> 节点被授权后,会获得一个可以用于故障转移节点的唯一的纪元(<code>configuration epoch</code>)标志.这是一个在故障转移完成后针对新配置的版本号 number.因为是多数同意将指定的版本分配给指定授权的 <code>sentinel</code> ,所以不会有其他节点使用这个版本号.也就意味着每一次故障转移时生成的新配置都有唯一的版本号标识.</p>
+
+<p><code>sentinel</code> 集群有一条规则: 如果 sentinel A 投票给 sentinel B 去执行故障转移,A 会等待一段时间后对同一个主节点再次进行故障转移.这个时间可以通过 <code>sentinel.conf</code> 的 <code>failover-timeout</code> 进行配置.这就意味着不会有节点在同一时间对同一个主节点进行故障转移,被授权的节点回先执行,失败了后面会有其他的节点进行重试.</p>
+
+<p><code>sentinel</code> 保证 <a href="https://en.wikipedia.org/wiki/Liveness">liveness</a> 特性(我的理解就是不会宕机一直存活):如果有多个节点可用,只会选择一个节点去执行故障转移.</p>
+
+<p><code>sentinel</code> 同样保证 <a href="https://en.wikipedia.org/wiki/Safety#System_safety_and_reliability_engineering">safety</a> 特性:每一个节点都会尝试使用不同的 <code>configuration epoch</code> 对相同的节点进行故障转移.</p>
+
+<h4 id="配置传递-configuration-propagation">配置传递  Configuration propagation</h4>
+
+<p>故障转移完成后,<code>sentinel</code> 会广播新的配置给其他 <code>sentinel</code> 节点更新这个新的主节点信息.执行故障转移的主节点还需要对新的主节点执行 <code>SLAVE NO ONE</code>,稍后在 <code>INFO</code> 命令中就可以看到这个主节点了.</p>
+
+<p>所有 <code>sentinel</code> 节点都会广播配置信息,通过 <code>__sentinel__:hello</code> channel 广播出去.配置信息都带有 <code>epoch</code> ,值越大越会被当做最新的配置.</p>
+
+<h4 id="网络分区后的一致性问题">网络分区后的一致性问题</h4>
+
+<p>Redis + Sentinel 架构是<strong>保证最终一致性</strong>的系统,在发生网络分区恢复时,不可避免的会丢失数据.</p>
+
+<p>如果把 redis 当做缓存来用,数据丢了也没事,可以再去库里查嘛.</p>
+
+<p>如果把 redis 当做存储来用,那最好配上下面两个配置降低损失.</p>
+
+<pre><code class="language-bash">min-replicas-to-write 1
+min-replicas-max-lag 10
+</code></pre>
+
+<h4 id="sentinel-状态持久化">Sentinel 状态持久化</h4>
+
+<p>Sentinel 状态持久化在 <code>sentinel.conf</code> 中,每次手挡新配置,或者创建配置,都会带着<code>configuration epoch</code> 一起持久化到硬盘,重启时就没有问题了.</p>
     </div>
     <div class="article-footer">
 <blockquote class="mt-2x">
   <ul class="post-copyright list-unstyled">
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接: </strong>
-      <a href="https://xiaohei.im/hugo-theme-pure/collections/hashset/" title="Collections-Hashset" target="_blank" rel="external">https://xiaohei.im/hugo-theme-pure/collections/hashset/</a>
+      <a href="https://xiaohei.im/hugo-theme-pure/2019/11/sentinel/" title="Redis HA - 哨兵模式" target="_blank" rel="external">https://xiaohei.im/hugo-theme-pure/2019/11/sentinel/</a>
     </li>
     <li class="post-copyright-license">
       <strong>License：</strong><a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN</a>
@@ -451,13 +629,13 @@ public Object clone() {
     <div class="bar-inner">
         <ul class="pager pull-left">
             <li class="prev">
-                <a href="https://xiaohei.im/hugo-theme-pure/collections/linkedhashmap/" title="Collections-Linkedhashmap"><i
+                <a href="https://xiaohei.im/hugo-theme-pure/2019/11/replication/" title="Redis-复制功能探索"><i
                         class="icon icon-angle-left"
                         aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
             </li>
             <li class="next">
-                <a href="https://xiaohei.im/hugo-theme-pure/collections/hashmap/"
-                    title="Collections-Hashmap"><span>上一篇&nbsp;&nbsp;</span><i
+                <a href="https://xiaohei.im/hugo-theme-pure/2019/11/cluster/"
+                    title="Redis HA - Cluster"><span>上一篇&nbsp;&nbsp;</span><i
                         class="icon icon-angle-right" aria-hidden="true"></i></a>
             </li>
             
@@ -595,6 +773,21 @@ public Object clone() {
 </script>
 
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: 'e38fc798c72a7e4e1386',
+        clientSecret: 'e151aa3b7b98d3cfaa1f096b88fdd7897e2c8007',
+        repo: 'xiaoheiAh.github.io',
+        owner: 'xiaoheiAh',
+        admin: ['xiaoheiAh'],
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('comments');
+</script>
 <script type="application/javascript">
 var doNotTrack = false;
 if (!doNotTrack) {
