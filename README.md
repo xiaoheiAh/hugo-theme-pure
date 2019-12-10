@@ -30,6 +30,8 @@ The file structure of `repo` is roughly referred to [hexo-theme-pure](https://gi
      <img src="https://raw.githubusercontent.com/xiaoheiAh/imgs/master/20191121103534.png" alt="not-set-mmark" style="zoom:50%;" />
    <img src="https://raw.githubusercontent.com/xiaoheiAh/imgs/master/20191121104118.png" alt="set-mmark" style="zoom:50%;" />
 
+3. [2019-12-07] beautify toc by [tocbot](https://github.com/tscanlin/tocbot/)
+
 ## Screenshots
 
 ![](https://raw.githubusercontent.com/xiaoheiAh/hugo-theme-pure/master/images/grey.png)
