@@ -4,7 +4,7 @@
         {{- if and (.Site.Params.profile) (.Site.Params.profile.enabled)}}
         {{- $profile := .Site.Params.profile }}
         <div class="profile-block text-center">
-          <a id="avatar" href="{{- $profile.follow }}" target="_blank">
+          <a id="avatar" href="{{- $profile.follow }}" target="{{ cond (eq $profile.follow "/") "" "_blank" }}">
             <img class="img-circle img-rotate" src="{{- $profile.avatar | absURL }}" width="200" height="200">
           </a>
           <h2 id="name" class="hidden-xs hidden-sm">{{- $profile.author }}</h2>
@@ -42,4 +42,4 @@
       </nav>
     </div>
   </header>
-  
+
