@@ -1,4 +1,4 @@
-{{- $paginator := .Paginate $.Scratch.Get "pages" -}}
+{{ $paginator := .Paginate .Site.RegularPages }}
 <nav class="bar bar-footer clearfix" data-stick-bottom>
   <div class="bar-inner">
     <ul class="pager pull-left">
@@ -21,7 +21,7 @@
       {{- end }}
     </ul>
     <div class="total-article bar-right">
-      {{ $paginator.TotalNumberOfElements }}
+      Page:{{ $paginator.PageNumber }}/{{ $paginator.TotalPages }}
     </div>
   </div>
 </nav>

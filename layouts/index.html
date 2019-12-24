@@ -1,10 +1,11 @@
 {{- define "content"}}
 
 <main class="main" role="main">
-  {{/* partial "archive-list.html" . - */}} 
+  {{/* partial "archive-list.html" . - */}}
   <div class="content article-list">
     <!-- {{- print ($.Scratch.Get "pages") }} -->
-    {{- range $.Scratch.Get "pages" }}
+    {{ $paginator := .Paginate .Site.RegularPages }}
+    {{ range $paginator.Pages }}
     <article
       class="article article-type-page"
       itemscope
@@ -30,7 +31,7 @@
     </article>
     {{- end -}}
   </div>
-  {{/* partial "pagination.html" . - */}}
+  {{ partial "pagination.html" . }}
 </main>
 {{- end }}
 
