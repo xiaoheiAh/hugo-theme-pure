@@ -32,6 +32,8 @@ The file structure of `repo` is roughly referred to [hexo-theme-pure](https://gi
 
 3. [2019-12-07] beautify toc by [tocbot](https://github.com/tscanlin/tocbot/)
 
+4. [2019-12-24] support pagination
+
 ## Screenshots
 
 ![](https://raw.githubusercontent.com/xiaoheiAh/hugo-theme-pure/master/images/grey.png)
