@@ -106,7 +106,7 @@ enable toc
 ## TODO
 
 - [x] TOC
-- [ ] pagination
+- [x] pagination
 
 ## License
 
