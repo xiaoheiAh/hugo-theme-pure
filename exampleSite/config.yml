@@ -72,7 +72,7 @@ params:
   # Icon Reference: http://blog.cofess.com/hexo-theme-pure/iconfont/demo_fontclass.html
   enableMathJax: true #Enable mathjax support, to use mathematical notations
   highlightjs:
-    langs: ["python", "javascript"] #specify languages for which you want to add syntax highlight support
+    langs: ["python", "javascript"] # refer to http://staticfile.org/, search highlight.js, already have highlight.min.js
     
   menuIcons:
     enable: true  # 是否启用导航菜单图标
@@ -173,7 +173,7 @@ params:
   # config
   config:
     skin: # theme color default is white. other type [theme-black,theme-blue,theme-green,theme-purple]
-    layout: main-center # 布局方式 main-left main-center main-right
+    layout: main-center # main-left main-center main-right
     excerpt_link: Read More
     toc: true
 
