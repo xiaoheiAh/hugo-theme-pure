@@ -4,7 +4,7 @@
   {{/* partial "archive-list.html" . - */}}
   <div class="content article-list">
     <!-- {{- print ($.Scratch.Get "pages") }} -->
-    {{ $paginator := .Paginate ($.Scratch.Get "pages") }}
+    {{ $paginator := .Paginate .Site.RegularPages }}
     {{ range $paginator.Pages }}
     <article
       class="article article-type-page"
