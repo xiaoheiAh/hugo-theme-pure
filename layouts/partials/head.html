@@ -46,30 +46,18 @@
     {{- end -}}
   </title>
   <!-- Canonical links -->
-
   {{ range .AlternativeOutputFormats -}}
   {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
   {{ end -}}
-<<<<<<< HEAD
-
-  <link rel="stylesheet" href="{{ "css/style.css" | absURL }}">
-  <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css">
-  {{- if eq .Site.Params.comment.type "gitalk"}}
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-  {{- end }}
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
-  {{ with .Site.Params.customCSS }}
-  <link rel="stylesheet" href="{{ . | absURL }}">{{ end }}
-
-=======
   {{ $css := resources.Get "css/style.css" | minify | fingerprint}}
   <link rel="stylesheet" href="{{ $css.Permalink }}">
+  {{ with .Site.Params.customCSS }}
+  <link rel="stylesheet" href="{{ . | absURL }}" async>{{ end }}
   <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
   {{- if eq .Site.Params.comment.type "gitalk"}} 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css" async>    
   {{- end }}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
->>>>>>> feat-optimization
   {{/* NOTE: These Hugo Internal Templates can be found starting at https://github.com/spf13/hugo/blob/master/tpl/tplimpl/template_embedded.go#L158 */}}
   {{- template "_internal/opengraph.html" . -}}
   {{- template "_internal/google_news.html" . -}}

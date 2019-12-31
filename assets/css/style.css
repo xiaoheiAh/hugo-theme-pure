@@ -7,15 +7,6 @@
 /**
  * font family
  */
- @font-face {
-  font-family: Fira Code;
-  src: url("../fonts/FiraCode-Retina.woff");
-}
-
-@font-face {
-  font-family: Source Han Sans;
-  src: url("../fonts/SourceHanSans-Normal.woff");
-}
 /**
  * 
  */
@@ -35,7 +26,7 @@
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
 html {
-  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif,"Fira Code","Source Han Sans";
+  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
@@ -156,7 +147,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: "Fira Code","Source Han Sans";
+  font-family: monospace, monospace;
   font-size: 1em;
 }
 
@@ -2948,7 +2939,7 @@ button.close {
   position: absolute;
   z-index: 1070;
   display: block;
-  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif,"Fira Code","Source Han Sans";
+  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
   font-style: normal;
   font-weight: normal;
   letter-spacing: normal;
@@ -3265,7 +3256,7 @@ body {
 
 body {
   padding-right: 0 !important;
-  font-family: "Source Han Sans","Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif,"Fira Code";
+  font-family: "Source Han Sans","Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
   font-size: 14px;
   line-height: 1.57143;
   color: #333333;
@@ -7051,7 +7042,7 @@ body.okayNav-loaded {
 
 .donate-box .donate-head:before,
 .donate-box .donate-head:after {
-  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif,"Fira Code","Source Han Sans";
+  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
   background: none;
   width: 0px;
   height: 0px;
@@ -7141,7 +7132,7 @@ body.okayNav-loaded {
   box-sizing: border-box;
   padding: 12px 28px 12px 20px;
   border-bottom: 1px solid #e2e2e2;
-  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif,"Fira Code","Source Han Sans";
+  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
 }
 
 .ins-close {
