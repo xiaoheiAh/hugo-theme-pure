@@ -6,6 +6,7 @@ footnoteReturnLinkContents: ↩
 hasCJKLanguage: true
 paginate: 7
 enableEmoji: true
+PygmentsCodeFences: false
 googleAnalytics: ""      # UA-XXXXXXXX-X 
 permalinks:
   posts: /:year/:month/:filename/
@@ -72,7 +73,7 @@ params:
   # Icon Reference: http://blog.cofess.com/hexo-theme-pure/iconfont/demo_fontclass.html
   enableMathJax: true #Enable mathjax support, to use mathematical notations
   highlightjs:
-    langs: ["python", "javascript"] # refer to http://staticfile.org/, search highlight.js, already have highlight.min.js
+    langs: ["python", "javascript","ini"] # refer to http://staticfile.org/, search highlight.js, already have highlight.min.js
     
   menuIcons:
     enable: true  # 是否启用导航菜单图标
@@ -172,7 +173,7 @@ params:
 
   # config
   config:
-    skin: # theme color default is white. other type [theme-black,theme-blue,theme-green,theme-purple]
+    skin: theme-black # theme color default is white. other type [theme-black,theme-blue,theme-green,theme-purple]
     layout: main-center # main-left main-center main-right
     excerpt_link: Read More
     toc: true
