@@ -1,6 +1,6 @@
 {{- with .Params.categories -}}
 <span class="article-category">
-  <i class="icon icon-folder"></i>
+  <i class="icon icon-folder"></i>&nbsp;
   {{- range . }}
   <a class="article-category-link" href="{{ "categories" | relLangURL }}/{{ . | urlize }}/"> {{ . }} </a>
   {{- end}}

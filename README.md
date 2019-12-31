@@ -34,6 +34,26 @@ The file structure of `repo` is roughly referred to [hexo-theme-pure](https://gi
 
 4. [2019-12-24] support pagination
 
+5. [2019-12-31] 
+   1. support highlight shortcode Note: Just compatible with basic `highlight` usage like:
+   
+    ```html
+    {{< highlight go >}}
+    // ... code
+    {{< / highlight >}}
+    ```
+
+   If you use hugo official example like,rendering will be very ugly.I don't want to compatible with it or maybe you want. Don't forget send a pr~ thanks.
+   ```html
+    {{< highlight go "linenos=table,hl_lines=8 15-17,linenostart=199" >}}
+    // ... code
+    {{< / highlight >}}
+   ```
+   
+   2. Add my favorite font: FiraCode. If you don't like it, please fork theme and remove it under `static/font` directory.
+   3. Add Chinese Friendly Font.
+   4. Minify css&js file.
+
 ## Screenshots
 
 ![](https://raw.githubusercontent.com/xiaoheiAh/hugo-theme-pure/master/images/grey.png)
