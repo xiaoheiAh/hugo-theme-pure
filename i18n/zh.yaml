@@ -88,9 +88,9 @@ unit_time:
   other: 分
 
 article_wordcount:
-  other: 字数统计
+  other: "字数统计: "
 article_readcount:
-  other: 阅读时长
+  other: "阅读时长: "
 article_more:
   other: 查看更多
 article_comments:

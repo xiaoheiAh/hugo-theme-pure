@@ -2,9 +2,9 @@
 {{- $page := .Page}}
 {{- with $postCount.enable }}
 	{{- with $postCount.wordcount }}
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">{{ T "article_wordcount" -}}: {{- $page.WordCount }}{{ T "unit_word" }}</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">{{ T "article_wordcount" -}}{{- $page.WordCount }}{{ T "unit_word" }}</span>
 	{{- end }}
 	{{- with $postCount.min2read }}
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">{{ T "article_readcount" }}: {{- $page.ReadingTime }}{{ T "unit_time" }} </span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">{{ T "article_readcount" }}{{- $page.ReadingTime }}{{ T "unit_time" }} </span>
 	{{- end }}
 {{- end }}
