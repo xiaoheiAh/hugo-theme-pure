@@ -9433,3 +9433,9 @@ body.okayNav-loaded {
     max-height: 200px;
   }
 }
+
+/* Assures listing in categories indentiation is consistent */
+time {
+  width: 10ch;
+  display: inline-block;
+}

@@ -21,7 +21,7 @@ outputFormats:          # use for search. recommend not to modify
     baseName: "searchindex"
     isPlainText: true
     notAlternative: true
-    
+
 outputs:
     home: ["HTML","RSS","SearchIndex"]  # recommend not to modify
 # sitemap
@@ -34,32 +34,32 @@ menu:
   main:
     - identifier: home
       name: Home
-      title: Home 
+      title: Home
       url: /
       weight: 1
 
     - identifier: archives
       name: Archives
       title: Archives
-      url: /posts
+      url: /posts/
       weight: 2
 
     - identifier: categories
       name: Categories
       title: Categories
-      url: /categories
+      url: /categories/
       weight: 3
 
     - identifier: tags
       name: Tags
       title: Tags
-      url: /tags
+      url: /tags/
       weight: 4
 
     - identifier: about
       name: About
       title: About
-      url: /about
+      url: /about/
       weight: 5
 
 

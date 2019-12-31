@@ -3,11 +3,11 @@
     <article class="content article article-archives article-type-list" itemscope="">
         <header class="article-header">
             <h1 itemprop="title">{{ .Title }}</h1>
-            <p class="text-muted">{{- T "total_article" (len .RegularPages) }}</p>
+            <p class="text-muted">{{- T "total_article" (len .Site.RegularPages) }}</p>
         </header>
         <div class="article-body">
             {{- $currentYearSection := 0}}
-            {{- range $idx,$page := .RegularPages}}
+            {{- range $idx,$page := .Site.RegularPages}}
                 {{- $thisYear := $page.Date.Format ("2006") }}
                 {{- if eq $currentYearSection 0 }}
                     {{- $currentYearSection = $thisYear}}
