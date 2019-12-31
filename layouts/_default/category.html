@@ -7,7 +7,7 @@
             <p class="text-muted hidden-xs">{{- T "total_category" (len $categories) }}</p>
             <nav role="navigation" id="nav-main" class="okayNav">
                 <ul>
-                    <li><a href="{{- "categories" | relURL }}">{{- T "nav_all" }}</a></li>
+                    <li><a href="{{- "categories/" | relURL }}">{{- T "nav_all" }}</a></li>
                     {{- range $categories }}
                     <li><a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a></li>
                     {{- end }}
