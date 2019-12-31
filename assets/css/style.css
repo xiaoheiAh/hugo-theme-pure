@@ -7,7 +7,15 @@
 /**
  * font family
  */
+ @font-face {
+  font-family: Fira Code;
+  src: url("../fonts/FiraCode-Retina.woff");
+}
 
+@font-face {
+  font-family: Source Han Sans;
+  src: url("../fonts/SourceHanSans-Normal.woff");
+}
 /**
  * 
  */
@@ -27,7 +35,7 @@
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
 html {
-  font-family: sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif,"Fira Code","Source Han Sans";
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
@@ -148,7 +156,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: monospace, monospace;
+  font-family: "Fira Code","Source Han Sans";
   font-size: 1em;
 }
 
@@ -2940,8 +2948,7 @@ button.close {
   position: absolute;
   z-index: 1070;
   display: block;
-  font-family: "PingHei", "PingFang SC", Helvetica Neue, "Work Sans",
-    "Hiragino Sans GB", "Microsoft YaHei", SimSun, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif,"Fira Code","Source Han Sans";
   font-style: normal;
   font-weight: normal;
   letter-spacing: normal;
@@ -3258,8 +3265,7 @@ body {
 
 body {
   padding-right: 0 !important;
-  font-family: "PingHei", "PingFang SC", Helvetica Neue, "Work Sans",
-    "Hiragino Sans GB", "Microsoft YaHei", SimSun, sans-serif;
+  font-family: "Source Han Sans","Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif,"Fira Code";
   font-size: 14px;
   line-height: 1.57143;
   color: #333333;
@@ -5600,9 +5606,8 @@ pre .js .function {
   color: #8959a8;
 }
 
-pre,
-.highlight {
-  background: #fafafa;
+pre {
+  background: #fafafa !important;
   margin: 10px 0;
   padding: 15px 10px;
   overflow: auto;
@@ -5610,11 +5615,11 @@ pre,
   color: #4d4d4c;
   line-height: 1.5;
 }
-
+/*
 .highlight .gutter pre,
 .gist .gist-file .gist-data .line-numbers {
   color: #666;
-}
+} */
 
 code {
   text-shadow: 0 1px #fff;
@@ -5660,7 +5665,7 @@ pre:before {
   top: 0;
   left: 0;
   right: 0;
-  background-color: #f6f6f6;
+  background-color: #f6f6f6 !important;
   padding: 0 10px;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
@@ -5679,8 +5684,10 @@ pre:after {
   -webkit-box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
   box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
 }
-
 .highlight pre {
+  background-color: inherit;
+}
+/* .highlight pre {
   border: none;
   margin: 0;
 }
@@ -5729,7 +5736,7 @@ pre:after {
   padding-right: 0;
   padding-left: 0;
   color: #ccc;
-}
+} */
 
 /*
  * Sidebar
@@ -7044,7 +7051,7 @@ body.okayNav-loaded {
 
 .donate-box .donate-head:before,
 .donate-box .donate-head:after {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif,"Fira Code","Source Han Sans";
   background: none;
   width: 0px;
   height: 0px;
@@ -7134,8 +7141,7 @@ body.okayNav-loaded {
   box-sizing: border-box;
   padding: 12px 28px 12px 20px;
   border-bottom: 1px solid #e2e2e2;
-  font-family: "Microsoft Yahei Light", "Microsoft Yahei", Helvetica, Arial,
-    sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif,"Fira Code","Source Han Sans";
 }
 
 .ins-close {
@@ -9432,10 +9438,4 @@ body.okayNav-loaded {
   .navbar-fixed-bottom .navbar-collapse {
     max-height: 200px;
   }
-}
-
-/* Assures listing in categories indentiation is consistent */
-time {
-  width: 10ch;
-  display: inline-block;
 }

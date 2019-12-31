@@ -17,8 +17,11 @@
     })
     hljs.initHighlightingOnLoad();
 </script>
-<script type="text/javascript" src="{{ "js/application.js" | absURL }}"></script>
-<script type="text/javascript" src="{{ "js/plugin.js" | absURL }}"></script>
+{{- $appjs := resources.Get "js/application.js" | resources.Minify | resources.Fingerprint}}
+<script src="{{- $appjs.Permalink }}"></script>
+{{- $plugin := resources.Get "js/plugin.js" | resources.Minify | resources.Fingerprint}}
+<script src="{{- $plugin.Permalink }}"></script>
+
 <script>
     (function (window) {
         var INSIGHT_CONFIG = {
@@ -35,7 +38,8 @@
         window.INSIGHT_CONFIG = INSIGHT_CONFIG;
     })(window);
 </script>
-<script type="text/javascript" src="{{ "js/insight.js" | absURL }}"></script>
+{{- $insight := resources.Get "js/insight.js" | resources.Minify | resources.Fingerprint "sha512" }}
+<script type="text/javascript" src="{{- $insight.Permalink }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
 <script>
     tocbot.init({

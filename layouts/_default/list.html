@@ -6,33 +6,58 @@
             <p class="text-muted">{{- T "total_article" (len .Site.RegularPages) }}</p>
         </header>
         <div class="article-body">
+            {{- $emptyDatePages := slice}}
             {{- $currentYearSection := 0}}
             {{- range $idx,$page := .Site.RegularPages}}
-                {{- $thisYear := $page.Date.Format ("2006") }}
-                {{- if eq $currentYearSection 0 }}
-                    {{- $currentYearSection = $thisYear}}
-                {{- end }}
-                {{- if or (eq $idx 0) (ne $currentYearSection $thisYear)}}
-                    {{- if ne $idx 0 }}
-                    </div></div></div></section>
+                {{- if $page.Date}}
+                    {{- $thisYear := $page.Date.Format ("2006") }}
+                    {{- if eq $currentYearSection 0 }}
+                        {{- $currentYearSection = $thisYear}}
+                    {{- end }}
+                    {{- if or (eq $idx 0) (ne $currentYearSection $thisYear)}}
+                        {{- if ne $idx 0 }}
+                        </div></div></div></section>
+                        {{- end}}
+                        <section class="panel panel-default b-no">
+                            <div class="panel-heading" role="tab">
+                                <h3 class="panel-title">
+                                    <a data-toggle="collapse" href="#collapse{{- $thisYear }}" aria-expanded="true">
+                                        <i class="icon icon-calendar-plus text-active"></i><i class="icon icon-calendar-minus text"></i>
+                                        &nbsp;{{- $thisYear }}
+                                    </a>
+                                </h3>
+                            </div>
+                            <div id="collapse{{- $thisYear }}" class="panel-collapse collapse in" role="tabpanel"
+                                aria-labelledby="heading{{- $thisYear }}">
+                                <div class="panel-body">
+                                    <div class="collection">
                     {{- end}}
-                    <section class="panel panel-default b-no">
-                        <div class="panel-heading" role="tab">
-                            <h3 class="panel-title">
-                                <a data-toggle="collapse" href="#collapse{{- $thisYear }}" aria-expanded="true">
-                                    <i class="icon icon-calendar-plus text-active"></i><i class="icon icon-calendar-minus text"></i>
-                                    &nbsp;{{- $thisYear }}
-                                </a>
-                            </h3>
-                        </div>
-                        <div id="collapse{{- $thisYear }}" class="panel-collapse collapse in" role="tabpanel"
-                            aria-labelledby="heading{{- $thisYear }}">
-                            <div class="panel-body">
-                                <div class="collection">
-                {{- end}}
-                {{- .Scratch.Set "type" "link"}}
-                {{- partial "item-post.html" . }}
+                    {{- .Scratch.Set "type" "link"}}
+                    {{- partial "item-post.html" . }}
+                {{- else}}
+                    {{- $emptyDatePages = $emptyDatePages | append $page}}
+                {{- end }}
             {{- end}}
+            {{- if $emptyDatePages}} 
+            </div></div></div></section>
+            <section class="panel panel-default b-no">
+                <div class="panel-heading" role="tab">
+                    <h3 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse-other" aria-expanded="true">
+                            <i class="icon icon-calendar-plus text-active"></i><i class="icon icon-calendar-minus text"></i>
+                            &nbsp; Other
+                        </a>
+                    </h3>
+                </div>
+                <div id="collapse-other" class="panel-collapse collapse in" role="tabpanel"
+                    aria-labelledby="heading-other">
+                    <div class="panel-body">
+                        <div class="collection">
+                            {{- range $page := $emptyDatePages}}
+                                {{- .Scratch.Set "type" "link"}}
+                                {{- partial "item-post.html" . }}
+                            {{- end}}
+            {{- end }}
         </div></div></div></section>
         </div>
     </article>
