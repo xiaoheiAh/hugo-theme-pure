@@ -26,7 +26,12 @@
   {{- if eq .Site.Params.sidebar "none"}} 
     {{- $.Scratch.Add "bodyClass" "no-sidebar" }}
   {{- end }}
+
   <!-- gen regular pages by mainSections -->
+  <!-- if exists, delete it -->
+  {{- if ($.Scratch.Get "pages") }}
+    {{- $.Scratch.Delete "pages"}}
+  {{- end}}
   {{- if and (.Site.Params.mainSections) (ge (len .Site.Params.mainSections) 0) }}
   {{- $.Scratch.Add "pages" (where .Site.RegularPages "Type" "in" .Site.Params.mainSections)  }}
   {{- else }}

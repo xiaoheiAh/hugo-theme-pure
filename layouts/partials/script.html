@@ -40,7 +40,7 @@
 </script>
 {{- $insight := resources.Get "js/insight.js" | resources.Minify | resources.Fingerprint "sha512" }}
 <script type="text/javascript" src="{{- $insight.Permalink }}" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
 <script>
     tocbot.init({
         // Where to render the table of contents.

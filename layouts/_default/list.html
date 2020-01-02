@@ -1,14 +1,15 @@
 {{- define "content"}}
+{{$pages := $.Scratch.Get "pages"}}
 <main class="main" role="main">
     <article class="content article article-archives article-type-list" itemscope="">
         <header class="article-header">
             <h1 itemprop="title">{{ .Title }}</h1>
-            <p class="text-muted">{{- T "total_article" (len .Site.RegularPages) }}</p>
+            <p class="text-muted">{{- T "total_article" (len $pages) }}</p>
         </header>
         <div class="article-body">
             {{- $emptyDatePages := slice}}
             {{- $currentYearSection := 0}}
-            {{- range $idx,$page := .Site.RegularPages}}
+            {{- range $idx,$page := $pages}}
                 {{- if $page.Date}}
                     {{- $thisYear := $page.Date.Format ("2006") }}
                     {{- if eq $currentYearSection 0 }}
