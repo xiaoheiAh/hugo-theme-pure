@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>collections on 赵小黑的博客</title>
+    <link>https://xiaohei.im/hugo-theme-pure/tags/collections/</link>
+    <description>Recent content in collections on 赵小黑的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 15 Aug 2019 13:19:18 +0800</lastBuildDate>
+    
+        <atom:link href="https://xiaohei.im/hugo-theme-pure/tags/collections/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>[LeetCode In Rust]189-Rotate Array</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/08/189-rotate-array/</link>
+      <pubDate>Wed, 21 Aug 2019 15:29:34 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/08/189-rotate-array/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>[LeetCode In Rust]026-Remove Duplicates From Sorted Array</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/08/026-remove-duplicates-from-sorted-array/</link>
+      <pubDate>Tue, 20 Aug 2019 15:54:47 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/08/026-remove-duplicates-from-sorted-array/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>[LeetCode In Rust]001-Two Sum</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/08/001-two-sum/</link>
+      <pubDate>Fri, 16 Aug 2019 18:22:05 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/08/001-two-sum/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Arraylist</title>
+      <link>https://xiaohei.im/hugo-theme-pure/collections/arraylist/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/collections/arraylist/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Hashmap</title>
+      <link>https://xiaohei.im/hugo-theme-pure/collections/hashmap/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/collections/hashmap/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Hashset</title>
+      <link>https://xiaohei.im/hugo-theme-pure/collections/hashset/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/collections/hashset/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Linkedhashmap</title>
+      <link>https://xiaohei.im/hugo-theme-pure/collections/linkedhashmap/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/collections/linkedhashmap/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Linkedlist</title>
+      <link>https://xiaohei.im/hugo-theme-pure/collections/linkedlist/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/collections/linkedlist/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Treemap</title>
+      <link>https://xiaohei.im/hugo-theme-pure/collections/treemap/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/collections/treemap/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Collections-Treeset</title>
+      <link>https://xiaohei.im/hugo-theme-pure/collections/treeset/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/collections/treeset/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>关于自己</title>
+      <link>https://xiaohei.im/hugo-theme-pure/about/</link>
+      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/about/</guid>
+      <description>xiaoheiAh~ 联系方式 github: @xiaoheiAh gmail: xiaohei.zyx@gmail.com 节点推荐 -&amp;gt; http://1t.click/aCyT 关注的大佬博客 面向信仰编程 真·面向信仰,硬核,主 go ,其他技术也很在行, kubernetes 贡献者.翻了翻他博客,就比我大一届,跪</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://xiaohei.im/hugo-theme-pure/book/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/book/</guid>
+      <description>https://juejin.im/post/5def96846fb9a01642385df9?utm_source=gold_browser_extension</description>
+    </item>
+    
+  </channel>
+</rss>

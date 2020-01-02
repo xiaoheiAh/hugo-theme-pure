@@ -3,14 +3,63 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://xiaohei.im/hugo-theme-pure/2019/11/netty/</loc>
-    <lastmod>2019-11-29T18:40:27+08:00</lastmod>
+    <loc>https://xiaohei.im/hugo-theme-pure/categories/</loc>
+    <lastmod>2019-12-26T18:22:05+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://xiaohei.im/hugo-theme-pure/categories/</loc>
+    <loc>https://xiaohei.im/hugo-theme-pure/tags/leetcode/</loc>
+    <lastmod>2019-12-26T18:22:05+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaohei.im/hugo-theme-pure/categories/leetcode/</loc>
+    <lastmod>2019-12-26T18:22:05+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaohei.im/hugo-theme-pure/posts/</loc>
+    <lastmod>2019-12-26T18:22:05+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaohei.im/hugo-theme-pure/tags/</loc>
+    <lastmod>2019-12-26T18:22:05+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaohei.im/hugo-theme-pure/2019/12/linkedlist/</loc>
+    <lastmod>2019-12-26T18:22:05+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaohei.im/hugo-theme-pure/</loc>
+    <lastmod>2019-12-26T18:22:05+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaohei.im/hugo-theme-pure/2019/12/array/</loc>
+    <lastmod>2019-12-26T17:22:05+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaohei.im/hugo-theme-pure/2019/11/netty/</loc>
     <lastmod>2019-11-29T18:40:27+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -24,20 +73,6 @@
   </url>
   
   <url>
-    <loc>https://xiaohei.im/hugo-theme-pure/posts/</loc>
-    <lastmod>2019-11-29T18:40:27+08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://xiaohei.im/hugo-theme-pure/tags/</loc>
-    <lastmod>2019-11-29T18:40:27+08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://xiaohei.im/hugo-theme-pure/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2019-11-29T18:40:27+08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -45,21 +80,14 @@
   </url>
   
   <url>
-    <loc>https://xiaohei.im/hugo-theme-pure/</loc>
-    <lastmod>2019-11-29T18:40:27+08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://xiaohei.im/hugo-theme-pure/categories/redis/</loc>
+    <loc>https://xiaohei.im/hugo-theme-pure/tags/redis/</loc>
     <lastmod>2019-11-24T11:48:17+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://xiaohei.im/hugo-theme-pure/tags/redis/</loc>
+    <loc>https://xiaohei.im/hugo-theme-pure/categories/redis/</loc>
     <lastmod>2019-11-24T11:48:17+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -255,20 +283,6 @@
   </url>
   
   <url>
-    <loc>https://xiaohei.im/hugo-theme-pure/tags/leetcode/</loc>
-    <lastmod>2019-08-21T15:29:34+08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://xiaohei.im/hugo-theme-pure/categories/leetcode/</loc>
-    <lastmod>2019-08-21T15:29:34+08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://xiaohei.im/hugo-theme-pure/tags/rust/</loc>
     <lastmod>2019-08-21T15:29:34+08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -364,6 +378,11 @@
     <lastmod>2019-08-15T13:19:18+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://xiaohei.im/hugo-theme-pure/book/</loc>
+    <priority>0</priority>
   </url>
   
 </urlset>

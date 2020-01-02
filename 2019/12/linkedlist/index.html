@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        「LeetCode」链表题解 - 赵小黑的博客
+      </title>
+    <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  
+  <meta name="theme-color" content="#000000" />
+  
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <meta name="keywords"
+    content="linkedlist" /><meta name="description" content="leetcode | linkedlist | 题解" />
+  <meta name="generator" content="Hugo 0.58.0 with theme pure" />
+  <title>「LeetCode」链表题解 - 赵小黑的博客</title>
+  
+  
+  <link rel="stylesheet" href="https://xiaohei.im/hugo-theme-pure/css/style.min.fff01462d48925d6dd653476606296669e94468a203c323f06008f5ce0abf582.css">
+  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async> 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css" async>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+  <meta property="og:title" content="「LeetCode」链表题解" />
+<meta property="og:description" content="leetcode | linkedlist | 题解" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xiaohei.im/hugo-theme-pure/2019/12/linkedlist/" />
+<meta property="article:published_time" content="2019-12-26T18:22:05+08:00" />
+<meta property="article:modified_time" content="2019-12-26T18:22:05+08:00" />
+<meta itemprop="name" content="「LeetCode」链表题解">
+<meta itemprop="description" content="leetcode | linkedlist | 题解">
+
+
+<meta itemprop="datePublished" content="2019-12-26T18:22:05&#43;08:00" />
+<meta itemprop="dateModified" content="2019-12-26T18:22:05&#43;08:00" />
+<meta itemprop="wordCount" content="684">
+
+
+
+<meta itemprop="keywords" content="leetcode," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="「LeetCode」链表题解"/>
+<meta name="twitter:description" content="leetcode | linkedlist | 题解"/>
+
+  <!--[if lte IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+    <![endif]-->
+
+  <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/xiaoheiAh" target="_blank">
+            <img class="img-circle img-rotate" src="https://xiaohei.im/hugo-theme-pure/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">赵小黑</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">Java Developer</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shanghai, China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav  menu-highlight">
+            <li class="menu-item menu-item-home">
+                <a href="/hugo-theme-pure/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/hugo-theme-pure/posts">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/hugo-theme-pure/categories">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/hugo-theme-pure/tags">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-about">
+                <a href="/hugo-theme-pure/about">
+                    <i class="icon icon-cup-fill"></i>
+                  <span class="menu-title">关于</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>自用科学上网节点推荐(便宜又好用)<a href="https://tianlinzhao.com/aff.php?aff=4969" target="_blank" style="background-color:#FFFF00">点这里跳转</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/corejava/" class="category-list-link">corejava</a><span class="category-list-count">7</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/hystrix/" class="category-list-link">hystrix</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/leetcode/" class="category-list-link">leetcode</a><span class="category-list-count">5</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/redis/" class="category-list-link">redis</a><span class="category-list-count">10</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="category-list-link">学习笔记</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://xiaohei.im/hugo-theme-pure/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="category-list-link">消息队列</a><span class="category-list-count">4</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/collections/" class="tag-list-link">collections</a><span
+                    class="tag-list-count">7</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/hugo/" class="tag-list-link">hugo</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/hystrix/" class="tag-list-link">hystrix</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">5</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/rabbitmq/" class="tag-list-link">rabbitmq</a><span
+                    class="tag-list-count">4</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">10</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/rust/" class="tag-list-link">rust</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/rxjava/" class="tag-list-link">rxjava</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" class="tag-list-link">分布式锁</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="tag-list-link">响应式编程</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://xiaohei.im/hugo-theme-pure/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="tag-list-link">数据结构</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://xiaohei.im/hugo-theme-pure/2019/12/linkedlist/" class="title">「LeetCode」链表题解</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2019-12-26 18:22:05 &#43;0800 CST" itemprop="datePublished">2019-12-26</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://xiaohei.im/hugo-theme-pure/2019/12/array/" class="title">「LeetCode」数组题解</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2019-12-26 17:22:05 &#43;0800 CST" itemprop="datePublished">2019-12-26</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/netty/" class="title">[学习笔记] Netty</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2019-11-29 18:40:27 &#43;0800 CST" itemprop="datePublished">2019-11-29</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/cluster/" class="title">Redis HA - Cluster</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2019-11-24 11:48:17 &#43;0800 CST" itemprop="datePublished">2019-11-24</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://xiaohei.im/hugo-theme-pure/2019/11/sentinel/" class="title">Redis HA - 哨兵模式</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2019-11-23 17:56:15 &#43;0800 CST" itemprop="datePublished">2019-11-23</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/hugo-theme-pure/2019/12/linkedlist/"
+    >「LeetCode」链表题解</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://xiaohei.im/hugo-theme-pure/2019/12/linkedlist/" class="article-date">
+  <time datetime="2019-12-26 18:22:05 &#43;0800 CST" itemprop="datePublished">2019-12-26</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/hugo-theme-pure/categories/leetcode/"> leetcode </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/hugo-theme-pure/tags/leetcode/"> leetcode </a>
+  </span>
+
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+        <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="/hugo-theme-pure/2019/12/linkedlist/#comments"
+            class="article-comment-link">评论</a></span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 684字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 2分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      
+
+<p>链表需要注意的问题:</p>
+
+<ul>
+<li>边界: 头结点尾结点的处理,链表长度为1时的处理</li>
+<li>多画图,跟一次循环,边界情况也画图试试</li>
+<li>思路大多都是 <strong>快慢指针</strong></li>
+</ul>
+
+<h4 id="no-19-remove-nth-node-from-end-of-list-https-leetcode-com-problems-remove-nth-node-from-end-of-list-medium"><a href="https://leetcode.com/problems/remove-nth-node-from-end-of-list/">No.19 =&gt; Remove Nth Node From End of List</a> <strong>Medium</strong></h4>
+
+<pre><code class="language-java">public ListNode removeNthFromEnd(ListNode head, int n) {
+  // 快慢指针
+  ListNode fast = head,slow = head,prev = null;
+  while(fast.next != null) {
+    if (--n &lt;= 0) {
+      // 先走 n 步后,slow 再走
+      prev = slow;
+      slow = slow.next;
+    }
+    fast = fast.next;
+  }
+  // fast 走完,slow 刚好到倒数 n 的位置
+  // 删除 slow 节点
+  if( prev == null) {
+    // 说明删除的是头结点
+    if(slow.next == null) {
+      // 说明链表只有一个节点.且需要删除的就是这个.
+      head = null;
+    } else {
+      // 大于一个节点就需要把 head 指向 slow.next
+      head = prev = slow.next;
+    }
+  } else {
+    prev.next = slow.next;
+  }
+  return head;
+}
+</code></pre>
+
+<h4 id="no-2-add-two-numbers-https-leetcode-com-problems-add-two-numbers-medium"><a href="https://leetcode.com/problems/add-two-numbers/">No.2 =&gt; Add Two Numbers</a> <strong>Medium</strong></h4>
+
+<p>思路: 就按着这个链表顺序加,然后生成一个链表就自然是倒序的了.</p>
+
+<pre><code class="language-java">public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+  // 一次累加,reverse
+  ListNode result = new ListNode(0);
+  ListNode head = result;
+  int carry = 0;
+  while(l1 != null || l2 != null || carry &gt; 0) {
+    int v1 = 0;
+    int v2 = 0;
+    if(l1 != null) {
+      v1 = l1.val;
+      l1 = l1.next;
+    }
+    if(l2 != null) {
+      v2 = l2.val;
+      l2 = l2.next;
+    }
+    int sum = v1 + v2 + carry;
+    result.next = new ListNode( sum % 10);
+    result = result.next;
+    carry = sum / 10 ;
+  }
+  return head.next;
+}
+</code></pre>
+
+<h4 id="no-21-merge-two-sorted-lists-https-leetcode-com-problems-merge-two-sorted-lists-easy"><a href="https://leetcode.com/problems/merge-two-sorted-lists/">No.21 =&gt;  Merge Two Sorted Lists</a> <strong>EASY</strong></h4>
+
+<h5 id="非递归"><strong>非递归</strong></h5>
+
+<pre><code class="language-java">public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    // 边界条件需要判断
+    if (l1 == null) return l2;
+    if (l2 == null) return l1;
+    ListNode dummy = new ListNode(0), head = dummy;
+    while(l1 !=null || l2 != null) {
+        if(l1 == null) {
+            head.next = l2;
+            l2 = l2.next;
+        } else if (l2 == null) {
+            head.next = l1;
+            l1 = l1.next;
+        } else if (l1.val &gt;= l2.val) {
+            head.next = l2;
+            l2 = l2.next;
+        } else {
+            head.next = l1;
+            l1 = l1.next;
+        }
+        head = head.next;
+    }
+    return dummy.next;
+}
+</code></pre>
+
+<h5 id="递归"><strong>递归</strong></h5>
+
+<pre><code class="language-java">public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    // 边界条件需要判断
+    if (l1 == null) return l2;
+    if (l2 == null) return l1;
+    if (l1.val &lt;= l2.val) {
+        l1.next = mergeTwoLists(l1.next,l2);
+        return l1;
+    } else {
+        l2.next = mergeTwoLists(l1, l2.next);
+        return l2;
+    }
+}
+</code></pre>
+
+<h4 id="no-24-swap-nodes-in-pairs-https-leetcode-com-problems-swap-nodes-in-pairs-medium"><a href="https://leetcode.com/problems/swap-nodes-in-pairs/">No.24 =&gt;  Swap Nodes in Pairs</a> <strong>Medium</strong></h4>
+
+<p>思路: 走两步然后替换这两个node,考虑head为空和头两个节点交换的情况</p>
+
+<pre><code class="language-java">public ListNode swapPairs(ListNode head) {
+  if(head == null) {
+    return null;
+  }
+  int step = 1;
+  ListNode prev = null;
+  ListNode curr = head;
+  while(curr.next != null) {
+    if(++step % 2 == 0) {
+      // 每两个反转链表
+      if (prev == null) {
+        // 是头结点与第二个节点反转
+        ListNode second = curr.next;
+        curr.next = second.next;
+        second.next = curr;
+        head = second;
+      } else {
+        // 中间节点 swap
+        ListNode second = curr.next;
+        curr.next = curr.next.next;
+        prev.next = second;
+        second.next = curr;
+      }
+    } else {
+      // 走两步~
+      prev = curr;
+      curr = curr.next;
+    }
+  }
+  return head;
+}
+</code></pre>
+
+    </div>
+    <div class="article-footer">
+<blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接: </strong>
+      <a href="https://xiaohei.im/hugo-theme-pure/2019/12/linkedlist/" title="「LeetCode」链表题解" target="_blank" rel="external">https://xiaohei.im/hugo-theme-pure/2019/12/linkedlist/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>License：</strong><a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN</a>
+    </li>
+  </ul>
+</blockquote>
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/xiaoheiAh" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://xiaohei.im/hugo-theme-pure/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/xiaoheiAh" target="_blank"><span class="text-dark">赵小黑</span><small class="ml-1x">Java Developer</small></a></h3>
+        <div>好好学习~天天向上~</div>
+      </div>
+    </figure>
+  </div>
+</div>
+    </div>
+  </article>
+<section id="comments">
+</section>
+
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://xiaohei.im/hugo-theme-pure/2019/12/array/" title="「LeetCode」数组题解"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        
+        <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal"
+            data-target="#donateModal"><span>赏</span></button>
+        
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content donate">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <div class="modal-body">
+                <div class="donate-box">
+                    <div class="donate-head">
+                        <p>感谢您的支持,我会继续努力的!</p>
+                    </div>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/hugo-theme-pure/donate/alipayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦~</p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+                            <div class="donate-payimg">
+                                <img src="https://xiaohei.im/hugo-theme-pure/donate/wechatpayimg.png"
+                                    alt="扫码支持" title="扫一扫" />
+                            </div>
+                            <p class="text-muted mv">扫码打赏, 多少你说了算~</p>
+                            <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+                        </div>
+                    </div>
+                    <div class="donate-footer">
+                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay"
+                                    aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+                            </li>
+                            <li role="presentation" class="">
+                                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab"
+                                    aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i>
+                                    微信支付</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/xiaoheiAh" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://xiaohei.im/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2017  -
+    2020
+    <div class="publishby">
+        Theme by <a href="https://github.com/xiaoheiAh" target="_blank"> xiaoheiAh </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/rust.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/java.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://xiaohei.im/hugo-theme-pure/js/application.min.bdeb64b910570b6c41badc6a05b7afb0c8ad9efd8525de3c7257d59e786326a3.js"></script>
+<script src="https://xiaohei.im/hugo-theme-pure/js/plugin.min.51ff8c7317566f82259170fa36e09c4493adc9b9378b427a01ad3f017ebac7dd.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/xiaohei.im\/hugo-theme-pure',
+            CONTENT_URL: 'https:\/\/xiaohei.im\/hugo-theme-pure\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://xiaohei.im/hugo-theme-pure/js/insight.min.a343cd9a5a7698336b28ef3a7c16a3a1b1d2d5fb17dc8ed04022bbe08cc5459073a15bdafa3a8a58cdd56080784bdd69fa70b1ae8597565c799c57ed00f0e120.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: 'e38fc798c72a7e4e1386',
+        clientSecret: 'e151aa3b7b98d3cfaa1f096b88fdd7897e2c8007',
+        repo: 'xiaoheiAh.github.io',
+        owner: 'xiaoheiAh',
+        admin: ['xiaoheiAh'],
+        id: md5(location.pathname),
+        distractionFreeMode: true
+    });
+    gitalk.render('comments');
+</script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-98254666-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  </body>
+</html>

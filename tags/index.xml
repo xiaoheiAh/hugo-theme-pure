@@ -5,10 +5,28 @@
     <link>https://xiaohei.im/hugo-theme-pure/tags/</link>
     <description>Recent content in Tags on 赵小黑的博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 29 Nov 2019 18:40:27 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 26 Dec 2019 18:22:05 +0800</lastBuildDate>
     
         <atom:link href="https://xiaohei.im/hugo-theme-pure/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>「LeetCode」链表题解</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/12/linkedlist/</link>
+      <pubDate>Thu, 26 Dec 2019 18:22:05 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/12/linkedlist/</guid>
+      <description>链表需要注意的问题: 边界: 头结点尾结点的处理,链表长度为1时的处理 多画图,跟一次循环,边界情况也画图试试 思路大多都是 快慢指针 No.19 =&amp;gt; Remove Nth Node From End of</description>
+    </item>
+    
+    <item>
+      <title>「LeetCode」数组题解</title>
+      <link>https://xiaohei.im/hugo-theme-pure/2019/12/array/</link>
+      <pubDate>Thu, 26 Dec 2019 17:22:05 +0800</pubDate>
+      
+      <guid>https://xiaohei.im/hugo-theme-pure/2019/12/array/</guid>
+      <description>Easy =&amp;gt; 1252. Cells with Odd Values in a Matrix public int oddCells(int n, int m, int[][] indices) { boolean[] oddRows = new boolean[n]; boolean[] oddCols = new boolean[m]; for(int[] item : indices) { // 遍历 indices 获取每一列每一行的出现次数是否为奇数 // 异或: 相同为0 不同为1 oddRows[item[0]] ^=</description>
+    </item>
     
     <item>
       <title>[学习笔记] Netty</title>
@@ -178,105 +196,6 @@
       <description>&lt;blockquote&gt;
 &lt;p&gt;本文基于 rxjava 1.x 版本&lt;/p&gt;
 &lt;/blockquote&gt;</description>
-    </item>
-    
-    <item>
-      <title>[LeetCode In Rust]189-Rotate Array</title>
-      <link>https://xiaohei.im/hugo-theme-pure/2019/08/189-rotate-array/</link>
-      <pubDate>Wed, 21 Aug 2019 15:29:34 +0800</pubDate>
-      
-      <guid>https://xiaohei.im/hugo-theme-pure/2019/08/189-rotate-array/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>[LeetCode In Rust]026-Remove Duplicates From Sorted Array</title>
-      <link>https://xiaohei.im/hugo-theme-pure/2019/08/026-remove-duplicates-from-sorted-array/</link>
-      <pubDate>Tue, 20 Aug 2019 15:54:47 +0800</pubDate>
-      
-      <guid>https://xiaohei.im/hugo-theme-pure/2019/08/026-remove-duplicates-from-sorted-array/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>[LeetCode In Rust]001-Two Sum</title>
-      <link>https://xiaohei.im/hugo-theme-pure/2019/08/001-two-sum/</link>
-      <pubDate>Fri, 16 Aug 2019 18:22:05 +0800</pubDate>
-      
-      <guid>https://xiaohei.im/hugo-theme-pure/2019/08/001-two-sum/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Collections-Arraylist</title>
-      <link>https://xiaohei.im/hugo-theme-pure/collections/arraylist/</link>
-      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
-      
-      <guid>https://xiaohei.im/hugo-theme-pure/collections/arraylist/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Collections-Hashmap</title>
-      <link>https://xiaohei.im/hugo-theme-pure/collections/hashmap/</link>
-      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
-      
-      <guid>https://xiaohei.im/hugo-theme-pure/collections/hashmap/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Collections-Hashset</title>
-      <link>https://xiaohei.im/hugo-theme-pure/collections/hashset/</link>
-      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
-      
-      <guid>https://xiaohei.im/hugo-theme-pure/collections/hashset/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Collections-Linkedhashmap</title>
-      <link>https://xiaohei.im/hugo-theme-pure/collections/linkedhashmap/</link>
-      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
-      
-      <guid>https://xiaohei.im/hugo-theme-pure/collections/linkedhashmap/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Collections-Linkedlist</title>
-      <link>https://xiaohei.im/hugo-theme-pure/collections/linkedlist/</link>
-      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
-      
-      <guid>https://xiaohei.im/hugo-theme-pure/collections/linkedlist/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Collections-Treemap</title>
-      <link>https://xiaohei.im/hugo-theme-pure/collections/treemap/</link>
-      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
-      
-      <guid>https://xiaohei.im/hugo-theme-pure/collections/treemap/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Collections-Treeset</title>
-      <link>https://xiaohei.im/hugo-theme-pure/collections/treeset/</link>
-      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
-      
-      <guid>https://xiaohei.im/hugo-theme-pure/collections/treeset/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>关于自己</title>
-      <link>https://xiaohei.im/hugo-theme-pure/about/</link>
-      <pubDate>Thu, 15 Aug 2019 13:19:18 +0800</pubDate>
-      
-      <guid>https://xiaohei.im/hugo-theme-pure/about/</guid>
-      <description>xiaoheiAh~ 联系方式 github: (https://github.com/xiaoheiAh) gmail: xiaohei.zyx@gmail.com 节点推荐 -&amp;gt; http://1t.click/aCyT 关注的大佬博客 面向信仰编程 真·面向信仰,硬核,主 go ,其他技术也很在行, kubernetes 贡献者.翻了翻他博客,就比我大一届,跪</description>
     </item>
     
   </channel>
