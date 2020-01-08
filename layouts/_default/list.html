@@ -32,6 +32,7 @@
                                 aria-labelledby="heading{{- $thisYear }}">
                                 <div class="panel-body">
                                     <div class="collection">
+                        {{- $currentYearSection = $thisYear}}
                     {{- end}}
                     {{- .Scratch.Set "type" "link"}}
                     {{- partial "item-post.html" . }}
