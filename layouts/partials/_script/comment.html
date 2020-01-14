@@ -22,7 +22,7 @@
 });
 </script>
 {{- else if eq $comment.type "disqus" }}
-<script defer>
+<script>
     var disqus_config = function () {
         this.page.url = '{{- .Permalink }}';
         this.page.identifier = '{{- $comment.disqus }}';
