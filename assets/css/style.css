@@ -9430,3 +9430,28 @@ body.okayNav-loaded {
     max-height: 200px;
   }
 }
+
+.alert-info {
+  padding: 10px 15px 0.1px;
+  margin: 0 0 10px;
+  border-left: 3px solid #349ef3;
+  background-color: #e8edfd;
+}
+.alert-success {
+  padding: 10px 15px 0.1px;
+  margin: 0 0 10px;
+  border-left: 3px solid #4dc657;
+  background-color: #ecf9ed;
+}
+.alert-danger {
+  padding: 10px 15px 0.1px;
+  margin: 0 0 10px;
+  border-left: 3px solid #f5311d;
+  background-color: #fee9e7;
+}
+.alert-warning {
+  padding: 10px 15px 0.1px;
+  margin: 0 0 10px;
+  border-left: 3px solid #ffcc00;
+  background-color: #fffae6;
+}
