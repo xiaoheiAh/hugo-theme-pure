@@ -6665,7 +6665,7 @@ body.okayNav-loaded {
 
 .okayNav__nav--visible {
   overflow: hidden;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .okayNav__nav--visible li {
@@ -6674,7 +6674,7 @@ body.okayNav-loaded {
 }
 
 .okayNav__nav--visible li:first-child {
-  margin-left: 0;
+  margin-left: 15px;
 }
 
 .okayNav__nav--visible a {
