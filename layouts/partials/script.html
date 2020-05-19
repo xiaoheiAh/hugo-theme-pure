@@ -7,7 +7,8 @@
 </script>
 <script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
 {{- range .Site.Params.highlightjs.langs }}
-<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/{{.}}.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/{{.}}.min.js"
+    defer></script>
 {{- end -}}
 <script>
     hljs.configure({
@@ -16,6 +17,19 @@
         // … other options aren't changed
     })
     hljs.initHighlightingOnLoad();
+</script>
+<script src="https://cdn.staticfile.org/mermaid/8.5.1/mermaid.min.js"></script>
+<script>
+    eles = document.getElementsByClassName("language-mermaid");
+    for (i = 0; i < eles.length; i++) {
+        eles[i].classList.add("mermaid")
+    }
+    mermaid.initialize({
+        startOnLoad: true,
+        flowchart: {
+            htmlLabels: false
+        }
+    });
 </script>
 {{- $appjs := resources.Get "js/application.js" | resources.Minify | resources.Fingerprint}}
 <script src="{{- $appjs.Permalink }}"></script>
