@@ -2,18 +2,18 @@
     <div class="bar-inner">
         {{- if (or (.Prev) (.Next)) }}
         <ul class="pager pull-left">
-            {{- with .Prev}}
-            <li class="prev">
-                <a href="{{- .Permalink }}" title="{{- .Title }}"><i
-                        class="icon icon-angle-left"
-                        aria-hidden="true"></i><span>&nbsp;&nbsp;{{T "nav_older" }}</span></a>
-            </li>
-            {{- end }}
             {{- with .Next }}
             <li class="next">
                 <a href="{{- .Permalink }}"
                     title="{{- .Title }}"><span>{{T "nav_newer" }}&nbsp;&nbsp;</span><i
-                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+                        class="icon icon-angle-left" aria-hidden="true"></i></a>
+            </li>
+            {{- end }}
+            {{- with .Prev}}
+            <li class="prev">
+                <a href="{{- .Permalink }}" title="{{- .Title }}"><i
+                        class="icon icon-angle-right"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;{{T "nav_older" }}</span></a>
             </li>
             {{- end }}
             {{ with .Site.Params.config.toc }}
