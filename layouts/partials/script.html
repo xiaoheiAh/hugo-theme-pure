@@ -10,6 +10,8 @@
 <script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/{{.}}.min.js"
     defer></script>
 {{- end -}}
+{{- $hljslnjs := resources.Get "js/highlightjs-line-numbers.js" | resources.Minify | resources.Fingerprint}}
+<script src="{{- $hljslnjs.Permalink }}"></script>
 <script>
     hljs.configure({
         tabReplace: '    ', // 4 spaces
@@ -17,6 +19,7 @@
         // … other options aren't changed
     })
     hljs.initHighlightingOnLoad();
+    hljs.initLineNumbersOnLoad();
 </script>
 <script src="https://cdn.staticfile.org/mermaid/8.5.1/mermaid.min.js"></script>
 <script>
