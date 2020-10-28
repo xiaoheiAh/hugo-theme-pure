@@ -86,7 +86,7 @@ unit_time:
 article_wordcount:
   other: "Word Count: "
 article_readcount:
-  other: "Read Count: "
+  other: "Read Time: "
 article_more:
   other: Read More
 article_comments:
