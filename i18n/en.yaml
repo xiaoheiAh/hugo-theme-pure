@@ -79,9 +79,9 @@ insight_untitled:
 
 
 unit_word:
-  other: words
+  other: " words"
 unit_time:
-  other: minutes
+  other: " minutes"
 
 article_wordcount:
   other: "Word Count: "
