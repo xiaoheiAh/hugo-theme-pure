@@ -77,6 +77,9 @@ params:
   highlightjs:
     langs: ["python", "javascript"] # refer to http://staticfile.org/, search highlight.js, already have highlight.min.js
 
+  tag_cloud:
+    min: 8
+    max: 20
   # Allows you to specify an override stylesheet
   # put custom.css in $hugo_root_dir/static/
   # customCSS: css/custom.css
@@ -194,6 +197,7 @@ params:
   # Sidebar only the following widgets. you can remove any you don't like it.
   widgets:
     - board
+    - tag_cloud
     - category
     - tag
     - recent_posts
