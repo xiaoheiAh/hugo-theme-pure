@@ -97,12 +97,15 @@ article_catalogue:
   other: Catalogue
 
 total_article:
+  one: Total {{ .Count }} article
   other: Total {{ .Count }} articles
 total_tag:
   other: Total {{ .Count }} tags
 total_category:
+  one: Total {{ .Count }} category
   other: Total {{ .Count }} categories
 total_link:
+  other: Total {{ .Count }} link
   other: Total {{ .Count }} links
 total_repository:
   other: Total {{ .Count }} projects
