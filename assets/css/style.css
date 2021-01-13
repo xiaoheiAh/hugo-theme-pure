@@ -6612,6 +6612,10 @@ body.no-sidebar .sidebar {
   margin-left: 20px;
 }
 
+.marked-body p {
+  word-wrap: break-word;
+}
+
 /*
  * We are hiding the invisible nav outside the screen
  * so we need to avoid the horizontal scroll
