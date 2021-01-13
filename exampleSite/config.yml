@@ -1,6 +1,7 @@
 baseURL: https://example.com/
 theme: pure
 title: Pure theme for Hugo
+copyright: CC BY 4.0 CN
 defaultContentLanguage: en  # en/zh/...
 footnoteReturnLinkContents: ↩
 hasCJKLanguage: true
@@ -67,6 +68,7 @@ params:
   since: 2017
   dateFormatToUse: "2006-01-02"
   enablePostCopyright: true
+  copyright_link: http://creativecommons.org/licenses/by/4.0/deed.zh
   # the directory under content folder that you want to render
   mainSections: ["posts"]
   # Enable/Disable menu icons
@@ -75,6 +77,9 @@ params:
   highlightjs:
     langs: ["python", "javascript"] # refer to http://staticfile.org/, search highlight.js, already have highlight.min.js
 
+  tag_cloud:
+    min: 8
+    max: 20
   # Allows you to specify an override stylesheet
   # put custom.css in $hugo_root_dir/static/
   # customCSS: css/custom.css
@@ -192,6 +197,7 @@ params:
   # Sidebar only the following widgets. you can remove any you don't like it.
   widgets:
     - board
+    - tag_cloud
     - category
     - tag
     - recent_posts

@@ -14,8 +14,10 @@
         {{- partial "post/category.html" . }}
         {{- partial "post/tag.html" . }}
         {{- partial "post/pv.html" . }}
+        {{- if .Site.Params.comment.type }}
         <span class="post-comment"><i class="icon icon-comment"></i>&nbsp;<a href="{{ .RelPermalink }}#comments"
             class="article-comment-link">{{T "article_comments" }}</a></span>
+        {{- end }}
         {{- partial "post/wc.html" . }}
       </div>
     </div>
@@ -26,7 +28,9 @@
       {{- partial "post/copyright.html" . }}
     </div>
   </article>
+  {{- if (.Site.Params.comment.type) }}
   {{- partial "post/comment.html" . }}
+  {{- end }}
 </div>
 {{- partial "post/nav.html" . }}
 {{- partial "post/donate.html" . }}

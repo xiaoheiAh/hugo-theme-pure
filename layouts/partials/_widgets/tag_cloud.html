@@ -1,0 +1,33 @@
+<div class="widget">
+    <h3 class="widget-title"> {{ T "widget_tags" }}</h3>
+    <div id="tag-cloud-list" class="widget-body">
+            {{ range $name, $taxonomy := $.Site.Taxonomies.tags }}
+            {{ with $.Site.GetPage (printf "/tags/%s" $name) }}
+            <a href="{{ .Permalink }}" class="tag-list-link" rel="{{ $taxonomy.Count}}">{{ $name }}<span
+               class="tag-list-count">{{ $taxonomy.Count}}</span></a>
+            {{ end }}
+            {{- end }}
+    </div>
+<script>
+document.onreadystatechange = () => {
+  if (document.readyState === 'complete') {
+    tagCloud('#tag-cloud-list a', {{ $.Site.Params.tag_cloud.min }}, {{ $.Site.Params.tag_cloud.max }});
+  }
+};
+
+function tagCloud(where, min, max) {
+  let iMax = 0;
+  let iMin = 0;
+  $(where).each(function() {
+    let weight = Number($(this).attr("rel"));
+    if(iMax < weight) iMax = weight;
+    if(iMin > weight || iMin == 0) iMin = weight;
+  });
+  let step = (max - min)/(iMax - iMin);
+  $(where).each(function() {
+    let weight = $(this).attr("rel") - iMin;
+    $(this).css({"font-size": min + (weight * step) + 'px'});
+  });
+};
+</script>
+</div>
