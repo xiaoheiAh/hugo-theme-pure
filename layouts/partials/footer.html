@@ -10,5 +10,10 @@
     <div class="publishby">
         {{T "copyright_theme_by"}} <a href="https://github.com/xiaoheiAh" target="_blank"> xiaoheiAh </a>{{T "copyright_base_on"}}<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
     </div>
+    {{ if (isset .Site.Params "beian") }}
+      <div>
+        <a href="https://beian.miit.gov.cn/" target="_blank">{{- print .Site.Params.beian }}</a>
+      </div>
+    {{ end }}
   </div>
 </footer>
