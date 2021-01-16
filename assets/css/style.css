@@ -6024,11 +6024,11 @@ body.no-sidebar .sidebar {
   margin-left: 10px;
 }
 
-.main .content {
+.main {
   min-height: 85vh;
 }
 
-.main.has-sticky .content {
+.main.has-sticky {
   margin-bottom: 70px;
 }
 
