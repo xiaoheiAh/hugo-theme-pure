@@ -31,9 +31,9 @@ pagination_next:
 pagination_prev:
   other: Prev
 pagination_page:
-  other: Page %d
+  other: Page {{.PageNumber}}
 pagination_pageof:
-  other: Page %d of %s
+  other: Page {{.PageNumber}} of {{.TotalPages}}
 
 widget_search:
   other: Search
@@ -147,6 +147,8 @@ copyright_base_on:
   other: base on
 copyright_powered_by:
   other: Powered by
+copyright_author:
+  other: Author
 copyright_post:
   other: Permalink
 copyright_license:

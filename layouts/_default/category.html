@@ -23,7 +23,7 @@
                             <i class="icon icon-folder text-active"></i><i class="icon icon-folder-open text"></i>
                             {{- .Name }}
                         </a>
-                        <small class="text-muted">(Total {{- len .Pages }} articles)</small>
+                        <small class="text-muted">({{- T "total_article" (len .Pages) }})</small>
                     </h4>
                 </div>
                 <div id="collapse{{ .Name | md5 }}" class="panel-collapse collapse in" role="tabpanel"

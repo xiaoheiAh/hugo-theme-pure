@@ -49,9 +49,9 @@ pagination_next:
 pagination_prev:
   other: 上一页
 pagination_page:
-  other: 第 %d 页
+  other: 第 {{.PageNumber}} 页
 pagination_pageof:
-  other: Page %d of %s
+  other: 第 {{.PageNumber}} 页，共 {{.TotalPages}} 页
 
 widget_search:
   other: 搜索
@@ -149,10 +149,12 @@ copyright_base_on:
 copyright_powered_by:
   other: Powered by
 
+copyright_author:
+  other: 本文作者
 copyright_post:
   other: 本文链接
 copyright_license:
-  other: License
+  other: 版权许可
 
 
 insight_hint: 
